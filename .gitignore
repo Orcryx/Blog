@@ -1,2 +1,7 @@
 # configuration
 config.php
+
+#les dossiers du vendor
+### Composer ###
+composer.phar
+/vendor/
