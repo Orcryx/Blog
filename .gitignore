@@ -2,7 +2,7 @@
 config.php
 
 # Dossier et fichier
+composer.phar
 vendor
 public/image
 public/asset/pdf.pdf
-
