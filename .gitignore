@@ -1,8 +1,11 @@
 # configuration
 config.php
 
-# Dossier et fichier
+#les dossiers du vendor
+### Composer ###
+composer.phar
 vendor
+
+# Dossier et fichier
 public/image
 public/asset/pdf.pdf
-

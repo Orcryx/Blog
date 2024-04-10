@@ -7,16 +7,16 @@ assignees: Orcryx
 
 ---
 
-Estimation de la charge :
+**Estimation de la charge :**
 
 [ ] 1/2 journée
 [ ] 1 journée
 [ ] 2 journées
 [ ] X journée
 
-Description :
+**Description :**
 
-Étape(s) :
+**Étape(s): **
 
     [ ]
     [ ]
