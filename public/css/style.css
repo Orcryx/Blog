@@ -1,0 +1,139 @@
+:root {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    overflow: hidden;
+    background-color: var(--background);
+    background-image: url("../image/5053309.jpg");
+    color: var(--colorText);
+   
+
+    /* Variable de couleurs */
+    --background: #1c2026;
+    --blur: #1c202698;
+    --backgroundTransparent: #1c2026c9;
+    --backgroundWhite : #fefefe;
+    --colorIcon : #4e607b;
+    --colorText: #ffffff; 
+    --colorExtra :#514355; 
+    --colorAlert: #9c544f;
+}
+
+/* GLOBALE */
+
+html{
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+
+    /* border: 3px solid whitesmoke; */
+}
+
+h1, h2, h3, h4, h5, h6{
+    color: var(--colorText);
+    font-weight: 500;
+    margin: 5px;
+}
+
+a,i, button {
+    cursor: pointer;
+}
+
+a{ 
+    text-decoration: none;
+}
+
+
+/* FLEX BOX */
+
+.flex{
+    display: flex;
+}
+
+.flex-around{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.flex-between{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin: 20px;
+}
+
+
+.flex-column{
+    display: flex;
+    flex-direction: column;
+}
+
+.flex-center{
+    display: flex;
+    justify-content: center;
+}
+
+.center-yz{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+/* LES ID */
+
+/* LES CLASS */
+.button-blog{
+    width: 100px;
+
+    margin-left: auto;
+    margin-right: auto;
+    padding: 5px;
+
+    border: none;
+    border-radius: 15px;
+  
+    background-color: var(--colorExtra);
+    
+    font-size: 1.5em;
+    font-weight: 700;
+    text-align: center;
+    color: var(--colorText);
+
+    box-shadow: rgba(50, 50, 105, 0.15) 0px 2px 5px 0px, rgba(0, 0, 0, 0.05) 0px 1px 1px 0px;
+}
+
+/* LE RESPONSIF */
+
+@media (max-width: 400px) {
+  
+}
+
+@media (max-width: 767px) {
+  
+}
+
+@media (max-width: 992px) {
+
+}
+
+
+@media (min-width: 768px) and (max-width: 1024px) {
+
+}
+
+@media (min-width: 1024px) and (max-width: 1366px) {
+
+}
+
+
+
+
+

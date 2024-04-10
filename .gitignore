@@ -1,2 +1,8 @@
 # configuration
 config.php
+
+# Dossier et fichier
+vendor
+public/image
+public/asset/pdf.pdf
+

@@ -1,0 +1,95 @@
+{% extends "layout.twig" %}
+{% block title %}Mon {% endblock %}
+{% block css %}
+  <link rel="stylesheet" href="public/css/blog.css"/>
+{% endblock %}
+
+{% block nav %}
+  {% include 'navigation_include.twig' %}
+{% endblock %}
+
+{% block content %}
+    <div id="gallery-img"></div>
+    <div id="gallery" class="article">
+
+      <article class="flex">
+        <div class="article-wrapper">
+       
+            <img src="../../public/image/avatar.jpg" />
+        
+          <div class="article-body">
+            <h2>{{titre}}</h2>
+            <p>{{chapo}}</p>
+            <a href="#" class="read-more"> En savoir plus <i class="fa-solid fa-arrow-right"></i></a>
+          </div>
+        </div>
+      </article>
+
+      <article class="flex">
+        <div class="article-wrapper">
+       
+            <img src="../../public/image/{{image}}.jpg" alt="image de tête de l'article" />
+        
+          <div class="article-body">
+            <h2>{{titre}}</h2>
+            <p>{{chapo}}</p>
+            <a href="#" class="read-more"> En savoir plus <i class="fa-solid fa-arrow-right"></i></a>
+          </div>
+        </div>
+      </article>
+
+          <article class="flex">
+        <div class="article-wrapper">
+      
+            <img src="../../public/image/{{image}}.jpg" alt="image de tête de l'article" />
+          
+          <div class="article-body">
+            <h2>{{titre}}</h2>
+            <p>{{chapo}}</p>
+            <a href="#" class="read-more"> En savoir plus <i class="fa-solid fa-arrow-right"></i></a>
+          </div>
+        </div>
+      </article>
+
+          <article class="flex">
+        <div class="article-wrapper">
+       
+            <img src="../../public/image/{{image}}.jpg" alt="image de tête de l'article" />
+         
+          <div class="article-body">
+            <h2>{{titre}}</h2>
+            <p>{{chapo}}</p>
+            <a href="#" class="read-more"> En savoir plus <i class="fa-solid fa-arrow-right"></i></a>
+          </div>
+        </div>
+      </article>
+
+          <article class="flex">
+        <div class="article-wrapper">
+       
+            <img src="../../public/image/{{image}}.jpg" alt="image de tête de l'article" />
+     
+          <div class="article-body">
+            <h2>{{titre}}</h2>
+            <p>{{chapo}}</p>
+            <a href="#" class="read-more"> En savoir plus <i class="fa-solid fa-arrow-right"></i></a>
+          </div>
+        </div>
+      </article>
+
+          <article class="flex">
+        <div class="article-wrapper">
+   
+            <img src="../../public/image/{{image}}.jpg" alt="image de tête de l'article"/>
+      
+          <div class="article-body">
+            <h2>{{titre}}</h2>
+            <p>{{chapo}}</p>
+            <a href="http://localhost:3000/blog.php?a:{{idArticle}}" class="read-more"> En savoir plus <i class="fa-solid fa-arrow-right"></i></a>
+          </div>
+        </div>
+      </article>
+    </div>
+    {% include 'footer_include.twig' %}
+{% endblock %}
+  

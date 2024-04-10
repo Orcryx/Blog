@@ -1,0 +1,36 @@
+{% extends "layout.twig" %}
+{% block title %}Accueil -  {% endblock %}
+{% block css %}
+  <link rel="stylesheet" href="public/css/profil.css"/>
+{% endblock %}
+
+{% block content %}
+    <div id="content">
+
+        <div id="blurred">
+
+            <div id="card" class="flex-column">
+                <div id="card-background" class="flex-center">
+                    <div id="avatar">
+                        <img id="img-avatar" src="public/image/avatar.jpg">
+                    </div>
+                </div>
+                <div id="card-container" class="flex-column">
+                    <h1 class="profil-name">Lauryann MAGAR</h1>
+                    <p>la développeuse web qu’il vous faut !</p>
+                    <a href="http://localhost:3000/blog.php" class="button-blog">Blog</a>
+                </div>
+                <div class="flex-between footer-profil">
+                    <a href="https://github.com/Orcryx" alt="lien vers Github"><i class="fa-brands fa-github"></i></a>
+                    <a href="https://www.linkedin.com/in/lmagar/" alt="lien vers Linkedin"><i class="fa-brands fa-linkedin"></i></a>
+                    <a href="public/asset/pdf.pdf" alt="lien de téléchargement du CV" download><i class="fa-solid fa-file"></i></a>
+                   <i class="fa-solid fa-message" alt="lien vers le formulaire de contact"></i>
+                </div>
+            </div>
+        </div>
+     
+    </div>
+{% endblock %}
+
+
+
