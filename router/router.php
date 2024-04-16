@@ -31,7 +31,8 @@ class Router
         }else {
             //sinon retourner l'action = message d'erreur 
             http_response_code(404);
-            return "404 - la page n'existe pas.";
+            echo "page non trouvée";
+          
         }
         
        

@@ -3,21 +3,13 @@
 use router\router;
 require "../vendor/autoload.php";
 
-
-// echo "page index";
-
 $router = new Router();
 
 $router->get('/public/index', ['controller\home','getHome']); 
-// $router->get('/public/contact.php', ['controller\home' , 'getHome']); 
+$router->get('/public/blog', ['controller\blog' , 'getGallery']); 
+$router->get('/public/contact', ['controller\contact' , 'getForm']); 
+// $router->get('/public/404', ['controller\404' , 'get404']); 
 
-// echo '<pre>';
-// var_dump($router);
-// echo '</pre>';
-
-// echo '<br>';
-// var_dump(explode('?', $_SERVER['REQUEST_URI']));
-// echo '<br>';
 
 //afficher le retour du routeur
 echo $router->run($_SERVER['REQUEST_URI']);

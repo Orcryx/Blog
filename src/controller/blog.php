@@ -1,3 +1,11 @@
 <?php
-require_once("../controller/init.php") ;
-echo $twig->render('gallery.twig');
+namespace controller;
+
+class blog
+{
+    public function getGallery()
+    {
+        require"init.php";
+        return $twig->render('gallery.twig');
+    }
+}
