@@ -4,7 +4,10 @@
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "Lame\\Blog\\": "src/"
+            "Lame\\Blog\\": "src/",
+            "controller\\":"src/controller/",
+            "router\\": "router/",
+            "exception\\": "exception/"
         }
     },
     "authors": [

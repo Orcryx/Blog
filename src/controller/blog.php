@@ -1,6 +1,3 @@
 <?php
-
-include "src/controller/init.php";
-
-
+require_once("../controller/init.php") ;
 echo $twig->render('gallery.twig');
