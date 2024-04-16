@@ -2,11 +2,21 @@
 
 namespace router;
 
-use exception\routeNotFound;
+use Twig\Environment;
+use Twig\Loader\FilesystemLoader;
 
 class Router
 {
     private array $routes;
+    private Environment $twig;
+
+    //constructeur de la class routeur
+    public function __construct()
+    {
+        $loader = new FilesystemLoader('../src/view');
+        $this->twig = new Environment($loader);
+    }
+
     public function get(string $path, array $action):void
     {
         $this->routes[$path] = $action;
@@ -15,9 +25,9 @@ class Router
     public function run(string $uri)
     {
         $path = explode('?', $uri)[0];
-        //aller chercher l'action dans le tableau, stocker dans la variable action si la route est différente de null (null=chemin non défini)
+        //aller chercher l'action dans le tableau, la stocker dans la variable action si la route est différente de null (null=chemin non défini)
         $action = $this->routes[$path] ?? null;
-        //vérifier si le tableau existe
+        //vérifier si le tableau avec le namespace/**  existe
         if(is_array($action)) {
             //instancier la class puis appeller la méthode lorsque c'est un tableau 
             [$class, $method] = $action;
@@ -29,10 +39,9 @@ class Router
             }
            
         }else {
-            //sinon retourner l'action = message d'erreur 
+            //sinon retourner la vue 404 
             http_response_code(404);
-            echo "page non trouvée";
-          
+            echo $this->twig->render('404.twig'); 
         }
         
        
