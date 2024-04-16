@@ -1,9 +1,8 @@
 <?php
-
 // check la compatibilité des variables passées dans les objets
 declare(strict_types=1);
 
-require '../../vendor/autoload.php';
+require '../vendor/autoload.php';
 
 use Twig\Loader\FilesystemLoader;
 use Twig\Environment; 
