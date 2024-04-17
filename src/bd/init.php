@@ -1,5 +1,5 @@
 <?php
-// phpinfo();
+//phpinfo();
 //connexion à la base de données
 $host = 'web-lame.home';
 $dbname = 'blog';
@@ -13,7 +13,7 @@ try {
     die("Erreur de connexion à la base de données : " . $e->getMessage());
 }
 
-//requête SQL pour tester  
-// $statement = $pdo->prepare('SELECT * FROM post');
-// $statement->execute();
-// $article->$statement->fetchAll();
+// requête SQL pour tester  
+$statement = $pdo->prepare('SELECT * FROM post');
+$statement->execute();
+$article->$statement->fetchAll();
