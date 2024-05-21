@@ -11,84 +11,29 @@
 {% block content %}
     <div id="gallery-img"></div>
     <div id="gallery" class="article">
-
-      <article class="flex">
-        <div class="article-wrapper">
-       
-            <img src="../../public/image/avatar.jpg" />
-        
-          <div class="article-body">
-            <h2>{{titre}}</h2>
-            <p>{{chapo}}</p>
-            <a href="#" class="read-more"> En savoir plus <i class="fa-solid fa-arrow-right"></i></a>
-          </div>
-        </div>
-      </article>
-
-      <article class="flex">
-        <div class="article-wrapper">
-       
-            <img src="../../public/image/{{image}}.jpg" alt="image de tête de l'article" />
-        
-          <div class="article-body">
-            <h2>{{titre}}</h2>
-            <p>{{chapo}}</p>
-            <a href="#" class="read-more"> En savoir plus <i class="fa-solid fa-arrow-right"></i></a>
-          </div>
-        </div>
-      </article>
-
-          <article class="flex">
-        <div class="article-wrapper">
-      
-            <img src="../../public/image/{{image}}.jpg" alt="image de tête de l'article" />
-          
-          <div class="article-body">
-            <h2>{{titre}}</h2>
-            <p>{{chapo}}</p>
-            <a href="#" class="read-more"> En savoir plus <i class="fa-solid fa-arrow-right"></i></a>
-          </div>
-        </div>
-      </article>
-
-          <article class="flex">
-        <div class="article-wrapper">
-       
-            <img src="../../public/image/{{image}}.jpg" alt="image de tête de l'article" />
-         
-          <div class="article-body">
-            <h2>{{titre}}</h2>
-            <p>{{chapo}}</p>
-            <a href="#" class="read-more"> En savoir plus <i class="fa-solid fa-arrow-right"></i></a>
-          </div>
-        </div>
-      </article>
-
-          <article class="flex">
-        <div class="article-wrapper">
-       
-            <img src="../../public/image/{{image}}.jpg" alt="image de tête de l'article" />
-     
-          <div class="article-body">
-            <h2>{{titre}}</h2>
-            <p>{{chapo}}</p>
-            <a href="#" class="read-more"> En savoir plus <i class="fa-solid fa-arrow-right"></i></a>
-          </div>
-        </div>
-      </article>
-
-          <article class="flex">
-        <div class="article-wrapper">
-   
-            <img src="../../public/image/{{image}}.jpg" alt="image de tête de l'article"/>
-      
-          <div class="article-body">
-            <h2>{{titre}}</h2>
-            <p>{{chapo}}</p>
-            <a href="http://localhost:3000/blog.php?a:{{idArticle}}" class="read-more"> En savoir plus <i class="fa-solid fa-arrow-right"></i></a>
-          </div>
-        </div>
-      </article>
+      {% if posts is not empty %}
+          {% for post in posts %}
+          <article class="flex-around">
+            <div id="post" class="article-wrapper">
+                <img src="../../public/image/{{post.id}}.jpg" />
+              <div class="article-body flex-column">
+                 <div class="article-title">
+                  <h2>{{ post.title }}</h2>
+                </div>
+                <div class="article-content">
+                  <p>{{ post.date }}</p>
+                  <p>{{ post.capo }}</p>
+                </div>
+                <div class="article-link">
+                  <a href="#" class="read-more"> En savoir plus <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+              </div>
+            </div>
+          </article>
+          {% endfor %}
+      {% else %}
+        <p>No posts available.</p>
+      {% endif %}
     </div>
     {% include 'footer_include.twig' %}
 {% endblock %}

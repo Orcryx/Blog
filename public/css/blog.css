@@ -54,10 +54,14 @@ footer{
 }
 
 article{
-    width: 45%;
-    max-height:350px ;
+    width: 300px;
+    max-height: 430px;
 
+    overflow: hidden;
+
+    color: black;
     background-color: var(--backgroundWhite);
+
     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
 }
 
@@ -110,4 +114,26 @@ article{
     width: 100%;
 
     padding: 5px;
+}
+
+.article-title{
+
+}
+
+
+.article-content{
+    text-align: justify;
+    padding:0 10px 0 10px;
+}
+
+
+
+/*OTHER*/
+
+article h2{
+    color: black;
+}
+
+article img{
+    width: 100%;
 }

@@ -8,7 +8,8 @@
             "controller\\":"src/controller/",
             "router\\": "router/",
             "exception\\": "exception/",
-            "bd\\":"src/bd"
+            "bd\\":"lib/bd",
+            "model\\":"src/model"
         }
     },
     "authors": [

@@ -5,7 +5,7 @@ class home
 {
     public function getHome()
     {
-        require"init.php";
+        require_once(__DIR__ . "/../lib/twig.php");
         return $twig->render('index.twig');
     }
 }
