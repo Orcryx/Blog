@@ -1,21 +1,17 @@
 <?php
 
-namespace router;
-
-use Twig\Environment;
-use Twig\Loader\FilesystemLoader;
+namespace App\service;
 
 class Router
 {
     private array $routes;
     private int $arg;
-    private Environment $twig;
+    private TwigService $twigService;
 
     //constructeur de la class routeur
     public function __construct()
     {
-        $loader = new FilesystemLoader('../src/view');
-        $this->twig = new Environment($loader);
+        $this->twigService = new TwigService();
     }
 
     public function get(string $path, array $action):void
@@ -64,7 +60,7 @@ class Router
         }else {
             //sinon retourner la vue 404 
             http_response_code(404);
-            echo $this->twig->render('404.twig'); 
+            echo $this->twigService->twigEnvironnement->render('404.twig'); 
         }
     }
 }

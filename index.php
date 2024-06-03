@@ -1,7 +1,7 @@
 <?php
 
-use router\router;
-require "../vendor/autoload.php";
+require "vendor/autoload.php";
+use App\service\Router;
 
 $router = new Router();
 
