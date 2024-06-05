@@ -2,7 +2,7 @@
 namespace App\controller;
 use App\service\TwigService;
 
-class home
+class HomeController
 {
 
     private TwigService $twigService;
@@ -13,9 +13,8 @@ class home
         $this->twigService = new TwigService();
     }
 
-    public function getHome()
+    public function displayHome()
     {
         return $this->twigService->twigEnvironnement->render('index.twig');
     }
-    
 }

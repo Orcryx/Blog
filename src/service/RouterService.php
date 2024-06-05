@@ -2,7 +2,7 @@
 
 namespace App\service;
 
-class Router
+class RouterService
 {
     private array $routes;
     private int $arg;

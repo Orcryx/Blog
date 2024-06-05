@@ -15,17 +15,17 @@
           {% for post in posts %}
           <article class="flex-around">
             <div id="post" class="article-wrapper">
-                <img src="../../public/image/{{post.id}}.jpg" />
+                <img src="../../public/image/{{post.postId}}.jpg" />
               <div class="article-body flex-column">
                  <div class="article-title">
                   <h2>{{ post.title }}</h2>
                 </div>
                 <div class="article-content">
-                  <p>{{ post.date }}</p>
-                  <p>{{ post.capo }}</p>
+                  <p>{{ post.createdAt }}</p>
+                  <p>{{ post.chapo }}</p>
                 </div>
                 <div class="article-link">
-                  <a href="#" class="read-more"> En savoir plus <i class="fa-solid fa-arrow-right"></i></a>
+                  <a href="?{{post.postId}}" class="read-more"> En savoir plus <i class="fa-solid fa-arrow-right"></i></a>
                 </div>
               </div>
             </div>

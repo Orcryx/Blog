@@ -3,7 +3,7 @@
 namespace App\service;
 use \PDO;
 
-class Database{
+class DatabaseService{
 
     private string $db_name;
     private string $db_user;
@@ -22,6 +22,7 @@ class Database{
 
     private function getPDO():PDO
     {
+        //créer un accesseur pour éviter d'avoir plusieurs fois la connexion à la base de données
         if ($this->pdo === null) {
             $dsn = "mysql:host={$this->db_host};dbname={$this->db_name}";
             $pdo = new PDO($dsn, $this->db_user, $this->db_pass);

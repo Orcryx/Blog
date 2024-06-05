@@ -2,7 +2,7 @@
 namespace App\controller;
 use App\service\TwigService;
 
-class contact
+class ContactController
 {
 
     private TwigService $twigService;

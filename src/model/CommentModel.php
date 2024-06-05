@@ -1,6 +1,6 @@
 <?php
 
-namespace App\model\manager;
+namespace App\model;
 
 class Comment {
     public int $postId;
