@@ -17,4 +17,5 @@ class home
     {
         return $this->twigService->twigEnvironnement->render('index.twig');
     }
+    
 }

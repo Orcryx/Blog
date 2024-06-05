@@ -19,7 +19,7 @@ class Router
         $this->routes[$path] = $action;
     }
 
-    public function getOne(string $path, array $action, int $id)
+    public function getOne(string $path, array $action, array $id)
     {
         $this->routes[$path] = $action;
         $this->arg = $id; 
@@ -49,9 +49,9 @@ class Router
                 $class = new $class;
 
                 if ($id !== null) {
-                    echo $id;
+                    echo $id=$this->arg;
                    // $method ='getPost';
-                    return call_user_func_array([$class, $method], $id);
+                    return call_user_func_array([$class, $method], [$id]);
                 } else {
                      //on exécute le code si : la class existe et si la méthode existe dans la class passée dans l'action - dans [] : les éventuels arguments après le ?
                     return call_user_func([$class, $method],[]);
