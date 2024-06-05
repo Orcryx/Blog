@@ -6,3 +6,7 @@ composer.phar
 vendor
 public/image
 public/asset/pdf.pdf
+
+#Autre
+public/.htaccess
+.github
