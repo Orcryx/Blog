@@ -1,11 +1,20 @@
 <?php
-namespace controller;
+namespace App\controller;
+use App\service\TwigService;
 
 class home
 {
+
+    private TwigService $twigService;
+
+    //constructeur de la class 
+    public function __construct()
+    {
+        $this->twigService = new TwigService();
+    }
+
     public function getHome()
     {
-        require_once(__DIR__ . "/../lib/twig.php");
-        return $twig->render('index.twig');
+        return $this->twigService->twigEnvironnement->render('index.twig');
     }
 }

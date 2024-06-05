@@ -1,6 +1,6 @@
 <?php
 
-namespace model;
+namespace App\model\manager;
 
 class User{
     public int $userId;

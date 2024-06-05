@@ -1,10 +1,10 @@
 <?php
 
-namespace model;
-// use model\Post;
+namespace App\model\repository;
+
 use PDO;
 
-require_once(__DIR__ . '/../lib/bd.php');
+// include(__DIR__ . '/../lib/bd.php');
 
 function getAllPost($pdo) {
             $sql = 'SELECT * FROM post';

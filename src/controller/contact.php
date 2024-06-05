@@ -1,11 +1,21 @@
 <?php
-namespace controller;
+namespace App\controller;
+use App\service\TwigService;
 
 class contact
 {
+
+    private TwigService $twigService;
+
+    //constructeur de la class 
+    public function __construct()
+    {
+        $this->twigService = new TwigService();
+    }
+    
     public function getForm()
     {
-        require_once(__DIR__ . "/../lib/twig.php");
-        return $twig->render('contact_include.twig');
+    
+        return $this->twigService->twigEnvironnement->render('contact_include.twig');
     }
 }

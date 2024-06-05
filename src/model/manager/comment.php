@@ -1,8 +1,8 @@
 <?php
 
-namespace model;
+namespace App\model\manager;
 
-class Post {
+class Comment {
     public int $postId;
     public string $title;
     public string $message;

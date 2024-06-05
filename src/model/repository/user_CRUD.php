@@ -1,4 +1,4 @@
 <?php
 
-namespace model;
+namespace App\model\repository;
 include('../lib/bd.php');

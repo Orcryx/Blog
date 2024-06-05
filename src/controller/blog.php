@@ -1,21 +1,31 @@
 <?php
-namespace controller;
+namespace App\controller;
+use App\service\TwigService;
+// use App\model\repository;
 
 class blog
 {
+
+
+    private TwigService $twigService;
+
+    //constructeur de la class 
+    public function __construct()
+    {
+        $this->twigService = new TwigService();
+    }
+
     public function getGallery()
     {
-        require_once(__DIR__ . "/../lib/twig.php");
-        include(__DIR__ ."/../model/post_CRUD.php");
-
         // Afficher le résultat de la requête
-        return $twig->render('gallery.twig',["posts"=>$post]);
+        // return $this->twigService->twigEnvironnement->render('gallery.twig',["posts"=>$post]);
+        return $this->twigService->twigEnvironnement->render('gallery.twig');
+
     }
 
     public function getPost()
     { 
-        require_once(__DIR__ . "/../lib/twig.php");
-        return $twig->render('post.twig');
+        return $this->twigService->twigEnvironnement->render('post.twig');
     }
 
 
