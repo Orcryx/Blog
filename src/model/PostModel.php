@@ -1,5 +1,4 @@
 <?php
-
 namespace App\model;
 use App\manager\PostManager;
 
@@ -10,6 +9,7 @@ class PostModel{
     private string $chapo;
     private int $userId;
     private string $createdAt;
+
 
     public function __construct(int $postId, string $title, string $message, string $chapo, int $userId, string $createdAt)
     {
@@ -24,25 +24,35 @@ class PostModel{
 
 
     //Créer un post avec les donnnées de la BD et des données construites
-   
-    public static function createFromEntity(array $postData): self {
-        // Construction de la date au format français
-        $createdAt = date("d/m/Y H:i:s", strtotime($postData['createAt']));
-        
-        // Récupération des 20 premières lignes du contenu (chapo)
-      
-        $chapo = strlen($postData['message']) > 100 ? substr($postData['message'], 0, 100) . '...' : $postData['message'];
+     /**
+      * @param PostEntity[] : pour plus tard
+     * @return PostModel[]
+    */
+    public static function createFromEntities(array $postEntities): array {
+        $postModels=[];
 
-        return new self(
-            $postData['postId'],
-            $postData['title'],
-            $postData['message'],
-            $chapo,
-            $postData['userId'],
-            $createdAt
-        );
+        foreach ($postEntities as $postEntity) 
+        {
+            // Construction de la date au format français
+            $createdAt = date("d/m/Y H:i:s", strtotime($postEntity['createAt']));
+            
+            // Récupération des 20 premières lignes du contenu (chapo)
+        
+            $chapo = strlen($postEntity['message']) > 100 ? substr($postEntity['message'], 0, 100) . '...' : $postEntity['message'];
+
+           $postModels[] = new self(
+                $postEntity['postId'],
+                $postEntity['title'],
+                $postEntity['message'],
+                $chapo,
+                $postEntity['userId'],
+                $createdAt
+            );
+        }
+        return $postModels;
     }
 
+    //TODO : créer une fonction createFromEntity(array $postEntity) qui retourn un PostModel! 
     
     // Getters
     public function getPostId(): int {

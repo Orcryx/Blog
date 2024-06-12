@@ -2,6 +2,7 @@
 namespace App\controller;
 use App\service\TwigService;
 use App\manager\PostManager;
+use App\model\PostModel;
 
 
 class PostController
@@ -20,12 +21,9 @@ class PostController
 
     public function displayGallery()
     {
-        echo "je suis un oiseau";
-        echo "je suis un pan";
+        /**@var PostModel[] $posts */
         $posts = $this->postManager->getAll();
-        var_dump($posts);
-        echo "je suis une fourmis ";
-        return $this->twigService->twigEnvironnement->render('gallery.twig',['posts' => $posts]);
+        echo $this->twigService->twigEnvironnement->render('gallery.twig',['posts' => $posts]);
 
     }
 
