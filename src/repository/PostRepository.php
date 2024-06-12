@@ -5,14 +5,18 @@ use App\service\DatabaseService;
 
 class PostRepository {
 
+         private DatabaseService $databaseService;
+
+        public function __construct( DatabaseService $databaseService) {
+              //Init connexion à la base de données
+            $this->databaseService = $databaseService;
+        }
+
     function getPosts():array{
     
-        //Init connexion à la base de données
-        $bd = new DatabaseService();
-        $posts = $bd->query('SELECT * FROM post');
+        $posts = $this->databaseService->query('SELECT * FROM post');
         return $posts;
     }
-
 }  
 
 
