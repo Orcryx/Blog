@@ -20,7 +20,11 @@ class PostController
 
     public function displayGallery()
     {
-        $posts = $this->postManager->getAll();  
+        echo "je suis un oiseau";
+        echo "je suis un pan";
+        $posts = $this->postManager->getAll();
+        var_dump($posts);
+        echo "je suis une fourmis ";
         return $this->twigService->twigEnvironnement->render('gallery.twig',['posts' => $posts]);
 
     }

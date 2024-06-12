@@ -37,9 +37,13 @@ class RouterService
 
             case '/blog':
                 $dataBD = new DatabaseService();
+                var_dump("1");
                 $postRepo = new PostRepository($dataBD);
-                $postManager = new PostManager($postRepo );     
+                var_dump("2");
+                $postManager = new PostManager($postRepo ); 
+                var_dump("3");
                 $blogController = new PostController($postManager);
+                var_dump("4");
                 $blogController->displayGallery();   
                 if ($id !==null) {
                     # code...

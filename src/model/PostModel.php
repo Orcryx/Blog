@@ -1,8 +1,7 @@
 <?php
 
 namespace App\model;
-use App\repository\PostRepository;
-use App\service\DatabaseService;
+use App\manager\PostManager;
 
 class PostModel{
     private int $postId;
