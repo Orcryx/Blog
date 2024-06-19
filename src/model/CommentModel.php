@@ -31,14 +31,13 @@ class CommentModel{
 
         foreach ($commentEntities as $comment) {
             # code...
-            $commentsModel[] = new self(
+            $commentModels[] = new self(
                 $comment['commentId'],
                 $comment['comment'],
                 $comment['userId'],
                 $comment['postId'],
             );
         }
-           
         return  $commentModels;
     }
     

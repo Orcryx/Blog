@@ -45,15 +45,9 @@ class RouterService
                 $blogController = new PostController($postManager, $commentManager );
             
                 if ($id !==null) {
-                    # code...
-                    // $commentRepo = new CommentRepository($dataBD);
-                    // $commentManager = new CommentManager($commentRepo); 
-                    // $commentController = new CommentController($commentManager);
-
-                    echo "ID de la page .$id";
+                    //echo "ID de la page .$id";
                     $blogController->displayOnePost($id);  
-                    // $commentController->dysplayCommentById($id);
-                    //TO DO : utiliser un ArticleController ?
+           
                 }  else {
                    
                     $blogController->displayGallery();  

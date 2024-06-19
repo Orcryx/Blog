@@ -32,10 +32,7 @@ class PostController
     public function displayOnePost(int $postId)
      {
         $articleModel =  $this->postManager->getOne($postId);
-       //var_dump($articleModel);
-       var_dump($articleModel->getPostId());
         $commentModels = $this->commentManager->getCommentByPost($articleModel->getPostId());
-       
         echo $this->twigService->twigEnvironnement->render('post.twig',['post' => $articleModel, "comments"=>$commentModels]);
 
      }

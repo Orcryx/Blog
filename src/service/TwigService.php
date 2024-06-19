@@ -21,17 +21,4 @@ class TwigService {
         $twig->addExtension(new DebugExtension());
         $this->twigEnvironnement=$twig;
     }
-
-    //il faut typer la sortie
-    // public function getTwigEnvironnement():Environment{
-    //     return $this->twigEnvironnement;
-    // }
-
-    // public function init(){
-    //     $twig = new TwigService();
-    //     $twig->twigEnvironnement->render('viex');
-    // }
-
-
-
 }
