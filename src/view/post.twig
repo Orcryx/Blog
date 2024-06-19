@@ -2,6 +2,7 @@
 {% block title %}Mon {% endblock %}
 {% block css %}
   <link rel="stylesheet" href="../../public/css/blog.css"/>
+  <link rel="stylesheet" href="../../public/css/article.css"/>
 {% endblock %}
 
 {% block nav %}
@@ -9,27 +10,28 @@
 {% endblock %}
 
 {% block content %}
-     <div id="gallery" class="article">
-      {% if post is not empty %}
-          {% for Onepost in post %}
-          <article class="flex-around">
-            <div id="post" class="article-wrapper">
-                <img src="../../public/image/{{Onepost.postId}}.jpg" />
-              <div class="article-body flex-column">
-                 <div class="article-title">
-                  <h2>{{ Onepost.title }}</h2>
+   
+      
+          {{dump(comments[0])}}
+          <article class="article flex-column">
+            <div id="article-img" class="">
+                <img src="../../public/image/{{post.postId}}.jpg" />
+              <div class="">
+                 <div class="">
+                  <h2>{{ post.title }}</h2>
                 </div>
-                <div class="article-content">
-                  <p>{{ Onepost.createdAt }}</p>
-                  <p>{{ Onepost.message }}</p>
+                <div class="">
+                  <p>{{ post.date }}</p>
+                  <p>{{ post.message }}</p>
                 </div>
               </div>
             </div>
           </article>
-          {% endfor %}
-      {% else %}
-        <p>No posts available.</p>
-      {% endif %}
+          <div id="comment">
+
+          </div>
+       
+
     </div>
 {% endblock %}
   

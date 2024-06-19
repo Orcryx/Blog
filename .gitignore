@@ -1,5 +1,6 @@
 # configuration
 config.php
+src/service/DatabaseService.php
 
 # Dossier et fichier
 composer.phar
