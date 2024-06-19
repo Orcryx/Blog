@@ -51,8 +51,6 @@ class PostModel{
         }
         return $postModels;
     }
-
-    //TODO : créer une fonction createFromEntity(array $postEntity) qui retourn un PostModel! 
     
     // Getters
     public function getPostId(): int {

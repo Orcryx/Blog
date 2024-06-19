@@ -9,6 +9,27 @@
 {% endblock %}
 
 {% block content %}
-  
+     <div id="gallery" class="article">
+      {% if post is not empty %}
+          {% for Onepost in post %}
+          <article class="flex-around">
+            <div id="post" class="article-wrapper">
+                <img src="../../public/image/{{Onepost.postId}}.jpg" />
+              <div class="article-body flex-column">
+                 <div class="article-title">
+                  <h2>{{ Onepost.title }}</h2>
+                </div>
+                <div class="article-content">
+                  <p>{{ Onepost.createdAt }}</p>
+                  <p>{{ Onepost.message }}</p>
+                </div>
+              </div>
+            </div>
+          </article>
+          {% endfor %}
+      {% else %}
+        <p>No posts available.</p>
+      {% endif %}
+    </div>
 {% endblock %}
   

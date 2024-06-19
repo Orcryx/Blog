@@ -12,11 +12,20 @@ class PostRepository {
             $this->databaseService = $databaseService;
         }
 
-    function getPosts():array{
+   public function getPosts():array{
     
         $posts = $this->databaseService->query('SELECT * FROM post');
         return $posts;
     }
+
+    public function getOnePost(int $id):array{
+    
+        $onePost = $this->databaseService->prepareAndExecute('SELECT * FROM post WHERE postId = :id', ['id' => $id]);
+        return $onePost ? $onePost[0] : []; // Retourne le premier élément ou un tableau vide si aucun résultat
+    }
+
+
+
 }  
 
 

@@ -39,4 +39,12 @@ class DatabaseService{
         return $data;
 
     }
+
+    public function prepareAndExecute($statement, $params)
+    {
+        $stmt = $this->getPDO()->prepare($statement);
+        $stmt->execute($params);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
 }

@@ -2,7 +2,7 @@
 namespace App\controller;
 use App\service\TwigService;
 use App\manager\PostManager;
-use App\model\PostModel;
+// use App\model\PostModel;
 
 
 class PostController
@@ -26,6 +26,14 @@ class PostController
         echo $this->twigService->twigEnvironnement->render('gallery.twig',['posts' => $posts]);
 
     }
+
+    public function displayOnePost(int $id)
+     {
+        /**@var ArticleModel[] $post */
+        $post =  $this->postManager->getOne($id);
+        echo $this->twigService->twigEnvironnement->render('post.twig',['post' => $post]);
+
+     }
 
 
 }

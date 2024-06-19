@@ -25,8 +25,6 @@ class RouterService
         $queryString = explode('?', $uri)[1] ?? ''; // Obtenir la partie de la chaîne après le '?'
         $id = intval($queryString);
         $id = ($id === 0 && $queryString !== "0") ? null : $id;
-       
-        //vérifier si le tableau avec le namespace/**  existe
     
         switch ($path) 
         {
@@ -38,12 +36,12 @@ class RouterService
                 $dataBD = new DatabaseService();
                 $postRepo = new PostRepository($dataBD);
                 $postManager = new PostManager($postRepo); 
-        
+                $blogController = new PostController($postManager);
                 if ($id !==null) {
                     # code...
-                    echo "il y a un ID . $id";
+                    $blogController->displayOnePost($id);  
                 }  else {
-                    $blogController = new PostController($postManager);
+                   
                     $blogController->displayGallery();  
                 }   
             break;

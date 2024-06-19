@@ -3,6 +3,7 @@
 namespace App\manager;
 
 use App\model\PostModel;
+use App\model\ArticleModel;
 use App\repository\PostRepository;
 
 
@@ -18,26 +19,16 @@ class PostManager {
     public function getAll(): array {
    
         $postsEntities = $this->postRepository->getPosts();
-        // $tableau = [
-        //     [
-        //         "postId"=>"",
-        //         "postVar"=>""
-        //     ],
-        //     [
-        //         "postId"=>"",
-        //         "postVar"=>""
-        //     ],
-        //     [
-        //         "postId"=>"",
-        //         "postVar"=>""
-        //     ]
-        // ];
-
         $postsModel= PostModel::createFromEntities($postsEntities);
-
-       //TODO : $post=PostModel::createFromEntity($tableau[0]);
         return $postsModel;
-      
+    }
+
+    public function getOne(int $id): array {
+        $postEntity = $this->postRepository->getOnePost($id);
+       // var_dump($postEntity );
+        $postModel = ArticleModel::createFromEntity($postEntity);
+       // var_dump( $postModel);
+        return $postModel;
     }
 
 }
