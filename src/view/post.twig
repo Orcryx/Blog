@@ -12,32 +12,37 @@
 {% block content %}
 
   {#{{dump(comments[0])}}#}
-  <article class="article flex-column">
-    <div id="article-img" class="">
-        <img src="../../public/image/{{post.postId}}.jpg" />
-      <div class="">
-          <div class="">
-          <h2>{{ post.title }}</h2>
-        </div>
-        <div class="">
-          <p>{{ post.date }}</p>
-          <p>{{ post.message }}</p>
-        </div>
+<div id="OneArticle" class="flex">
+  <div id="article">
+     <div id="image" class="flex-around">
+        <img src="../../public/image/{{post.postId}}.jpg" id="image"/>
       </div>
-    </div>
-  </article>
+    <article class="">
+       
+          <div class="">
+            <h1>{{ post.title }}</h1>
+          </div>
+          <div class="">
+            <p>{{ post.date }}</p>
+          </div>
+          <div class="">
+            <p>{{ post.message }}</p>
+          </div>
+
+    </article>
+  </div>
   <div id="comment">
+    <h2 id="comment-title">Vos commentaires</h2>
     {% if comments is not empty %}
       {% for comment in comments %}
-       
         <div class="comment">
-           <p>{{ comment.comment }}</p>
-      </div>
+          <p>{{ comment.comment }}</p>
+        </div>
        {% endfor %}
     {% else %}
       <p>No comment available.</p>
     {% endif %}
   </div>
-
+</div>
 {% endblock %}
   

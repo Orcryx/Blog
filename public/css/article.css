@@ -1,16 +1,64 @@
-/* article{
+
+article{
     width: 100%;
     height: auto;
-} */
+} 
+
+h1, h2, h3, h4, h5, h6{
+    color: var(--colorTextDark);
+}
+
+
+img{
+    width: 100%;
+    height: 400px;
+
+    object-fit: cover;
+    /* border: 2px solid yellow; */
+}
+
 
 /* LES ID */
-/* #article-img{
-    height: 100px;
-} */
+#OneArticle{
+    height: 100%;
 
+    overflow: hidden;
+    /* border: 3px solid pink; */
+}
+
+#article, #comment{
+    height: 100%;
+
+    padding: 0.5rem;
+
+    overflow-y: scroll;
+
+    text-align: justify;
+    color: var(--colorTextDark);
+}
+
+#comment-title{
+    margin-bottom: 20px;
+}
 /* LES CLASS */
 
-/* .article{
+.article{
     width: 100%;
-     max-height: 430px; 
-} */
+    max-height: 430px; 
+}
+
+.comment{
+    padding: 0.8rem;
+    margin-bottom: 5px;
+
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+}
+.comment:nth-child(even) 
+{
+    background-color: var(--backgroundTransparent); 
+    color: var(--colorText); 
+} 
+
+
+
+/* OTHERS */
