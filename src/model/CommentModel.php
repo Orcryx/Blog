@@ -38,7 +38,7 @@ class CommentModel{
                 $comment['comment'],
                 $comment['postId'],
                 $comment['name'],
-                $comment['firstName']
+                $comment['firstName'],
             );
         }
         return  $commentModels;

@@ -5,13 +5,22 @@
   <link rel="stylesheet" href="../../public/css/article.css"/>
 {% endblock %}
 
+{% block js %}
+  <script src="../../js/display.js" crossorigin="anonymous"></script>
+{% endblock %}
+
 {% block nav %}
   {% include 'navigation_include.twig' %}
 {% endblock %}
 
+ {% block dialogue %}
+  <div id="dialogue">
+    {% include 'formComment.twig' %}
+  </div>
+ {% endblock %}
+
 {% block content %}
 
-  {#{{dump(comments[0])}}#}
 <div id="OneArticle" class="flex">
   <div id="article">
      <div id="image" class="flex-around">
@@ -31,12 +40,13 @@
 
     </article>
   </div>
-  <div id="comment">
+  <div id="comment-zone">
     <h2 id="comment-title">Vos commentaires</h2>
+    <button id="commentAdd-btn" class="center-yz" type="button" onclick="showDialogue()">Ajouter un commentaire <i class="fa-solid fa-comment-medical"></i></button>
     {% if comments is not empty %}
       {% for comment in comments %}
         <div class="comment">
-          <!-- <p></p> -->
+          <p>{{comment.firstName}} {{comment.userName}}</p>
           <p>{{ comment.comment }}</p>
         </div>
        {% endfor %}

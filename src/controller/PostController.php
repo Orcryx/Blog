@@ -33,7 +33,6 @@ class PostController
      {
         $articleModel =  $this->postManager->getOne($postId);
         $commentModels = $this->commentManager->getCommentByPost($articleModel->getPostId());
-        // var_dump($commentModels);
         echo $this->twigService->twigEnvironnement->render('post.twig',['post' => $articleModel, "comments"=>$commentModels]);
 
      }

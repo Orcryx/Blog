@@ -24,6 +24,8 @@ class RouterService
     public function run(string $uri)
     {
         $path = explode('?', $uri)[0];
+        $isMethodPost = $_SERVER['REQUEST_METHOD'] === 'POST';
+        $isMethodGet = $_SERVER['REQUEST_METHOD'] === 'GET';
 
         // Récupérer l'ID de l'URL s'il est présent
         $queryString = explode('?', $uri)[1] ?? ''; // Obtenir la partie de la chaîne après le '?'
@@ -46,7 +48,11 @@ class RouterService
             
                 if ($id !==null) {
                     //echo "ID de la page .$id";
-                    $blogController->displayOnePost($id);  
+                    $blogController->displayOnePost($id); 
+                    if ($isMethodPost) {
+                        # code...
+                        echo "je suis une requête Post";
+                    }
            
                 }  else {
                    
