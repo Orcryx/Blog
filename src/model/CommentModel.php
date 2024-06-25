@@ -6,19 +6,21 @@ class CommentModel{
     private int $commentId;
     private string $comment;
    // private bool $isValidated;
-    private int $userId;
+    // private int $userId;
     private int $postId;
+    private string $userName;
+    private string $firstName;
 
 
     // bool $isValidated
-    public function __construct(int $commentId, string $comment, int $userId, int $postId)
+    public function __construct(int $commentId, string $comment, int $postId, string $userName, string $firstName)
     {
        
         $this->commentId = $commentId;
         $this->comment = $comment;
-       // $this->isValidated = $isValidated;
-        $this->userId = $userId;
         $this->postId = $postId;
+        $this->userName = $userName;
+        $this->firstName = $firstName;
     }
 
 
@@ -34,8 +36,9 @@ class CommentModel{
             $commentModels[] = new self(
                 $comment['commentId'],
                 $comment['comment'],
-                $comment['userId'],
                 $comment['postId'],
+                $comment['name'],
+                $comment['firstName']
             );
         }
         return  $commentModels;
@@ -50,15 +53,15 @@ class CommentModel{
         return $this->comment;
     }
 
-    // public function getIsValidated(): bool {
-    //     return $this->isValidated;
-    // }
-
-    public function getUserId(): int {
-        return $this->userId;
-    }
-
     public function getPostId(): int {
         return $this->postId;
+    }
+
+    public function getUserName(): string {
+        return $this->userName;
+    }
+
+    public function getfirstName(): string {
+        return $this->firstName;
     }
 }

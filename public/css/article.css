@@ -27,6 +27,7 @@ img{
 }
 
 #article, #comment{
+ 
     height: 100%;
 
     padding: 0.5rem;
@@ -36,10 +37,26 @@ img{
     text-align: justify;
     color: var(--colorTextDark);
 }
-
+#article{
+    flex: 2;
+}
+#comment{
+    flex: 1;
+}
 #comment-title{
     margin-bottom: 20px;
 }
+#article-contain{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  margin-right: auto;
+  margin-left: auto;
+
+  width: 95%;
+}
+
 /* LES CLASS */
 
 .article{

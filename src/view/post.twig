@@ -17,7 +17,7 @@
      <div id="image" class="flex-around">
         <img src="../../public/image/{{post.postId}}.jpg" id="image"/>
       </div>
-    <article class="">
+    <article id="article-contain">
        
           <div class="">
             <h1>{{ post.title }}</h1>
@@ -25,7 +25,7 @@
           <div class="">
             <p>{{ post.date }}</p>
           </div>
-          <div class="">
+          <div class="article-message flex-center">
             <p>{{ post.message }}</p>
           </div>
 
@@ -36,6 +36,7 @@
     {% if comments is not empty %}
       {% for comment in comments %}
         <div class="comment">
+          <!-- <p></p> -->
           <p>{{ comment.comment }}</p>
         </div>
        {% endfor %}
