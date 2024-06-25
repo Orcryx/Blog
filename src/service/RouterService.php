@@ -50,8 +50,9 @@ class RouterService
                     //echo "ID de la page .$id";
                     $blogController->displayOnePost($id); 
                     if ($isMethodPost) {
-                        # code...
-                        echo "je suis une requête Post";
+
+                        $commentRepo = new PostRepository($dataBD);
+                        $commentController->createComment();
                     }
            
                 }  else {

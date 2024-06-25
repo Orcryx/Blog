@@ -21,5 +21,10 @@ class CommentRepository {
     }
 
 
+    public function createCommentByPostId(string $comment, bool $isValidated, int $userId, int $postId):array{
+    
+        $newcomment = $this->databaseService->prepareAndExecute('INSERT INTO comment (comment, isValidated, userId, postId) VALUES (:comment, :isValidated, :userId, :postId)', ['comment' => $comment, 'isValidated' => $isValidated, 'userId' => $userId,'postId' => $postId]);
+        return $newcomment ;
+    }
 
 }  
