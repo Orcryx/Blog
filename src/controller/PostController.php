@@ -1,23 +1,39 @@
 <?php
-
 namespace App\controller;
-
 use App\service\TwigService;
+use App\manager\PostManager;
+// use App\model\PostModel;
+
 
 class PostController
 {
-private TwigService $twigService;
-
-//constructeur de la class 
-public function __construct()
-{
-    $this->twigService = new TwigService();
-}
 
 
-public function displayPost()
-{ 
- 
-    return $this->twigService->twigEnvironnement->render('post.twig',['posts' => $posts]);
-}
+    private TwigService $twigService;
+    private PostManager $postManager;
+
+    //constructeur de la class 
+    public function __construct(PostManager $postManager)
+    {
+        $this->twigService = new TwigService();
+        $this->postManager = $postManager;
+    }
+
+    public function displayGallery()
+    {
+        /**@var PostModel[] $posts */
+        $posts = $this->postManager->getAll();
+        echo $this->twigService->twigEnvironnement->render('gallery.twig',['posts' => $posts]);
+
+    }
+
+    public function displayOnePost(int $id)
+     {
+        /**@var ArticleModel[] $post */
+        $post =  $this->postManager->getOne($id);
+        echo $this->twigService->twigEnvironnement->render('post.twig',['post' => $post]);
+
+     }
+
+
 }
