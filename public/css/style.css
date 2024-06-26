@@ -94,7 +94,7 @@ position: relative;
 
 /* LES ID */
 
-#dialogue
+#dialogue, #auth
 {
     position: absolute;
     z-index: 9;

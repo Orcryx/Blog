@@ -21,39 +21,42 @@
 
 {% block content %}
 
-<div id="OneArticle" class="flex">
-  <div id="article">
-     <div id="image" class="flex-around">
-        <img src="../../public/image/{{post.postId}}.jpg" id="image"/>
-      </div>
-    <article id="article-contain">
-       
-          <div class="">
-            <h1>{{ post.title }}</h1>
-          </div>
-          <div class="">
-            <p>{{ post.date }}</p>
-          </div>
-          <div class="article-message flex-center">
-            <p>{{ post.message }}</p>
-          </div>
-
-    </article>
-  </div>
-  <div id="comment-zone">
-    <h2 id="comment-title">Vos commentaires</h2>
-    <button id="commentAdd-btn" class="center-yz" type="button" onclick="showDialogue()">Ajouter un commentaire <i class="fa-solid fa-comment-medical"></i></button>
-    {% if comments is not empty %}
-      {% for comment in comments %}
-        <div class="comment">
-          <p>{{comment.firstName}} {{comment.userName}}</p>
-          <p>{{ comment.comment }}</p>
+  <div id="OneArticle" class="flex">
+    <div id="article">
+      <div id="image" class="flex-around">
+          <img src="../../public/image/{{post.postId}}.jpg" id="image"/>
         </div>
-       {% endfor %}
-    {% else %}
-      <p>No comment available.</p>
-    {% endif %}
+      <article id="article-contain">
+        
+            <div class="">
+              <h1>{{ post.title }}</h1>
+            </div>
+            <div class="">
+              <p>{{ post.date }}</p>
+            </div>
+            <div class="article-message flex-center">
+              <p>{{ post.message }}</p>
+            </div>
+
+      </article>
+    </div>
+    <div id="comment-zone">
+      <h2 id="comment-title">Vos commentaires</h2>
+      <button id="commentAdd-btn" class="center-yz" type="button" onclick="showDialogue()">Ajouter un commentaire <i class="fa-solid fa-comment-medical"></i></button>
+      {% if comments is not empty %}
+        {% for comment in comments %}
+          <div class="comment">
+            <p>{{comment.nickname}}</p>
+            <p>{{ comment.comment }}</p>
+          </div>
+        {% endfor %}
+      {% else %}
+        <p>No comment available.</p>
+      {% endif %}
+    </div>
   </div>
-</div>
+
+  {% include 'footer_include.twig' %}
+
 {% endblock %}
-  
+

@@ -12,13 +12,18 @@
             <link rel="stylesheet" href="../../public/css/style.css"/>
             {% block css %}{% endblock %}
 
-            <script src="https://kit.fontawesome.com/1732d22efc.js" crossorigin="anonymous"></script>
+            <script src="../../js/base.js"></script>
+             <script src="https://kit.fontawesome.com/1732d22efc.js" crossorigin="anonymous"></script>
              {% block js %}{% endblock %}
     </head>
     <body>
             {% block nav %}{% endblock %}
-             {% block dialogue %}{% endblock %}
-             
+            {% block dialogue %}{% endblock %}
+            {% block connexion %}
+                <div id="auth">
+                    {% include 'formConnexion.twig' %}
+                </div>
+            {% endblock %}
             <main>
                 {% block content %}{% endblock %}
             </main>

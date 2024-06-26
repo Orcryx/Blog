@@ -49,11 +49,11 @@ class RouterService
                 if ($id !==null) {
                     //echo "ID de la page .$id";
                     $blogController->displayOnePost($id); 
-                    if ($isMethodPost) {
+                    // if ($isMethodPost) {
+                    //     $commentRepo = new PostRepository($dataBD);
 
-                        $commentRepo = new PostRepository($dataBD);
-                        $commentController->createComment();
-                    }
+                    //     $commentController->createComment();
+                    // }
            
                 }  else {
                    
