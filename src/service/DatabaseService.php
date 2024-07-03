@@ -11,8 +11,16 @@ class DatabaseService{
     private string $db_host;
     private ?PDO $pdo = null;
 
-    public function __construct($db_name="blog", $db_user="root", $db_pass="GyA5ShSyTj2paFknmC", $db_host="web-lame.home" )
+    public function __construct($db_name=null, $db_user=null, $db_pass=null, $db_host=null )
     {
+
+        // vérifier si les variables ont une valeur sinon donner cette d'environnement
+
+        $db_name = $db_name ?? $_ENV["DB_NAME"];
+        $db_user = $db_user ?? $_ENV["DB_USER"];
+        $db_pass = $db_pass ?? $_ENV["DB_PASS"];
+        $db_host = $db_host ?? $_ENV["DB_HOST"];
+
         //relier les variables de la class aux valeurs passées en paramètre 
         $this->db_name = $db_name;
         $this->db_user = $db_user;

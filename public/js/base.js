@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     let div = document.getElementById('auth');
     div.style.display = 'none';   
+    initLinkDivToggle();
 });
 
 function showAuth(){
@@ -14,4 +15,11 @@ function showAuth(){
 function hideAuth(){
     let div = document.getElementById('auth');
     div.style.display = 'none';  
+}
+
+
+function initLinkDivToggle() {
+    // Sélectionne tous les liens et toutes les divs
+  
+
 }

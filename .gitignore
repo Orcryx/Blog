@@ -11,3 +11,6 @@ public/asset/pdf.pdf
 #Autre
 public/.htaccess
 .github
+
+#variables
+.env
