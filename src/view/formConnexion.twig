@@ -1,27 +1,54 @@
 <form method="POST" action="/">
-    <div id="zoneXmark" class="center-yz">
+    <div id="zoneXmark" class="zoneXmark">
         <i class="fa-solid fa-xmark" onclick="hideAuth()"></i>
     </div>
-            <div id="comment-user" class="flex">
-                <div>
-                    <label for="name">Nom:</label>
-                    <input type="text" id="name" name="name" />
-                </div>
-                <div>
-                    <label for="firstName">Prénom:</label>
-                    <input type="text" id="firstName" name="firstName" />
-                </div>
-                <div>
-                    <label for="nickname">Pseudo:</label>
-                    <input type="text" id="nickname" name="nickname" />
-                </div>
-                <div>
-                    <label for="email">Mail:</label>
-                    <input type="email" id="firstName" name="firstName" />
-                </div>
-              
-            </div>
-           
-        <button id="comment-btn" type="submit">Créer un compte</button>
+       <div id='userAuthentication'>
+         <div id="signIn" data-id="singIn" class="">
+                <div id="connec-auth" class="flex-column">
+                    <div>
+                        <label for="nickname">Pseudo:</label>
+                        <input type="text" id="nickname" name="nickname" />
+                    </div>
+                    <div>
+                        <label for="email">Mail:</label>
+                        <input type="email" id="firstName" name="firstName" />
+                    </div>
+                    <div>
+                        <label for="password">Mot de passe:</label>
+                        <input type="password" id="password" name="password" />
+                    </div>
 
+                </div>
+            <button id="connec-btn" type="submit">Se connecter</button>
+            <p class="signIn" data-id="singUp">Vous n'avez pas de compte ?<a class="linkSign"> S'inscrire</a></p>
+        </div>
+         <div id="singUp"  data-id="singUp" class="hidden">
+                <div id="connec-creation" class="flex-column">
+                    <div>
+                        <label for="name">Nom:</label>
+                        <input type="text" id="name" name="name" />
+                    </div>
+                    <div>
+                        <label for="firstName">Prénom:</label>
+                        <input type="text" id="firstName" name="firstName" />
+                    </div>
+                    <div>
+                        <label for="nickname">Pseudo:</label>
+                        <input type="text" id="nickname" name="nickname" />
+                    </div>
+                    <div>
+                        <label for="email">Mail:</label>
+                        <input type="email" id="firstName" name="firstName" />
+                    </div>
+                   <div>
+                        <label for="password">Mot de passe:</label>
+                        <input type="password" id="password" name="password" />
+                    </div>
+                </div>
+            
+            <button id="connec-btn" type="submit">Créer un compte</button>
+             <p class="signIn" data-id="singIn">Vous avez déjà un compte ?<a class="linkSign"> Se connecter</a></p>
+        </div>
+    </div>
 </form>
+
