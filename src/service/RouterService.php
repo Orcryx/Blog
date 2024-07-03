@@ -5,6 +5,10 @@ namespace App\service;
 use App\controller\PostController;
 use App\manager\PostManager;
 use App\repository\PostRepository;
+
+use App\controller\CommentController;
+use App\manager\CommentManager;
+use App\repository\CommentRepository;
 use App\service\DatabaseService;
 
 class RouterService
@@ -20,6 +24,8 @@ class RouterService
     public function run(string $uri)
     {
         $path = explode('?', $uri)[0];
+        $isMethodPost = $_SERVER['REQUEST_METHOD'] === 'POST';
+        $isMethodGet = $_SERVER['REQUEST_METHOD'] === 'GET';
 
         // Récupérer l'ID de l'URL s'il est présent
         $queryString = explode('?', $uri)[1] ?? ''; // Obtenir la partie de la chaîne après le '?'
@@ -35,11 +41,20 @@ class RouterService
             case '/blog':
                 $dataBD = new DatabaseService();
                 $postRepo = new PostRepository($dataBD);
-                $postManager = new PostManager($postRepo); 
-                $blogController = new PostController($postManager);
+                $postManager = new PostManager($postRepo);
+                $commentRepo = new CommentRepository($dataBD);
+                $commentManager = new CommentManager($commentRepo);  
+                $blogController = new PostController($postManager, $commentManager );
+            
                 if ($id !==null) {
-                    # code...
-                    $blogController->displayOnePost($id);  
+                    //echo "ID de la page .$id";
+                    $blogController->displayOnePost($id); 
+                    // if ($isMethodPost) {
+                    //     $commentRepo = new PostRepository($dataBD);
+
+                    //     $commentController->createComment();
+                    // }
+           
                 }  else {
                    
                     $blogController->displayGallery();  

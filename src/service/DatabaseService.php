@@ -40,7 +40,7 @@ class DatabaseService{
 
     }
 
-    public function prepareAndExecute($statement, $params)
+    public function prepareAndExecute(string $statement, array $params): array
     {
         $stmt = $this->getPDO()->prepare($statement);
         $stmt->execute($params);

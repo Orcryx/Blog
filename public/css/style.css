@@ -14,6 +14,7 @@
     --backgroundTransparent: #1c2026c9;
     --backgroundWhite : #fefefe;
     --colorIcon : #4e607b;
+    --colorTextDark :#1c2026; ;
     --colorText: #ffffff; 
     --colorExtra :#514355; 
     --colorAlert: #9c544f;
@@ -47,6 +48,10 @@ a{
     text-decoration: none;
 }
 
+main
+{
+position: relative;
+}
 
 /* FLEX BOX */
 
@@ -89,7 +94,31 @@ a{
 
 /* LES ID */
 
+#dialogue, #auth
+{
+    position: absolute;
+    z-index: 9;
+    display: block;
+
+    background-color: var(--backgroundWhite);
+    color: var(--colorTextDark);
+
+    padding: 20px;
+
+    border: 1px solid white;
+    
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+
+}
+
+#zoneXmark
+{
+    justify-content: flex-end;
+    margin-bottom: 10px;
+}
+
 /* LES CLASS */
+
 .button-blog{
     width: 100px;
 

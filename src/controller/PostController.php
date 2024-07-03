@@ -1,8 +1,10 @@
 <?php
 namespace App\controller;
+
+use App\manager\CommentManager;
 use App\service\TwigService;
 use App\manager\PostManager;
-// use App\model\PostModel;
+
 
 
 class PostController
@@ -10,13 +12,13 @@ class PostController
 
 
     private TwigService $twigService;
-    private PostManager $postManager;
+ 
+
 
     //constructeur de la class 
-    public function __construct(PostManager $postManager)
+    public function __construct(private readonly PostManager $postManager, private readonly CommentManager $commentManager)
     {
         $this->twigService = new TwigService();
-        $this->postManager = $postManager;
     }
 
     public function displayGallery()
@@ -27,13 +29,16 @@ class PostController
 
     }
 
-    public function displayOnePost(int $id)
+    public function displayOnePost(int $postId)
      {
-        /**@var ArticleModel[] $post */
-        $post =  $this->postManager->getOne($id);
-        echo $this->twigService->twigEnvironnement->render('post.twig',['post' => $post]);
+        $articleModel =  $this->postManager->getOne($postId);
+        $commentModels = $this->commentManager->getCommentByPost($articleModel->getPostId());
+        echo $this->twigService->twigEnvironnement->render('post.twig',['post' => $articleModel, "comments"=>$commentModels]);
 
      }
 
+
+
+  
 
 }

@@ -34,7 +34,7 @@ class PostModel{
         foreach ($postEntities as $postEntity) 
         {
             // Construction de la date au format français
-            $createdAt = date("d/m/Y H:i:s", strtotime($postEntity['createAt']));
+            $createdAt = date("d/m/Y", strtotime($postEntity['createAt']));
             
             // Récupération des 20 premières lignes du contenu (chapo)
         

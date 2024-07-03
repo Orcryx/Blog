@@ -20,21 +20,15 @@ class ArticleModel{
         $this->date = $date;
     }
 
-
-    //Créer un post avec les donnnées de la BD et des données construites
-     /**
-     * @return ArticleModel[]
-    */
     //TODO : créer une fonction createFromEntity(array $postEntity) qui retourn un ArticleModel!
     
-    public static function createFromEntity(array $postEntity): array {
-        $postModel = [];
+    public static function createFromEntity(array $postEntity): ArticleModel {
      
         // Construction de la date au format français
         $date = date("d/m/Y", strtotime($postEntity['createAt']));
         
         // Ajouter l'instance de la classe au tableau $postModel
-        $postModel[] = new self(
+        $postModel = new self(
             $postEntity['postId'],
             $postEntity['title'],
             $postEntity['message'],

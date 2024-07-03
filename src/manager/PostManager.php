@@ -23,12 +23,12 @@ class PostManager {
         return $postsModel;
     }
 
-    public function getOne(int $id): array {
+    public function getOne(int $id): ArticleModel {
         $postEntity = $this->postRepository->getOnePost($id);
-       // var_dump($postEntity );
-        $postModel = ArticleModel::createFromEntity($postEntity);
-       // var_dump( $postModel);
-        return $postModel;
+        //var_dump($postEntity );
+        $articleModel = ArticleModel::createFromEntity($postEntity);
+        //var_dump( $postModel);
+        return $articleModel;
     }
 
 }
