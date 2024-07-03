@@ -13,4 +13,5 @@ public/.htaccess
 .github
 
 #variables
-.env
+.env.dev
+.env.local

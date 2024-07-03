@@ -10,6 +10,8 @@ use App\controller\CommentController;
 use App\manager\CommentManager;
 use App\repository\CommentRepository;
 use App\service\DatabaseService;
+use App\service\UserService;
+use App\repository\UserRepository;
 
 class RouterService
 {
@@ -23,9 +25,19 @@ class RouterService
 
     public function run(string $uri)
     {
+        
         $path = explode('?', $uri)[0];
         $isMethodPost = $_SERVER['REQUEST_METHOD'] === 'POST';
-        $isMethodGet = $_SERVER['REQUEST_METHOD'] === 'GET';
+        if(isset($isMethodPost) && isset($_POST['email']))
+                {
+                    echo "je suis une requête POST";
+                    var_dump($_POST['email']);
+                    $dataBD = new DatabaseService();
+                    $userRepo = new UserRepository($dataBD);
+                    $userService = new UserService($userRepo);
+                    $userService-> logIn();
+                }
+        //$isMethodGet = $_SERVER['REQUEST_METHOD'] === 'GET';
 
         // Récupérer l'ID de l'URL s'il est présent
         $queryString = explode('?', $uri)[1] ?? ''; // Obtenir la partie de la chaîne après le '?'
