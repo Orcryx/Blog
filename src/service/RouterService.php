@@ -25,17 +25,15 @@ class RouterService
 
     public function run(string $uri)
     {
-        
         $path = explode('?', $uri)[0];
         $isMethodPost = $_SERVER['REQUEST_METHOD'] === 'POST';
         if(isset($isMethodPost) && isset($_POST['email']))
                 {
-                    echo "je suis une requête POST";
-                    var_dump($_POST['email']);
+                    $environnement = $_SERVER["REQUEST_URI"];
                     $dataBD = new DatabaseService();
                     $userRepo = new UserRepository($dataBD);
                     $userService = new UserService($userRepo);
-                    $userService-> logIn();
+                    $userService-> logIn($environnement);
                 }
         //$isMethodGet = $_SERVER['REQUEST_METHOD'] === 'GET';
 
