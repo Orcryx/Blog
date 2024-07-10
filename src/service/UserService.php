@@ -21,21 +21,25 @@ class UserService{
         /** @var array|null  $user  **/
         $user = $this->user->getUserByEmail($email); 
         if ($user !== null) {
-            $hashedPassword = password_hash($user[0]["password"], PASSWORD_DEFAULT);
+            $hashedPassword = password_hash($user["password"], PASSWORD_DEFAULT);
             if(password_verify($_POST['password'],  $hashedPassword))
             {
-                echo "reussite !";
+                //echo "reussite !";
                 $_SESSION['status'] = true;
-                $_SESSION['userId'] =$user[0]["userId"];
-                $_SESSION['email'] =$user[0]["email"];
-                $_SESSION['role'] = $user[0]["role"];
-                $_SESSION['nickname'] = $user[0]["nickname"];
+                $_SESSION['userId'] =$user["userId"];
+                $_SESSION['email'] =$user["email"];
+                $_SESSION['role'] = $user["role"];
+                $_SESSION['nickname'] = $user["nickname"];
+                // $_SESSION['user']['id'] =$user["userId"];
+                // $_SESSION['user']['email'] =$user["email"];
+                // $_SESSION['user']['role'] =$user["role"];
+                // $_SESSION['user']['nickname'] =$user["nickname"];
                 $_SESSION['environnement'] = $environnement;
-                //header("Location:".$_SESSION['environnement']);
-       
+                header("Location:".$_SESSION['environnement']);
             }
             else
             {
+                $this->signOut();
                 echo "echec de connexion";
             }
         }else
@@ -45,20 +49,27 @@ class UserService{
      
     }
 
-    // private function isConnected() : void
-    // {
-    //     if (isset($_SESSION['status']) && $_SESSION['status'] === true) {
-    //         header("Location:".$_SESSION['environnement']);
-    //     }
-    // }
+    private function isConnected() : void
+    {
+        if (isset($_SESSION['status']) && $_SESSION['status'] === true) {
+            header("Location:".$_SESSION['environnement']);
+        }
+    }
+
+
+    public function checkSessionExpiration(): void
+{
+    if (isset($_SESSION['start']) && (time() - $_SESSION['start'] > 600)) {
+        // Si durée session >= 10 minutes, détruire la session.
+        session_unset(); 
+        session_destroy();
+    }
+}
 
     public function signOut():void
     {
-        unset($_SESSION['userId']);
-        unset($_SESSION['email']);
-        unset($_SESSION['role']);
-        unset($_SESSION['nickname']);
-        unset($_SESSION['environnement'] );
+        session_unset(); 
+        session_destroy(); 
     }
 
 }
