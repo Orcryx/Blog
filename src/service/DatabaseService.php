@@ -56,7 +56,7 @@ class DatabaseService{
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function prepareAndExecuteOneObject(string $statement, array $params): object
+    public function prepareAndExecuteOneObject(string $statement, array $params): object|false
     {
         $stmt = $this->getPDO()->prepare($statement);
         $stmt->execute($params);

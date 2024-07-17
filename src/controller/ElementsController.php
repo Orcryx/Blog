@@ -21,10 +21,10 @@ class ElementsController
         $this->userService = new UserService();
     }
 
-    public function showLoginDialogue(): void
+    public function showLoginDialogue(string $previous_url)
     {
-
-        echo $this->twigService->twigEnvironnement->render('formConnexion.twig',["session"=>$_SESSION]);
+        $environnement = $this->userService->setEnvironnement($_SESSION['previous_url']);
+        echo $this->twigService->twigEnvironnement->render('formConnexion.twig',["origin"=>$environnement]);
 
     }
 

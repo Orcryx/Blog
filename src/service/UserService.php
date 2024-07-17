@@ -19,9 +19,9 @@ class UserService{
     {
       
         $email = $_POST['email'];
-        /** @var object|null  $user  **/
+        /** @var object|false  $user  **/
         $user = $this->user->getUserByEmail($email); 
-        if ($user !== null) {
+        if ($user !== null && $user !==false) {
             $hashedPassword = password_hash($user->password, PASSWORD_DEFAULT);
             if(password_verify($_POST['password'],  $hashedPassword))
             {
@@ -31,26 +31,22 @@ class UserService{
                 $_SESSION['user']['email'] =$user->email;
                 $_SESSION['user']['role']= $user->role;
                 $_SESSION['user']['nickname'] = $user->nickname;
-                // $_SESSION['environnement'] = $this->getEnvironnement();
-                // header("Location:".$_SESSION['environnement']);
-             
+                var_dump($_SESSION);
             }
             else
             {
                 echo "echec de connexion";
-               $this->signOut();
-        
+                $this->signOut();
+                var_dump($_SESSION);
             }
         }else
         {
             echo "echec de connexion";
         }
-     
     }
 
     public function setEnvironnement($environnement) {
-        $this->environnement = $environnement;
-        echo  $this->environnement;
+       return $this->environnement = $environnement;
     }
 
     public function getEnvironnement() {

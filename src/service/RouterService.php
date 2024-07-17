@@ -81,8 +81,8 @@ class RouterService
                         $_SESSION['previous_url'] = '/blog'; // Page par défaut si HTTP_REFERER n'est pas défini
                        // echo "si il n'y a pas de previous_url" . $_SESSION['previous_url'];
                     }
-                     $userService->setEnvironnement($_SESSION['previous_url']);
-                    return $this->twigService->twigEnvironnement->render('formConnexion.twig');  
+                    $test = new ElementsController;
+                    $test->showLoginDialogue($_SESSION['previous_url']);
                 break;
             case '/contact':
                 return $this->twigService->twigEnvironnement->render('contact_include.twig');
