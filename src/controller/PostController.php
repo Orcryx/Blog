@@ -9,15 +9,10 @@ use App\manager\PostManager;
 class PostController
 {
 
-
-    private TwigService $twigService;
- 
-
-
     //constructeur de la class 
-    public function __construct(private readonly PostManager $postManager, private readonly CommentManager $commentManager)
+    public function __construct(private readonly PostManager $postManager, private readonly CommentManager $commentManager, private readonly TwigService $twigService)
     {
-        $this->twigService = new TwigService();
+
     }
 
     public function displayGallery()

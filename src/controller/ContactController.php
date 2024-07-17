@@ -5,12 +5,10 @@ use App\service\TwigService;
 class ContactController
 {
 
-    private TwigService $twigService;
-
     //constructeur de la class 
-    public function __construct()
+    public function __construct(private readonly TwigService $twigService)
     {
-        $this->twigService = new TwigService();
+     
     }
     
     public function getForm()

@@ -55,7 +55,7 @@ class RouterService
                 $postManager = new PostManager($postRepo);
                 $commentRepo = new CommentRepository($dataBD);
                 $commentManager = new CommentManager($commentRepo);  
-                $blogController = new PostController($postManager, $commentManager );
+                $blogController = new PostController($postManager, $commentManager, $this->twigService );
             
                 if ($id !==null) {
                     //echo "ID de la page .$id";
@@ -73,7 +73,7 @@ class RouterService
                     $_SESSION['previous_url'] = '/blog'; // Page par défaut si HTTP_REFERER n'est pas défini
                     // echo "si il n'y a pas de previous_url" . $_SESSION['previous_url'];
                 }
-                $form = new ElementsController;
+                $form = new ElementsController($this->twigService );
                 $form->showLoginDialogue($_SESSION['previous_url']);
             break;
             case '/contact':

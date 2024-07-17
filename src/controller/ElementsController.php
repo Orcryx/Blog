@@ -6,13 +6,12 @@ use App\service\UserService;
 
 class ElementsController
 {
-    private TwigService $twigService;
     private UserService $userService;
-
+    
     //constructeur de la class 
-    public function __construct()
+    public function __construct(private readonly TwigService $twigService)
     {
-        $this->twigService = new TwigService();
+
         $this->userService = new UserService();
     }
 
