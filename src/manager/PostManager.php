@@ -17,12 +17,12 @@ class PostManager {
     }
 
     public function getAll(): array {
-   
         $postsEntities = $this->postRepository->getPosts();
         $postsModel= PostModel::createFromEntities($postsEntities);
         return $postsModel;
     }
 
+ 
     public function getOne(int $id): ArticleModel {
         $postEntity = $this->postRepository->getOnePost($id);
         //var_dump($postEntity );

@@ -20,8 +20,9 @@ class CommentManager {
      */
     public function getCommentByPost(int $postId): array {
         $commentEntities = $this->commentRepository->getValidatedCommentByPostId($postId);
-        $commentModels = CommentModel::createFromEntities($commentEntities);
-        return $commentModels;
+        //$commentModels = CommentModel::createFromEntities($commentEntities);
+        //return $commentModels;
+        return  $commentEntities;
     }
 
 }

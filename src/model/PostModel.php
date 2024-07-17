@@ -34,23 +34,24 @@ class PostModel{
         foreach ($postEntities as $postEntity) 
         {
             // Construction de la date au format français
-            $createdAt = date("d/m/Y", strtotime($postEntity['createAt']));
+            $createdAt = date("d/m/Y", strtotime($postEntity->createAt));
             
             // Récupération des 20 premières lignes du contenu (chapo)
         
-            $chapo = strlen($postEntity['message']) > 100 ? substr($postEntity['message'], 0, 100) . '...' : $postEntity['message'];
+            $chapo = strlen($postEntity->message) > 100 ? substr($postEntity->message, 0, 100) . '...' : $postEntity->message;
 
            $postModels[] = new self(
-                $postEntity['postId'],
-                $postEntity['title'],
-                $postEntity['message'],
+                $postEntity->postId,
+                $postEntity->title,
+                $postEntity->message,
                 $chapo,
-                $postEntity['userId'],
+                $postEntity->userId,
                 $createdAt
             );
         }
         return $postModels;
     }
+
     
     // Getters
     public function getPostId(): int {

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\service;
 use App\repository\UserRepository;
+use App\model\UserSessionModel;
 
 class UserService{
 
@@ -31,6 +32,9 @@ class UserService{
                 $_SESSION['user']['email'] =$user->email;
                 $_SESSION['user']['role']= $user->role;
                 $_SESSION['user']['nickname'] = $user->nickname;
+                
+                $_SESSION['user2'] = new UserSessionModel($user->userId,$user->email,$user->role, $user->nickname);
+                //var_dump($_SESSION['user2']->userId);
             }
             else
             {
@@ -63,6 +67,11 @@ class UserService{
         // Si durée session >= 10 minutes, détruire la session.
         $this->logOut();
     }
+    }
+
+    public function register() : void
+    {
+        
     }
 
     public function logOut():void

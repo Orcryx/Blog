@@ -19,7 +19,7 @@ class UserRepository{
      */
     public function getUserByEmail(string $email) : object|false
     {
-        $user = $this->databaseService->prepareAndExecuteOneObject('SELECT * FROM user WHERE email = :email' , ['email' => $email] );
+        $user = $this->databaseService->prepareAndExecuteOne('SELECT * FROM user WHERE email = :email' , ['email' => $email] );
         return $user;
     }
 }

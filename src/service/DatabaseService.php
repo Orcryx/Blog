@@ -35,28 +35,22 @@ class DatabaseService{
     public function query($statement){
         //on a besoin de récupérer PDO
         $req = $this->getPDO()->query($statement);
-        $data = $req->fetchAll(PDO::FETCH_ASSOC);
+        $data = $req->fetchAll(PDO::FETCH_OBJ);
+        //var_dump($data);
         return $data;
 
     }
+
 
     public function prepareAndExecute(string $statement, array $params): array
     {
         $stmt = $this->getPDO()->prepare($statement);
         $stmt->execute($params);
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
 
 
-    
-    public function prepareAndExecuteOne(string $statement, array $params): array
-    {
-        $stmt = $this->getPDO()->prepare($statement);
-        $stmt->execute($params);
-        return $stmt->fetch(PDO::FETCH_ASSOC);
-    }
-
-    public function prepareAndExecuteOneObject(string $statement, array $params): object|false
+    public function prepareAndExecuteOne(string $statement, array $params): object|false
     {
         $stmt = $this->getPDO()->prepare($statement);
         $stmt->execute($params);

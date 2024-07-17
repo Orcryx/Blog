@@ -2,6 +2,7 @@
 
 namespace App\model;
 
+
 class UserModel{
     public int $userId;
     public string $name;
@@ -11,4 +12,9 @@ class UserModel{
     public string $password;
     public bool $isValidated;
     public string $nickname;
+
+    // public function isOwer()
+    // {
+
+    // }
 }

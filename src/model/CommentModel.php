@@ -5,8 +5,6 @@ use App\manager\CommentManager;
 class CommentModel{
     private int $commentId;
     private string $comment;
-   // private bool $isValidated;
-    // private int $userId;
     private int $postId;
     private string $nickname;
 
@@ -23,23 +21,23 @@ class CommentModel{
 
 
     //Créer un post avec les donnnées de la BD et des données construites
-     /**
-     * @return CommentModel[]
-    */
-    public static function createFromEntities(array $commentEntities): array {
-        $commentModels=[];
+    //  /**
+    //  * @return CommentModel[]
+    // */
+    // public static function createFromEntities(array $commentEntities): array {
+    //     $commentModels=[];
 
-        foreach ($commentEntities as $comment) {
-            # code...
-            $commentModels[] = new self(
-                $comment['commentId'],
-                $comment['comment'],
-                $comment['postId'],
-                $comment['nickname'],
-            );
-        }
-        return  $commentModels;
-    }
+    //     foreach ($commentEntities as $comment) {
+    //         # code...
+    //         $commentModels[] = new self(
+    //             $comment->commentId,
+    //             $comment->comment,
+    //             $comment->postId,
+    //             $comment->nickname,
+    //         );
+    //     }
+    //     return  $commentModels;
+    // }
     
     // Getters
     public function getCommentId(): int {
