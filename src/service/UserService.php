@@ -43,17 +43,19 @@ class UserService{
         }
     }
 
-    public function getEnvironnement($environnement) {
+    public function getEnvironnement($environnement) 
+    {
        return $this->environnement = $environnement;
     }
 
-    
-    // private function isConnected() : void
-    // {
-    //     if (isset($_SESSION['status']) && $_SESSION['status'] === true) {
-    //         header("Location:".$this->getEnvironnement());
-    //     }
-    // }
+    private function isConnected() : bool
+    {
+        if (isset($_SESSION['status']) && $_SESSION['status'] === true) {
+            return true;
+        }else{
+            return false;
+        }
+    }
 
     public function checkSessionExpiration(): void
     {
