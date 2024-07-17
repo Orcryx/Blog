@@ -35,7 +35,7 @@ class UserService{
             else
             {
                //echo "echec de connexion";
-                $this->signOut();
+                $this->logOut();
             }
         }else
         {
@@ -59,11 +59,11 @@ class UserService{
     {
     if (isset($_SESSION['start']) && (time() - $_SESSION['start'] > 600)) {
         // Si durée session >= 10 minutes, détruire la session.
-        $this->signOut();
+        $this->logOut();
     }
     }
 
-    public function signOut():void
+    public function logOut():void
     {
         session_unset(); 
         session_destroy(); 

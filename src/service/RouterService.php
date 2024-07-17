@@ -65,17 +65,17 @@ class RouterService
                     $blogController->displayGallery();  
                 }   
             break;
-             case '/auth':
-                    if (isset($_SERVER['HTTP_REFERER'])) {
-                        $_SESSION['previous_url'] = $_SERVER['HTTP_REFERER'];
-                       // echo "si création de previous_url" .$_SESSION['previous_url'];
-                    } else {
-                        $_SESSION['previous_url'] = '/blog'; // Page par défaut si HTTP_REFERER n'est pas défini
-                       // echo "si il n'y a pas de previous_url" . $_SESSION['previous_url'];
-                    }
-                    $form = new ElementsController;
-                    $form->showLoginDialogue($_SESSION['previous_url']);
-                break;
+            case '/auth':
+                if (isset($_SERVER['HTTP_REFERER'])) {
+                    $_SESSION['previous_url'] = $_SERVER['HTTP_REFERER'];
+                    // echo "si création de previous_url" .$_SESSION['previous_url'];
+                } else {
+                    $_SESSION['previous_url'] = '/blog'; // Page par défaut si HTTP_REFERER n'est pas défini
+                    // echo "si il n'y a pas de previous_url" . $_SESSION['previous_url'];
+                }
+                $form = new ElementsController;
+                $form->showLoginDialogue($_SESSION['previous_url']);
+            break;
             case '/contact':
                 return $this->twigService->render('contact_include.twig');
             break;

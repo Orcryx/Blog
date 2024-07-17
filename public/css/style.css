@@ -190,6 +190,10 @@ padding: 10px;
 
 /* LES CLASS */
 
+.userConnected{
+    color: var(--colorText);
+}
+
 .button-blog{
     width: 100px;
 
