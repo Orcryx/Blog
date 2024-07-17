@@ -9,6 +9,7 @@ class UserService{
 
     private UserRepository $user;
     private $environnement;
+    private $session;
 
     public function __construct()
     {
@@ -17,7 +18,6 @@ class UserService{
 
     public function logIn(): void
     {
-      
         $email = $_POST['email'];
         /** @var object|false  $user  **/
         $user = $this->user->getUserByEmail($email); 
@@ -25,19 +25,17 @@ class UserService{
             $hashedPassword = password_hash($user->password, PASSWORD_DEFAULT);
             if(password_verify($_POST['password'],  $hashedPassword))
             {
-                echo "reussite !";
+                //echo "reussite !";
                 $_SESSION['status'] = true;
                 $_SESSION['user']['id'] =$user->userId;
                 $_SESSION['user']['email'] =$user->email;
                 $_SESSION['user']['role']= $user->role;
                 $_SESSION['user']['nickname'] = $user->nickname;
-                var_dump($_SESSION);
             }
             else
             {
-                echo "echec de connexion";
+               //echo "echec de connexion";
                 $this->signOut();
-                var_dump($_SESSION);
             }
         }else
         {
@@ -45,30 +43,25 @@ class UserService{
         }
     }
 
-    public function setEnvironnement($environnement) {
+    public function getEnvironnement($environnement) {
        return $this->environnement = $environnement;
     }
 
-    public function getEnvironnement() {
-        return $this->environnement;
-    }
-
-    private function isConnected() : void
-    {
-        if (isset($_SESSION['status']) && $_SESSION['status'] === true) {
-            header("Location:".$this->getEnvironnement());
-        }
-    }
-
+    
+    // private function isConnected() : void
+    // {
+    //     if (isset($_SESSION['status']) && $_SESSION['status'] === true) {
+    //         header("Location:".$this->getEnvironnement());
+    //     }
+    // }
 
     public function checkSessionExpiration(): void
-{
+    {
     if (isset($_SESSION['start']) && (time() - $_SESSION['start'] > 600)) {
         // Si durée session >= 10 minutes, détruire la session.
-        session_unset(); 
-        session_destroy();
+        $this->signOut();
     }
-}
+    }
 
     public function signOut():void
     {
@@ -77,8 +70,3 @@ class UserService{
     }
 
 }
-
-          // $_SESSION['user']['id'] =$user["userId"];
-                // $_SESSION['user']['email'] =$user["email"];
-                // $_SESSION['user']['role'] =$user["role"];
-                // $_SESSION['user']['nickname'] =$user["nickname"];

@@ -27,18 +27,16 @@ class RouterService
     public function run(string $uri)
     {
         $path = explode('?', $uri)[0];
-         //$environnement = $_SERVER["REQUEST_URI"];
-         $dataBD = new DatabaseService();
-         $userRepo = new UserRepository($dataBD);
-         $userService = new UserService($userRepo);
+        //$environnement = $_SERVER["REQUEST_URI"];
+        $dataBD = new DatabaseService();
+        $userRepo = new UserRepository($dataBD);
+        $userService = new UserService($userRepo);
        
         $isMethodPost = $_SERVER['REQUEST_METHOD'] === 'POST';
-        if(isset($isMethodPost) && isset($_POST['email']))
-                {
-                   
-                    $userService-> logIn();
-                }
-        //$isMethodGet = $_SERVER['REQUEST_METHOD'] === 'GET';
+        if(isset($isMethodPost) && isset($_POST['email']) && isset($_POST['password']))
+        {
+            $userService-> logIn();
+        }
 
         // Récupérer l'ID de l'URL s'il est présent
         $queryString = explode('?', $uri)[1] ?? ''; // Obtenir la partie de la chaîne après le '?'
@@ -48,7 +46,7 @@ class RouterService
         switch ($path) 
         {
             case '/':
-                return $this->twigService->twigEnvironnement->render('index.twig');
+                return $this->twigService->render('index.twig');
             break;
 
             case '/blog':
@@ -62,12 +60,6 @@ class RouterService
                 if ($id !==null) {
                     //echo "ID de la page .$id";
                     $blogController->displayOnePost($id); 
-                    // if ($isMethodPost) {
-                    //     $commentRepo = new PostRepository($dataBD);
-
-                    //     $commentController->createComment();
-                    // }
-           
                 }  else {
                    
                     $blogController->displayGallery();  
@@ -81,18 +73,21 @@ class RouterService
                         $_SESSION['previous_url'] = '/blog'; // Page par défaut si HTTP_REFERER n'est pas défini
                        // echo "si il n'y a pas de previous_url" . $_SESSION['previous_url'];
                     }
-                    $test = new ElementsController;
-                    $test->showLoginDialogue($_SESSION['previous_url']);
+                    $form = new ElementsController;
+                    $form->showLoginDialogue($_SESSION['previous_url']);
                 break;
             case '/contact':
-                return $this->twigService->twigEnvironnement->render('contact_include.twig');
+                return $this->twigService->render('contact_include.twig');
             break;
             case '/admin':
-                return $this->twigService->twigEnvironnement->render('contact_include.twig');
+                return $this->twigService->render('contact_include.twig');
+            break;
+            case '/test':
+                return $this->twigService->render('test.twig');
             break;
             default:
                 http_response_code(404);
-                echo $this->twigService->twigEnvironnement->render('404.twig'); 
+                echo $this->twigService->render('404.twig'); 
             break;
         }
 

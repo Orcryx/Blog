@@ -24,7 +24,7 @@ class PostController
     {
         /**@var PostModel[] $posts */
         $posts = $this->postManager->getAll();
-        echo $this->twigService->twigEnvironnement->render('gallery.twig',['posts' => $posts]);
+        echo $this->twigService->render('gallery.twig',['posts' => $posts]);
 
     }
 
@@ -32,7 +32,7 @@ class PostController
      {
         $articleModel =  $this->postManager->getOne($postId);
         $commentModels = $this->commentManager->getCommentByPost($articleModel->getPostId());
-        echo $this->twigService->twigEnvironnement->render('post.twig',['post' => $articleModel, "comments"=>$commentModels]);
+        echo $this->twigService->render('post.twig',['post' => $articleModel, "comments"=>$commentModels]);
 
      }
 
