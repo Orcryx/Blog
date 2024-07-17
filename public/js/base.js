@@ -5,16 +5,40 @@ document.addEventListener('DOMContentLoaded', function() {
     // initShowDiv();
 });
 
-function showAuth(){
-    let div = document.getElementById('auth');
-    if(div)
-    {
-        div.removeAttribute('style');
-    }
-}
+// function showAuth(){
+
+//     // let div = document.getElementById('auth');
+//     // if(div)
+//     // {
+//     //     div.removeAttribute('style');
+//     // }
+
+// }
+
+// function showAuth(event) {
+
+//     event.preventDefault();
+//     let currentUrl = window.location.href;
+//     let linkUrl = event.target.closest('a').href;;
+
+//     //alert(linkUrl);
+
+//     var xhr = new XMLHttpRequest();
+//     xhr.open('POST', '/auth', true);
+//     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+//     xhr.send("current_url=" + encodeURIComponent(currentUrl));
+//     xhr.onload = function() {
+//         if (xhr.status === 200) {
+//            window.location.href = linkUrl;
+//         } else {
+//              alert('La requête a échoué. Statut retourné : ' + xhr.status);
+//         }
+//     };
+  
+// }
 
 function hideAuth(){
-    let div = document.getElementById('auth');
+    let div = document.getElementById('blurred');
     div.style.display = 'none';  
 }
 

@@ -8,39 +8,38 @@ use App\repository\UserRepository;
 class UserService{
 
     private UserRepository $user;
+    private $environnement;
 
     public function __construct()
     {
         $this->user= new UserRepository(new DatabaseService);
     }
 
-    public function logIn($environnement): void
+    public function logIn(): void
     {
-        //$this->isConnected();
+      
         $email = $_POST['email'];
-        /** @var array|null  $user  **/
+        /** @var object|null  $user  **/
         $user = $this->user->getUserByEmail($email); 
         if ($user !== null) {
-            $hashedPassword = password_hash($user["password"], PASSWORD_DEFAULT);
+            $hashedPassword = password_hash($user->password, PASSWORD_DEFAULT);
             if(password_verify($_POST['password'],  $hashedPassword))
             {
-                //echo "reussite !";
+                echo "reussite !";
                 $_SESSION['status'] = true;
-                $_SESSION['userId'] =$user["userId"];
-                $_SESSION['email'] =$user["email"];
-                $_SESSION['role'] = $user["role"];
-                $_SESSION['nickname'] = $user["nickname"];
-                // $_SESSION['user']['id'] =$user["userId"];
-                // $_SESSION['user']['email'] =$user["email"];
-                // $_SESSION['user']['role'] =$user["role"];
-                // $_SESSION['user']['nickname'] =$user["nickname"];
-                $_SESSION['environnement'] = $environnement;
-                header("Location:".$_SESSION['environnement']);
+                $_SESSION['user']['id'] =$user->userId;
+                $_SESSION['user']['email'] =$user->email;
+                $_SESSION['user']['role']= $user->role;
+                $_SESSION['user']['nickname'] = $user->nickname;
+                // $_SESSION['environnement'] = $this->getEnvironnement();
+                // header("Location:".$_SESSION['environnement']);
+             
             }
             else
             {
-                $this->signOut();
                 echo "echec de connexion";
+               $this->signOut();
+        
             }
         }else
         {
@@ -49,10 +48,19 @@ class UserService{
      
     }
 
+    public function setEnvironnement($environnement) {
+        $this->environnement = $environnement;
+        echo  $this->environnement;
+    }
+
+    public function getEnvironnement() {
+        return $this->environnement;
+    }
+
     private function isConnected() : void
     {
         if (isset($_SESSION['status']) && $_SESSION['status'] === true) {
-            header("Location:".$_SESSION['environnement']);
+            header("Location:".$this->getEnvironnement());
         }
     }
 
@@ -73,3 +81,8 @@ class UserService{
     }
 
 }
+
+          // $_SESSION['user']['id'] =$user["userId"];
+                // $_SESSION['user']['email'] =$user["email"];
+                // $_SESSION['user']['role'] =$user["role"];
+                // $_SESSION['user']['nickname'] =$user["nickname"];

@@ -10,8 +10,8 @@ $dotenv = new Dotenv();
 $dotenv->load(__DIR__.'/.env', __DIR__.'/.env.dev');
 
 //session start
+session_set_cookie_params(600);
 session_start();
-
 
 //Init Router
 $router = new RouterService();

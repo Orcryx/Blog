@@ -6,7 +6,6 @@ use App\service\TwigService;
 use App\manager\PostManager;
 
 
-
 class PostController
 {
 
@@ -36,7 +35,6 @@ class PostController
         echo $this->twigService->twigEnvironnement->render('post.twig',['post' => $articleModel, "comments"=>$commentModels]);
 
      }
-
 
 
   

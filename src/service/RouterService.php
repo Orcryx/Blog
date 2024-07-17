@@ -12,6 +12,7 @@ use App\repository\CommentRepository;
 use App\service\DatabaseService;
 use App\service\UserService;
 use App\repository\UserRepository;
+use App\controller\ElementsController;
 
 class RouterService
 {
@@ -26,14 +27,16 @@ class RouterService
     public function run(string $uri)
     {
         $path = explode('?', $uri)[0];
+         //$environnement = $_SERVER["REQUEST_URI"];
+         $dataBD = new DatabaseService();
+         $userRepo = new UserRepository($dataBD);
+         $userService = new UserService($userRepo);
+       
         $isMethodPost = $_SERVER['REQUEST_METHOD'] === 'POST';
         if(isset($isMethodPost) && isset($_POST['email']))
                 {
-                    $environnement = $_SERVER["REQUEST_URI"];
-                    $dataBD = new DatabaseService();
-                    $userRepo = new UserRepository($dataBD);
-                    $userService = new UserService($userRepo);
-                    $userService-> logIn($environnement);
+                   
+                    $userService-> logIn();
                 }
         //$isMethodGet = $_SERVER['REQUEST_METHOD'] === 'GET';
 
@@ -70,6 +73,17 @@ class RouterService
                     $blogController->displayGallery();  
                 }   
             break;
+             case '/auth':
+                    if (isset($_SERVER['HTTP_REFERER'])) {
+                        $_SESSION['previous_url'] = $_SERVER['HTTP_REFERER'];
+                       // echo "si création de previous_url" .$_SESSION['previous_url'];
+                    } else {
+                        $_SESSION['previous_url'] = '/blog'; // Page par défaut si HTTP_REFERER n'est pas défini
+                       // echo "si il n'y a pas de previous_url" . $_SESSION['previous_url'];
+                    }
+                     $userService->setEnvironnement($_SESSION['previous_url']);
+                    return $this->twigService->twigEnvironnement->render('formConnexion.twig');  
+                break;
             case '/contact':
                 return $this->twigService->twigEnvironnement->render('contact_include.twig');
             break;

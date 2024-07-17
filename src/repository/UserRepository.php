@@ -17,8 +17,8 @@ class UserRepository{
       /**
      * @return array|null
      */
-    public function getUserByEmail(string $email) : array|null{
-        $user = $this->databaseService->prepareAndExecute('SELECT * FROM user WHERE email = :email' , ['email' => $email] );
+    public function getUserByEmail(string $email) : object|null{
+        $user = $this->databaseService->prepareAndExecuteOneObject('SELECT * FROM user WHERE email = :email' , ['email' => $email] );
         if (empty($user)) {
             return null;
         }

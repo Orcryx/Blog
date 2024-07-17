@@ -1,56 +1,64 @@
-
-    <div id="zoneXmark" class="zoneXmark">
-        <i class="fa-solid fa-xmark" onclick="hideAuth()"></i>
-    </div>
-    <div id="ZoneOnglet" class="flex">
-        <button type="button" class="connec-oglt" data-id="signIn" onclick="showDiv(this)">Se connecter</button>
-        <button  type="button" class="connec-oglt" data-id="signUp" onclick="showDiv(this)">Créer un compte</button>
-    </div>
-    <div id='userAuthentication'>
-        <form method="POST" action=" ">
-            <div id="signIn" data-id="signIn" class="content active">
-                <div id="connec-auth" class="flex-column">
-                    <div>
-                        <label for="email">Mail:</label>
-                        <input type="email" id="email" name="email" />
-                    </div>
-                    <div>
-                        <label for="password">Mot de passe:</label>
-                        <input type="password" id="password" name="password" />
-                    </div>
-        </form>
+{% extends "layout.twig" %}
+{% block css %}{% endblock %}
+{% block js %}{% endblock %}
+{% block content %}
+    <div id="content">
+        <div id="blurred">
+            <div id="zoneXmark" class="zoneXmark">
+                    <i class="fa-solid fa-xmark" onclick="hideAuth()"></i>
                 </div>
-                <button id="connec-btn" type="submit">Se connecter</button>
-                <!-- <p class="signIn" data-id="singUp">Vous n'avez pas de compte ?<a class="linkSign"> S'inscrire</a></p> -->
-            </div>
-        <form method="POST" action=" ">
-            <div id="singUp"  data-id="signUp" class="content">
-                    <div id="connec-creation" class="flex-column">
-                        <div>
-                            <label for="name">Nom:</label>
-                            <input type="text" id="name" name="name" />
+                <div id="ZoneOnglet" class="flex">
+                    <button type="button" class="connec-oglt" data-id="signIn" onclick="showDiv(this)">Se connecter</button>
+                    <button  type="button" class="connec-oglt" data-id="signUp" onclick="showDiv(this)">Créer un compte</button>
+                </div>
+                <div id='userAuthentication'>
+                    <form method="POST" action=" ">
+                        <div id="signIn" data-id="signIn" class="content active">
+                            <div id="connec-auth" class="flex-column">
+                                <div>
+                                    <label for="email">Mail:</label>
+                                    <input type="email" id="email" name="email" />
+                                </div>
+                                <div>
+                                    <label for="password">Mot de passe:</label>
+                                    <input type="password" id="password" name="password" />
+                                </div>
+                    </form>
+                            </div>
+                            <button id="connec-btn" type="submit">Se connecter</button>
+                            <!-- <p class="signIn" data-id="singUp">Vous n'avez pas de compte ?<a class="linkSign"> S'inscrire</a></p> -->
                         </div>
-                        <div>
-                            <label for="firstName">Prénom:</label>
-                            <input type="text" id="firstName" name="firstName" />
+                    <form method="POST" action="">
+                        <div id="singUp"  data-id="signUp" class="content">
+                                <div id="connec-creation" class="flex-column">
+                                    <div>
+                                        <label for="name">Nom:</label>
+                                        <input type="text" id="name" name="name" />
+                                    </div>
+                                    <div>
+                                        <label for="firstName">Prénom:</label>
+                                        <input type="text" id="firstName" name="firstName" />
+                                    </div>
+                                    <div>
+                                        <label for="nickname">Pseudo:</label>
+                                        <input type="text" id="nickname" name="nickname" />
+                                    </div>
+                                    <div>
+                                        <label for="email">Mail:</label>
+                                        <input type="email" id="mail" name="mail" />
+                                    </div>
+                                    <div>
+                                        <label for="password">Mot de passe:</label>
+                                        <input type="password" id="pswd" name="password" />
+                                    </div>
+                                </div>
+                                <button id="connec-btn" type="submit">Créer un compte</button> 
+                                <!-- <p class="signIn" data-id="singIn">Vous avez déjà un compte ?<a class="linkSign"> Se connecter</a></p> -->
                         </div>
-                        <div>
-                            <label for="nickname">Pseudo:</label>
-                            <input type="text" id="nickname" name="nickname" />
-                        </div>
-                        <div>
-                            <label for="email">Mail:</label>
-                            <input type="email" id="mail" name="mail" />
-                        </div>
-                        <div>
-                            <label for="password">Mot de passe:</label>
-                            <input type="password" id="pswd" name="password" />
-                        </div>
-                    </div>
-                    <button id="connec-btn" type="submit">Créer un compte</button> 
-                    <!-- <p class="signIn" data-id="singIn">Vous avez déjà un compte ?<a class="linkSign"> Se connecter</a></p> -->
-            </div>
-        </form>
+                    </form>
+              </div>
+            </div>    
+        </div>
     </div>
-
+{% endblock %}
 
