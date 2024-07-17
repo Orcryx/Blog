@@ -16,6 +16,6 @@ class ContactController
     public function getForm()
     {
     
-        return $this->twigService->twigEnvironnement->render('contact_include.twig');
+        return $this->twigService->render('contact_include.twig');
     }
 }

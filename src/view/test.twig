@@ -1,16 +1,14 @@
 {% extends "layout.twig" %}
 {% block content %}
-      {% if comment is not empty %}
-          {% for Onecomment in comment %}
-             <h1>Je suis la page TEST</h1>
-                 <div class="">
-               
-                  <p>{{ Onecomment.comment }}</p>
-                </div>
-          {% endfor %}
-      {% else %}
-        <p>No comment available.</p>
-      {% endif %}
-    </div>
+    {# formConnexion.twig #}
+{% if session.status %}
+    <p>Bienvenue, {{ session.user.nickname }}!</p>
+    <p>Email: {{ session.user.email }}</p>
+    <p>Rôle: {{ session.user.role }}</p>
+{% else %}
+    <p>Vous n'êtes pas connecté.</p>
+{% endif %}
+
+
 {% endblock %}
   

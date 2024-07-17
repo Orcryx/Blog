@@ -15,6 +15,6 @@ class HomeController
 
     public function displayHome()
     {
-        return $this->twigService->twigEnvironnement->render('index.twig');
+        return $this->twigService->render('index.twig');
     }
 }

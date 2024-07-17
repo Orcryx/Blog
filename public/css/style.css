@@ -98,7 +98,16 @@ position: relative;
 
 .content{
 
+    display: none;
+}
+
+.content.active {
     display: block;
+}
+
+.noActive{
+    background-color: var(--backgroundWhite);
+    color: var(--colorExtra);
 }
 
 /* LES ID */
@@ -107,7 +116,6 @@ position: relative;
 {
     position: absolute;
     z-index: 9;
-    display: block;
 
     background-color: var(--backgroundWhite);
     color: var(--colorTextDark);
@@ -123,12 +131,12 @@ position: relative;
 #auth
 {
     width: 280px;
-    height: 300px;
-    max-height:600px ;
+    min-height: 300px;
+   
 }
 
 
-#zoneXmark
+#zoneArrow
 {
     justify-content: flex-end;
     margin-bottom: 10px;
@@ -137,20 +145,24 @@ position: relative;
 
 #userAuthentication{
 position:  relative; 
+max-height:700px ;
 padding: 10px;
 }
 #userAuthentication input{
     width: 100%;
+    height: auto;
 }
 
-
+#ZoneOnglet{
+    margin-bottom: 20px;
+}
 
 #connec-auth, #connec-creation{
  gap : 10px;
  margin-bottom : 20px;
 }
 
-#connec-btn{
+#connec-btn, .connec-oglt{
     width: 100%;
     height: 50px;
     
@@ -163,9 +175,24 @@ padding: 10px;
     position: absolute;
 }
 
+#blurred{
+
+    width: 90%; 
+    min-height:  300px;
+    padding: 10px;
+    /* border: 1px solid yellow;  */
+    border-radius: 10px;
+
+    background-color: rgba(255, 255, 255, 0.7);
+    box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+}
 
 
 /* LES CLASS */
+
+.userConnected{
+    color: var(--colorText);
+}
 
 .button-blog{
     width: 100px;
