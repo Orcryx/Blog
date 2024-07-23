@@ -31,7 +31,7 @@ class PostManager {
     }
 
 
-    public function isOwner(int $postId, UserSessionModel $userSession): bool {
+     public function isOwner(int $postId, UserSessionModel $userSession): bool {
         $postEntity = $this->postRepository->getOnePost($postId);
         if ($postEntity) {
             return $userSession->isOwer($postEntity->userId);

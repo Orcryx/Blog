@@ -15,7 +15,11 @@ class UserSessionModel{
      if ($this->userId === $id) {
             return  $this->isower = true;
         }
-        return $this->isower;
+        else
+        {
+            return $this->isower = false;
+        }
+       
     }
 
     public function setIsOwner(bool $isOwner): void {

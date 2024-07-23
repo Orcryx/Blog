@@ -75,11 +75,13 @@ class UserService{
         session_destroy(); 
     }
 
-    public function getUserSession(): UserSessionModel {
-        if (isset($_SESSION['user'])) {
+     public function getUserSession(): UserSessionModel | null {
+        if (isset($_SESSION['user']) && $_SESSION['user'] instanceof UserSessionModel) {            
             return $_SESSION['user'];
+        }else
+        {
+            return null; // Retourner null si aucun utilisateur n'est connecté
         }
-        throw new \Exception("No user is logged in");
     }
 
 }

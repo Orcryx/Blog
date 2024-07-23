@@ -29,15 +29,20 @@ class PostController
         $commentModels = $this->commentManager->getCommentByPost($articleModel->getPostId());
         // Utilisation de UserService pour obtenir la session utilisateur
         $userSession = $this->userService->getUserSession();
-
+    
+        if ($userSession !== null) {
         // Vérifier si l'utilisateur connecté est l'auteur du post
-        $isOwner = $this->postManager->isOwner($postId, $userSession);
+        $isAuthor = $this->postManager->isOwner($postId, $userSession);
 
-      // Mettre à jour l'objet UserSessionModel avec le boolean isOwner
-        $userSession->setIsOwner($isOwner);
-        var_dump(  $isOwner);
+        // Mettre à jour l'objet UserSessionModel avec le boolean isOwner
+        $userSession->setIsOwner($isAuthor);
+         
+        // Mettre à jour la session avec l'objet modifié
+         $_SESSION['user'] = $userSession;
         
-        echo $this->twigService->render('post.twig',['post' => $articleModel, "comments"=>$commentModels]);
+        }
+
+        echo $this->twigService->render('post.twig',['post' => $articleModel, "comments"=>$commentModels, "isAuthor"=> $isAuthor ]);
 
      }
 
