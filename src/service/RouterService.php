@@ -6,7 +6,7 @@ use App\controller\PostController;
 use App\manager\PostManager;
 use App\repository\PostRepository;
 
-use App\controller\CommentController;
+// use App\controller\CommentController;
 use App\manager\CommentManager;
 use App\repository\CommentRepository;
 use App\service\DatabaseService;
@@ -55,7 +55,7 @@ class RouterService
                 $postManager = new PostManager($postRepo);
                 $commentRepo = new CommentRepository($dataBD);
                 $commentManager = new CommentManager($commentRepo);  
-                $blogController = new PostController($postManager, $commentManager, $this->twigService );
+                $blogController = new PostController($postManager, $commentManager, $this->twigService, $userService );
             
                 if ($id !==null) {
                     //echo "ID de la page .$id";

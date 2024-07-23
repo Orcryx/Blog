@@ -28,13 +28,8 @@ class UserService{
             {
                 //echo "reussite !";
                 $_SESSION['status'] = true;
-                $_SESSION['user']['id'] =$user->userId;
-                $_SESSION['user']['email'] =$user->email;
-                $_SESSION['user']['role']= $user->role;
-                $_SESSION['user']['nickname'] = $user->nickname;
-                
-                $_SESSION['user2'] = new UserSessionModel($user->userId,$user->email,$user->role, $user->nickname);
-                //var_dump($_SESSION['user2']->userId);
+                $_SESSION['user'] = new UserSessionModel($user->userId,$user->email,$user->role, $user->nickname);
+                var_dump($_SESSION['user']);
             }
             else
             {
@@ -78,6 +73,13 @@ class UserService{
     {
         session_unset(); 
         session_destroy(); 
+    }
+
+    public function getUserSession(): UserSessionModel {
+        if (isset($_SESSION['user'])) {
+            return $_SESSION['user'];
+        }
+        throw new \Exception("No user is logged in");
     }
 
 }

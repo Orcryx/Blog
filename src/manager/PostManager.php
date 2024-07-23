@@ -5,6 +5,7 @@ namespace App\manager;
 use App\model\PostModel;
 use App\model\ArticleModel;
 use App\repository\PostRepository;
+use App\model\UserSessionModel;
 
 
 class PostManager {
@@ -25,10 +26,16 @@ class PostManager {
  
     public function getOne(int $id): ArticleModel {
         $postEntity = $this->postRepository->getOnePost($id);
-        //var_dump($postEntity );
         $articleModel = ArticleModel::createFromEntity($postEntity);
-        //var_dump( $postModel);
         return $articleModel;
     }
 
+
+    public function isOwner(int $postId, UserSessionModel $userSession): bool {
+        $postEntity = $this->postRepository->getOnePost($postId);
+        if ($postEntity) {
+            return $userSession->isOwer($postEntity->userId);
+        }
+        return false;
+    }
 }

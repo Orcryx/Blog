@@ -54,6 +54,11 @@ class PostModel{
 
     
     // Getters
+
+    public function getOwer(UserSessionModel $userSession): bool {
+        return $userSession->isOwer($this->userId);
+    }
+    
     public function getPostId(): int {
         return $this->postId;
     }

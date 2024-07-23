@@ -42,7 +42,9 @@
     </div>
     <div id="comment-zone">
       <h2 id="comment-title">Vos commentaires</h2>
-      <button id="commentAdd-btn" class="center-yz" type="button" onclick="showDialogue()">Ajouter un commentaire <i class="fa-solid fa-comment-medical"></i></button>
+      {% if session.status %}
+        <button id="commentAdd-btn" class="center-yz" type="button" onclick="sendComment()">Ajouter un commentaire <i class="fa-solid fa-comment-medical"></i></button>
+      {% endif %}
       {% if comments is not empty %}
         {% for comment in comments %}
           <div class="comment">
