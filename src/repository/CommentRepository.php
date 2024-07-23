@@ -16,7 +16,7 @@ class CommentRepository {
 
     public function getValidatedCommentByPostId(int $postId):array{
     
-        $comments = $this->databaseService->prepareAndExecute('SELECT comment.commentId, comment.comment, comment.isValidated, comment.postId, user.nickname FROM comment JOIN user ON comment.userId = user.userId WHERE comment.postId = :postId AND comment.isValidated ="1" ', ['postId' => $postId]);
+        $comments = $this->databaseService->prepareAndExecute('SELECT comment.commentId, comment.comment, comment.isValidated, comment.postId, comment.userId, user.nickname FROM comment JOIN user ON comment.userId = user.userId WHERE comment.postId = :postId AND comment.isValidated ="1" ', ['postId' => $postId]);
         return $comments ;
     }
 
@@ -27,5 +27,12 @@ class CommentRepository {
         return $newcomment ;
     }
 
+
+    public function getCommentById(int $commentId): object {
+        $comment = $this->databaseService->prepareAndExecuteOne(
+        'SELECT comment.commentId, comment.comment, comment.isValidated, comment.postId, comment.userId, user.nickname FROM comment JOIN user ON comment.userId = user.userId WHERE comment.commentId = :commentId', ['commentId' => $commentId]);
+        var_dump($comment);
+        return $comment ;
+    }
 
 }  

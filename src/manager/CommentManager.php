@@ -4,7 +4,7 @@ namespace App\manager;
 
 use App\model\CommentModel;
 use App\repository\CommentRepository;
-
+use App\model\UserSessionModel;
 
 class CommentManager {
 
@@ -20,9 +20,15 @@ class CommentManager {
      */
     public function getCommentByPost(int $postId): array {
         $commentEntities = $this->commentRepository->getValidatedCommentByPostId($postId);
-        //$commentModels = CommentModel::createFromEntities($commentEntities);
-        //return $commentModels;
         return  $commentEntities;
+    }
+
+    public function isOwner(int $commentId, UserSessionModel $userSession): bool {
+        $commentEntity = $this->commentRepository->getCommentById($commentId);
+        if ($commentEntity) {
+            return $userSession->isOwer($commentEntity->userId);
+        }
+        return false;
     }
 
 }

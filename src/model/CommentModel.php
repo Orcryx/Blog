@@ -3,20 +3,23 @@ namespace App\model;
 use App\manager\CommentManager;
 
 class CommentModel{
-    private int $commentId;
+    // protected int $commentId;
     private string $comment;
     private int $postId;
     private string $nickname;
+    private int $userId;
+    public bool $isOwner = false; 
 
 
     // bool $isValidated
-    public function __construct(int $commentId, string $comment, int $postId, string $nickname)
+    public function __construct(public readonly int $commentId, string $comment, int $postId, string $nickname, int $userId)
     {
        
-        $this->commentId = $commentId;
+        // $this->commentId = $commentId;
         $this->comment = $comment;
         $this->postId = $postId;
         $this->nickname = $nickname;
+        $this->userId = $userId;
     }
 
 
@@ -34,6 +37,7 @@ class CommentModel{
     //             $comment->comment,
     //             $comment->postId,
     //             $comment->nickname,
+    //             $comment->userId
     //         );
     //     }
     //     return  $commentModels;
@@ -54,6 +58,10 @@ class CommentModel{
 
     public function getNickname(): string {
         return $this->nickname;
+    }
+
+    public function getUserId(): string {
+        return $this->userId;
     }
 
 }

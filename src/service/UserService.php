@@ -29,7 +29,7 @@ class UserService{
                 //echo "reussite !";
                 $_SESSION['status'] = true;
                 $_SESSION['user'] = new UserSessionModel($user->userId,$user->email,$user->role, $user->nickname);
-                var_dump($_SESSION['user']);
+                // var_dump($_SESSION['user']);
             }
             else
             {

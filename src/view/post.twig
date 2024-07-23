@@ -39,6 +39,12 @@
             </div>
 
       </article>
+      {% if isAuthor%}
+        <div id="article-manager" class="flex-around">
+            <a href="#" alt="Modifier un article"><i class="fa-solid fa-pencil"></i></a>
+            <a href="#" alt="Supprimer un article"><i class="fa-solid fa-trash-can"></i></a>
+        </div>
+      {% endif %}
     </div>
     <div id="comment-zone">
       <h2 id="comment-title">Vos commentaires</h2>
