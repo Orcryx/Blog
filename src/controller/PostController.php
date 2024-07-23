@@ -12,6 +12,7 @@ class PostController
     //constructeur de la class 
     public function __construct(private readonly PostManager $postManager, private readonly CommentManager $commentManager, private readonly TwigService $twigService, private readonly UserService $userService)
     {
+        // session_start();
     }
 
     public function displayGallery()
@@ -37,18 +38,21 @@ class PostController
         // Mettre à jour l'objet UserSessionModel avec le boolean isOwner
         $userSession->setIsOwner($isPostOwner);
          
-        // Mettre à jour la session avec l'objet modifié
-        $_SESSION['user'] = $userSession;
-
+       
          
         // Vérifier si l'utilisateur connecté est l'auteur de chaque commentaire
-        foreach ($commentModels as $commentModel) {
+        foreach ($commentModels as $commentModel) 
+        {
             $id = $commentModel->commentId;
             $isCommentOwner = $this->commentManager->isOwner($id, $userSession) ;
             var_dump($isCommentOwner);
             $commentModel->isOwner = $isCommentOwner; 
             var_dump($commentModel);  
         }
+
+         // Mettre à jour la session avec l'objet modifié
+         $_SESSION['user'] = $userSession;
+
          
          echo $this->twigService->render('post.twig',['post' => $articleModel, "comments"=>$commentModels, "isAuthor"=> $isPostOwner ]);
 

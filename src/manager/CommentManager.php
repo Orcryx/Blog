@@ -13,6 +13,7 @@ class CommentManager {
     public function __construct(CommentRepository $commentRepository)
     {
         $this->commentRepository = $commentRepository;
+        // session_start();
     }
 
     /** 

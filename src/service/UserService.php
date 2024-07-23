@@ -29,7 +29,9 @@ class UserService{
                 //echo "reussite !";
                 $_SESSION['status'] = true;
                 $_SESSION['user'] = new UserSessionModel($user->userId,$user->email,$user->role, $user->nickname);
-                // var_dump($_SESSION['user']);
+                // var_dump($_SESSION);
+                header("Location: {$_SESSION['previous_url']}");
+                exit();
             }
             else
             {
@@ -73,6 +75,8 @@ class UserService{
     {
         session_unset(); 
         session_destroy(); 
+        header("Location: {$_SESSION['previous_url']}");
+        exit();
     }
 
      public function getUserSession(): UserSessionModel | null {
