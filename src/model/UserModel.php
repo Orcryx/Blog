@@ -13,8 +13,4 @@ class UserModel{
     public bool $isValidated;
     public string $nickname;
 
-    // public function isOwer()
-    // {
-
-    // }
 }

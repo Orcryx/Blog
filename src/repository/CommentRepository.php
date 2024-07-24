@@ -29,9 +29,7 @@ class CommentRepository {
 
 
     public function getCommentById(int $commentId): object {
-        $comment = $this->databaseService->prepareAndExecuteOne(
-        'SELECT comment.commentId, comment.comment, comment.isValidated, comment.postId, comment.userId, user.nickname FROM comment JOIN user ON comment.userId = user.userId WHERE comment.commentId = :commentId', ['commentId' => $commentId]);
-        var_dump($comment);
+        $comment = $this->databaseService->prepareAndExecuteOne('SELECT comment.commentId, comment.comment, comment.isValidated, comment.postId, comment.userId, user.nickname FROM comment JOIN user ON comment.userId = user.userId WHERE comment.commentId = :commentId', ['commentId' => $commentId]);
         return $comment ;
     }
 

@@ -35,21 +35,22 @@ class PostController
         // Vérifier si l'utilisateur connecté est l'auteur du post
         $isPostOwner = $this->postManager->isOwner($postId, $userSession);
 
-        // Mettre à jour l'objet UserSessionModel avec le boolean isOwner
+        // Mettre à jour l'objet UserSessionModel avec le boolean
         $userSession->setIsOwner($isPostOwner);
-         
-       
          
         // Vérifier si l'utilisateur connecté est l'auteur de chaque commentaire
         foreach ($commentModels as $commentModel) 
         {
             $id = $commentModel->commentId;
+             // Vérifier si l'utilisateur connecté est l'auteur du commentaire
             $isCommentOwner = $this->commentManager->isOwner($id, $userSession) ;
-            var_dump($isCommentOwner);
-            $commentModel->isOwner = $isCommentOwner; 
-            var_dump($commentModel);  
-        }
 
+            //Ajouter au model du commentaire une valeur IsOwer (pour chaque commentaire)
+            $commentModel->isOwner = $isCommentOwner; 
+            // var_dump( $isCommentOwner);
+            // var_dump($commentModel);
+  
+        }
          // Mettre à jour la session avec l'objet modifié
          $_SESSION['user'] = $userSession;
 

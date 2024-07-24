@@ -4,7 +4,7 @@ namespace App\model;
 
 class UserSessionModel{
     
-    public bool $isower = false;
+    public bool $isOwer = false;
 
     public function __construct(public readonly int $userId, public readonly string $email, public readonly string $role, public readonly string $nickname)
     {
@@ -13,17 +13,17 @@ class UserSessionModel{
     public function isOwer(int $id) : bool
     {
      if ($this->userId === $id) {
-            return  $this->isower = true;
+            return  $this->isOwer = true;
         }
         else
         {
-            return $this->isower = false;
+            return $this->isOwer = false;
         }
        
     }
 
     public function setIsOwner(bool $isOwner): void {
-        $this->isower = $isOwner;
+        $this->isOwer = $isOwner;
     }
 
 }

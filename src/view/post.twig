@@ -54,6 +54,12 @@
       {% if comments is not empty %}
         {% for comment in comments %}
           <div class="comment">
+               {% if comment.isOwner %}
+                  <div id="comment-manager" class="flex-around">
+                      <a href="#" alt="Modifier un article"><i class="fa-solid fa-pencil"></i></a>
+                      <a href="#" alt="Supprimer un article"><i class="fa-solid fa-trash-can"></i></a>
+                  </div>
+              {% endif %} 
             <p>{{comment.nickname}}</p>
             <p>{{ comment.comment }}</p>
           </div>
