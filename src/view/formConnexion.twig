@@ -1,6 +1,8 @@
 {% extends "layout.twig" %}
 {% block css %}{% endblock %}
-{% block js %}{% endblock %}
+{% block js %}
+  <script src="../../public/js/formRegister.js" crossorigin="anonymous"></script>
+{% endblock %}
 {% block content %}
     <div id="content">
         <div id="blurred">
@@ -29,7 +31,7 @@
                         <button id="connec-btn" type="submit">Se connecter</button>
                         <!-- <p class="signIn" data-id="singUp">Vous n'avez pas de compte ?<a class="linkSign"> S'inscrire</a></p> -->
                     </div>
-                <form method="POST" action="{{origin}}">
+                <form method="POST" action="{{origin}}" id="registerForm">
                     <div id="singUp"  data-id="signUp" class="content">
                             <div id="connec-creation" class="flex-column">
                                 <input type="hidden" name="formType" value="register">
@@ -58,7 +60,7 @@
                                     <input type="password" id="pswdC" name="passwordConfirm" required />
                                 </div>
                             </div>
-                            <button id="connec-btn" type="submit">Créer un compte</button> 
+                            <button id="register-btn" type="submit">Créer un compte</button> 
                             <!-- <p class="signIn" data-id="singIn">Vous avez déjà un compte ?<a class="linkSign"> Se connecter</a></p> -->
                     </div>
                 </form>
