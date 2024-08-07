@@ -33,9 +33,18 @@ class RouterService
         $userService = new UserService($userRepo);
        
         $isMethodPost = $_SERVER['REQUEST_METHOD'] === 'POST';
-        if(isset($isMethodPost) && isset($_POST['email']) && isset($_POST['password']))
-        {
-            $userService-> logIn();
+        if ($isMethodPost) {
+            $formType = $_POST['formType'] ?? '';
+            if ($formType === 'login' && isset($_POST['email']) && isset($_POST['password'])) {
+                // Action de connexion
+                $userService->logIn();
+            } elseif ($formType === 'register' && isset($_POST['name']) && isset($_POST['firstName']) && isset($_POST['nickname']) && isset($_POST['email']) && isset($_POST['password'])) {
+                // Action d'enregistrement
+                $userService->register();
+            } else {
+                // Gérer les erreurs ou les cas où les champs nécessaires ne sont pas présents
+                // Par exemple, vous pourriez rediriger l'utilisateur vers une page d'erreur ou afficher un message d'erreur
+            }
         }
 
         // Récupérer l'ID de l'URL s'il est présent
@@ -70,7 +79,7 @@ class RouterService
                     $_SESSION['previous_url'] = $_SERVER['HTTP_REFERER'];
                     // echo "si création de previous_url" .$_SESSION['previous_url'];
                 } else {
-                    $_SESSION['previous_url'] = '/blog'; // Page par défaut si HTTP_REFERER n'est pas défini
+                    $_SESSION['previous_url'] = '/auth'; // Page par défaut si HTTP_REFERER n'est pas défini
                     // echo "si il n'y a pas de previous_url" . $_SESSION['previous_url'];
                 }
                 $form = new ElementsController($this->twigService );
