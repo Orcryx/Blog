@@ -33,15 +33,20 @@ class RouterService
         $userService = new UserService($userRepo);
        
         $isMethodPost = $_SERVER['REQUEST_METHOD'] === 'POST';
-        if ($isMethodPost) {
+        if ($isMethodPost)
+        {
             $formType = $_POST['formType'] ?? '';
             if ($formType === 'login' && isset($_POST['email']) && isset($_POST['password'])) {
                 // Action de connexion
                 $userService->logIn();
-            } elseif ($formType === 'register' && isset($_POST['name']) && isset($_POST['firstName']) && isset($_POST['nickname']) && isset($_POST['email']) && isset($_POST['password'])) {
+            } 
+            elseif ($formType === 'register' && isset($_POST['name']) && isset($_POST['firstName']) && isset($_POST['nickname']) && isset($_POST['email']) && isset($_POST['password'])) 
+            {
                 // Action d'enregistrement
                 $userService->register();
-            } else {
+            } 
+            else 
+            {
                 // Gérer les erreurs ou les cas où les champs nécessaires ne sont pas présents
                 // Par exemple, vous pourriez rediriger l'utilisateur vers une page d'erreur ou afficher un message d'erreur
             }

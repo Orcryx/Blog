@@ -21,7 +21,7 @@ class PostRepository {
                 return $postsObj;
             }
 
-
+    
     public function getOnePost(int $id):object{
     
         $onePost = $this->databaseService->prepareAndExecuteOne('SELECT * FROM post WHERE postId = :id', ['id' => $id]);

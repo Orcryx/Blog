@@ -46,11 +46,11 @@ class UserRepository{
             ':nickname' => $nickname,
             ':role' => $role
         ];
-    
         $newUser = $this->databaseService->prepareAndExecuteOne('INSERT INTO user (name, firstName, email, password, isValidated, nickname, role) VALUES (:name, :firstName, :email, :password, :isValidated, :nickname, :role)', $params);
-        var_dump($newUser);
+        //var_dump($newUser);
         if ($newUser === false) {
             echo"Echec de la requête SQL Insert Into";
+            exit;
         }
     }
 }

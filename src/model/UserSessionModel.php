@@ -2,6 +2,7 @@
 
 namespace App\model;
 
+
 class UserSessionModel{
     
     public bool $isOwer = false;
@@ -20,6 +21,15 @@ class UserSessionModel{
             return $this->isOwer = false;
         }
        
+    }
+
+    public function IsAdmin () : bool{
+        if ($this->role == UserModel::ROLE_ADMIN) {
+            return true;
+        }else
+        {
+            return false;
+        }
     }
 
     public function setIsOwner(bool $isOwner): void {
