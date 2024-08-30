@@ -14,11 +14,13 @@
 {% endblock %}
 
  {% block dialogue %}
-  <div id="dialogue">
-    {% include 'formComment.twig' %}
-  </div>
+  <dialog id="addCommentDialog">
+    {% include 'formComment.twig' with {'dialogId': 'addCommentDialog'} %}
+  </dialog>
+  <dialog id="deleteCommentDialog">
+    {% include 'deleteComment.twig' with { 'dialogId': 'deleteCommentDialog', 'id': 'id' } %}
+  </dialog>
  {% endblock %}
-
 {% block content %}
 
   <div id="OneArticle" class="flex">
@@ -49,16 +51,15 @@
     <div id="comment-zone">
       <h2 id="comment-title">Vos commentaires</h2>
       {% if session.status %}
-        <button id="commentAdd-btn" class="center-yz" type="button" onclick="sendComment()">Ajouter un commentaire <i class="fa-solid fa-comment-medical"></i></button>
+        <button id="commentAdd-btn" class="center-yz" type="button" onclick="addCommentDialog()">Ajouter un commentaire <i class="fa-solid fa-comment-medical"></i></button>
       {% endif %}
       {% if comments is not empty %}
         {% for comment in comments %}
           <div class="comment">
                {% if comment.isOwner %}
                   <div id="comment-manager" class="flex-around">
-                      <a href="#" alt="Modifier un article"><i class="fa-solid fa-pencil"></i></a>
-                      <a href="#" alt="Supprimer un article"><i class="fa-solid fa-trash-can"></i></a>
-                  </div>
+                      <i class="fa-solid fa-pencil" id="updateCommentIcon" onclick="updateCommentDialog()"></i>
+                      <i class="fa-solid fa-trash-can" id="deleteCommentIcon" onclick="deleteCommentDialog('{{ comment.commentId }}')"></i>                  </div>
               {% endif %} 
             <p>{{comment.nickname}}</p>
             <p>{{ comment.comment }}</p>

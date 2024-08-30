@@ -2,6 +2,7 @@
 
 namespace App\service;
 
+use App\controller\CommentController;
 use App\controller\PostController;
 use App\manager\PostManager;
 use App\repository\PostRepository;
@@ -13,6 +14,7 @@ use App\service\DatabaseService;
 use App\service\UserService;
 use App\repository\UserRepository;
 use App\controller\ElementsController;
+use App\controller\AdminController;
 
 class RouterService
 {
@@ -90,11 +92,59 @@ class RouterService
                 $form = new ElementsController($this->twigService );
                 $form->showLoginDialogue($_SESSION['previous_url']);
             break;
+            case '/addComment':
+                if ($isMethodPost) {
+                    $dataBD = new DatabaseService();
+                    $commentRepo = new CommentRepository($dataBD);
+                    $commentManager = new CommentManager($commentRepo);
+                    $commentController = new CommentController($commentManager, $this->twigService);
+                    if (isset($_POST['comment']) && isset($_POST['postId']) && isset($_POST['userId'])) {
+                        $commentText = $_POST['comment'];
+                        $postId = intval($_POST['postId']);
+                        $userId = intval($_POST['userId']);
+                        $isValidated = 0; // selon votre logique de validation par modération
+            
+                        // Appeler la méthode pour ajouter le commentaire
+                        $result = $commentController->addComment($postId, $commentText, $userId, $isValidated);
+                        
+                        echo $result;
+                    } else {
+                        //Afficher un message d'erreur
+                        echo "Erreur: tous les champs ne sont pas remplis.";
+                    }
+                } else {
+                    // Gérer l'accès via GET ou d'autres méthodes HTTP
+                    echo "Erreur: méthode non autorisée.";
+                }
+                break;
+                case '/deleteComment':
+                    if ($isMethodPost) {
+                        $dataBD = new DatabaseService();
+                        $commentRepo = new CommentRepository($dataBD);
+                        $commentManager = new CommentManager($commentRepo);
+                        $commentController = new CommentController($commentManager, $this->twigService);
+                        if (isset($_POST['commentId'])){
+                            $commentId = $_POST['commentId'];
+                            // Appeler la méthode pour ajouter le commentaire
+                            $result = $commentController->deleteComment($commentId);
+                            
+                           // echo $result;
+                        }
+                    }
+                    break;
             case '/contact':
                 return $this->twigService->render('contact_include.twig');
             break;
             case '/admin':
-                return $this->twigService->render('contact_include.twig');
+                 // Instancier les services nécessaires
+                $dataBD = new DatabaseService();
+                $commentRepo = new CommentRepository($dataBD);
+                $commentManager = new CommentManager($commentRepo);
+                $AdminController = new AdminController($commentManager, $this->twigService, $userService);
+               
+                
+                $AdminController->dashboardAdmin();
+              
             break;
             case '/test':
                 return $this->twigService->render('test.twig');

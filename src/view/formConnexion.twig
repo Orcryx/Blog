@@ -14,8 +14,8 @@
                 <button  type="button" class="connec-oglt" data-id="signUp" onclick="showDiv(this)">Créer un compte</button>
             </div>
             <div id='userAuthentication'>
-                <!-- action="{{origin}}" -->
-                <form method="POST" >
+                <!--  -->
+                <form method="POST" action="{{origin}}" >
                     <div id="signIn" data-id="signIn" class="content active">
                         <div id="connec-auth" class="flex-column">
                              <input type="hidden" name="formType" value="login">
@@ -32,8 +32,8 @@
                         <button id="connec-btn" type="submit">Se connecter</button>
                         <!-- <p class="signIn" data-id="singUp">Vous n'avez pas de compte ?<a class="linkSign"> S'inscrire</a></p> -->
                     </div>
-                    <!-- action="{{origin}}" -->
-                <form method="POST"  id="registerForm">
+                    <!--  -->
+                <form method="POST" action="{{origin}}" id="registerForm">
                     <div id="singUp"  data-id="signUp" class="content">
                             <div id="connec-creation" class="flex-column">
                                 <input type="hidden" name="formType" value="register">
@@ -69,29 +69,6 @@
             </div>
         </div>    
     </div>
-    <div>
-        <!-- Zone pour afficher les messages d'alerte -->
-    <div id="content">
-        <div id="blurred">
-            <!-- Vérification de la présence du message -->
-               {{dump(message)}}
-            {% if message %}
-                <div class="alert alert-warning">
-                    {{dump(message)}}
-                    {{ message|raw }}  <!-- Utilisation de |raw pour afficher le HTML non échappé -->
-                </div>
-            {% else %}
-                <p>Aucun message d'alerte trouvé.</p> <!-- Cette ligne est pour le débogage -->
-            {% endif %}
-            <!-- Le reste de votre contenu -->
-            <div id="zoneArrow" class="zoneXmark">
-                <a href="{{origin}}" alt="lien vers la page administration" class="userConnected"> 
-                    <i class="fa-solid fa-arrow-left"></i> 
-                </a>
-            </div>
-            <!-- Le reste de votre contenu -->
-        </div>    
-    </div>
-   
+    <div> 
 {% endblock %}
 

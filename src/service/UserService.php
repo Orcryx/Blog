@@ -35,25 +35,24 @@ class UserService
             $hashedPassword = password_hash($user->password, PASSWORD_DEFAULT);
             if(password_verify($_POST['password'],  $hashedPassword))
             {
-                // cas : "reussite !";
+                echo "reussite !";
                 $_SESSION['status'] = true;
                 $_SESSION['user'] = new UserSessionModel($user->userId,$user->email,$user->role, $user->nickname);
                 $_SESSION['login_attempts'] = 0; // Reset login attempts
-                // header("Location: {$_SESSION['previous_url']}");
-                // exit();
+                header("Location: {$_SESSION['previous_url']}");
+                exit();
             }
             else
             {
-                // cas :  "echec de connexion";
-                $message = MessageService::getMessage("echec de connexion !", MessageService::ALERT_WARNING, $twigService);              
+                echo  "echec de connexion";
+                // $message = MessageService::getMessage("echec de connexion !", MessageService::ALERT_WARNING, $twigService);              
                   $_SESSION['login_attempts']++;
                 if ($_SESSION['login_attempts'] >= 3) {
                      $this->logOut();
                 } else {
-
-                  
-                    $message = MessageService::getMessage( "Echec d'authentification. Tentative " . $_SESSION['login_attempts'] . " / 3.", MessageService::ALERT_WARNING, $twigService);              
-                    // header("Location: /auth"); // Replace with your login page
+                    echo  "echec de connexion";
+                    // $message = MessageService::getMessage( "Echec d'authentification. Tentative " . $_SESSION['login_attempts'] . " / 3.", MessageService::ALERT_WARNING, $twigService);              
+                    // header("Location: /auth");
                     // exit();
                 }
                     // Afficher la page de connexion avec le message d'erreur
@@ -62,8 +61,9 @@ class UserService
         }
         else
         {
-            $message = MessageService::getMessage("echec de connexion !", MessageService::ALERT_WARNING, $twigService);              
-            echo $twigService->render('message.twig', ['message' => $message, 'origin' => $_SERVER['REQUEST_URI'] ]);
+            echo  "echec de connexion";
+            // $message = MessageService::getMessage("echec de connexion !", MessageService::ALERT_WARNING, $twigService);              
+            // echo $twigService->render('message.twig', ['message' => $message, 'origin' => $_SERVER['REQUEST_URI'] ]);
 
         }
     }
@@ -81,7 +81,7 @@ class UserService
             $nickname = $_POST['nickname'];
             $password = $_POST['password'];
            
-            var_dump( $name, $firstName, $nickname, $password);
+            // 5var_dump( $name, $firstName, $nickname, $password);
             $this->user->insertUser($name, $firstName,$email, $password, $nickname);
             echo "création de compte possible";
             header("Location: {$_SESSION['previous_url']}");

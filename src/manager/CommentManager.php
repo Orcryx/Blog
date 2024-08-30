@@ -32,4 +32,21 @@ class CommentManager {
         return false;
     }
 
+    public function addCommentByPostId(int $postId, string $comment, int $userId, int $isValidated): void {
+         $this->commentRepository->createCommentByPostId($postId, $comment, $userId, $isValidated);
+    }
+
+    public function deleteCommentById(int $commentId) : void
+    {
+        $this->commentRepository->deleteCommentById($commentId);
+    }
+
+     /** 
+     * @return CommentModel[] 
+     */
+    public function getNoValidatedComment(): array {
+        $commentNoValidatedEntities = $this->commentRepository->getNoValidatedComment();
+        return  CommentModel::createFromEntities($commentNoValidatedEntities);
+    }
+
 }

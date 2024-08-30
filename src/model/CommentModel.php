@@ -15,7 +15,7 @@ class CommentModel{
     public function __construct(public readonly int $commentId, string $comment, int $postId, string $nickname, int $userId)
     {
        
-        // $this->commentId = $commentId;
+        //$this->commentId = $commentId;
         $this->comment = $comment;
         $this->postId = $postId;
         $this->nickname = $nickname;
@@ -27,21 +27,20 @@ class CommentModel{
     //  /**
     //  * @return CommentModel[]
     // */
-    // public static function createFromEntities(array $commentEntities): array {
-    //     $commentModels=[];
+    public static function createFromEntities(array $commentEntities): array {
+        $commentModelsNoValidated=[];
 
-    //     foreach ($commentEntities as $comment) {
-    //         # code...
-    //         $commentModels[] = new self(
-    //             $comment->commentId,
-    //             $comment->comment,
-    //             $comment->postId,
-    //             $comment->nickname,
-    //             $comment->userId
-    //         );
-    //     }
-    //     return  $commentModels;
-    // }
+        foreach ($commentEntities as $comment) {
+            $commentModelsNoValidated[] = new self(
+                $comment->commentId,
+                $comment->comment,
+                $comment->postId,
+                $comment->nickname,
+                $comment->userId
+            );
+        }
+        return  $commentModelsNoValidated;
+    }
     
     // Getters
     public function getCommentId(): int {

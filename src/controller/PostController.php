@@ -47,21 +47,14 @@ class PostController
 
             //Ajouter au model du commentaire une valeur IsOwer (pour chaque commentaire)
             $commentModel->isOwner = $isCommentOwner; 
-            // var_dump( $isCommentOwner);
-            // var_dump($commentModel);
-  
         }
          // Mettre à jour la session avec l'objet modifié
          $_SESSION['user'] = $userSession;
-
-         
          echo $this->twigService->render('post.twig',['post' => $articleModel, "comments"=>$commentModels, "isAuthor"=> $isPostOwner ]);
-
         }
         else
         {
             echo $this->twigService->render('post.twig',['post' => $articleModel, "comments"=>$commentModels ]);
-
         }
 
 

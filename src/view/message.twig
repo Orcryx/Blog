@@ -1,0 +1,21 @@
+   <!-- Zone pour afficher les messages d'alerte -->
+    <div id="content">
+        <div id="blurred">
+            <!-- Vérification de la présence du message -->
+               {{dump(message)}}
+               <button autofocus>X</button>
+            {% if message %}
+                <div class="alert alert-warning">
+                    {{dump(message)}}
+                    {{ message|raw }}  
+                </div>
+            <!-- {% else %}
+                <p>Aucun message d'alerte trouvé.</p>  -->
+            {% endif %}
+            <div id="zoneArrow" class="zoneXmark">
+                <a href="{{origin}}" alt="lien vers la page administration" class="userConnected"> 
+                    <i class="fa-solid fa-arrow-left"></i> 
+                </a>
+            </div>
+        </div>    
+    </div>
