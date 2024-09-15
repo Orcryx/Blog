@@ -125,34 +125,60 @@ class RouterService
                         $commentController = new CommentController($commentManager, $this->twigService);
                         if (isset($_POST['commentId'])){
                             $commentId = $_POST['commentId'];
-                            // Appeler la méthode pour ajouter le commentaire
+                            // Appeler la méthode pour supprimer le commentaire
                             $result = $commentController->deleteComment($commentId);
                             
                            // echo $result;
                         }
                     }
-                    break;
-            case '/contact':
-                return $this->twigService->render('contact_include.twig');
-            break;
-            case '/admin':
-                 // Instancier les services nécessaires
-                $dataBD = new DatabaseService();
-                $commentRepo = new CommentRepository($dataBD);
-                $commentManager = new CommentManager($commentRepo);
-                $AdminController = new AdminController($commentManager, $this->twigService, $userService);
-               
+                break;
+                case '/updateComment':
+                    if ($isMethodPost) {
+                        $dataBD = new DatabaseService();
+                        $commentRepo = new CommentRepository($dataBD);
+                        $commentManager = new CommentManager($commentRepo);
+                        $commentController = new CommentController($commentManager, $this->twigService);
+                        if (isset($_POST['commentId'])){
+                            $commentId = $_POST['commentId'];
+                            $comment = $_POST['comment'];
+                            // Appeler la méthode pour modifier le commentaire
+                            $result = $commentController->updateComment($commentId, $comment);
+                            
+                           // echo $result;
+                        }
+                    }
+                break;
+                case '/contact':
+                    return $this->twigService->render('contact_include.twig');
+                    // Vérifie si le formulaire est soumis
+                    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+                        // Récupérer les données du formulaire
+                        $email = htmlspecialchars(trim($_POST['user-mail']));
+                        $message = htmlspecialchars(trim($_POST['user-msg']));
+                     
+                        return $this->twigService->render();
+
+                    }
+                break;
+                case '/admin':
+                    // Instancier les services nécessaires
+                    $dataBD = new DatabaseService();
+                    $commentRepo = new CommentRepository($dataBD);
+                    $commentManager = new CommentManager($commentRepo);
+                    $AdminController = new AdminController($commentManager, $this->twigService, $userService);
                 
-                $AdminController->dashboardAdmin();
-              
-            break;
-            case '/test':
-                return $this->twigService->render('test.twig');
-            break;
-            default:
-                http_response_code(404);
-                echo $this->twigService->render('404.twig'); 
-            break;
+                    
+                    $AdminController->dashboardAdmin();
+                
+                break;
+                case '/test':
+                    return $this->twigService->render('test.twig');
+                break;
+                default:
+                    http_response_code(404);
+                    echo $this->twigService->render('404.twig'); 
+                break;
         }
 
     }

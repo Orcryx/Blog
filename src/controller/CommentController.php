@@ -26,4 +26,9 @@ class CommentController
         return $this->twigService->render('message.twig', ['message' => $deleteComment]);
     }
 
+    public function updateComment(int $commentId, string $comment) : string
+    {
+        $updateComment = $this->commentManager->updateCommentById($commentId, $comment);
+        return $this->twigService->render('message.twig', ['message' => $updateComment]);
+    }
 }

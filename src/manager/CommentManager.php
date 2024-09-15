@@ -40,6 +40,11 @@ class CommentManager {
     {
         $this->commentRepository->deleteCommentById($commentId);
     }
+    
+    public function updateCommentById(int $commentId, string $comment) : void
+    {
+        $this->commentRepository->updateCommentById($commentId, $comment);
+    }
 
      /** 
      * @return CommentModel[] 

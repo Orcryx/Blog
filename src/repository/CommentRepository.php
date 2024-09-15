@@ -45,9 +45,13 @@ class CommentRepository {
         $comment = $this->databaseService->prepareAndExecuteOne('DELETE FROM comment WHERE comment.commentId = :commentId', ['commentId' => $commentId]);
         // return $comment ;
     }
+    public function updateCommentById(int $commentId, string $comment): void {
+        $comment = $this->databaseService->prepareAndExecuteOne('UPDATE comment SET comment = :comment WHERE commentId = :commentId', ['commentId' => $commentId, 'comment'=> $comment]);
+    }
 
     public function getNoValidatedComment():array{
     
-        $comments = $this->databaseService->query('SELECT comment.commentId, comment.comment, comment.isValidated, comment.userId, user.nickname FROM comment JOIN user ON comment.userId = user.userId WHERE comment.isValidated = "0" ');        return $comments ;
+        $comments = $this->databaseService->query('SELECT comment.commentId, comment.comment, comment.isValidated, comment.postId, comment.userId, user.nickname FROM comment JOIN user ON comment.userId = user.userId WHERE comment.isValidated = "0" ');        
+        return $comments ;
     }
 }  

@@ -22,12 +22,22 @@ function deleteCommentDialog(commentId)
     });
 }
 
-function updateCommentDialog()
-{
-    const dialog = document.getElementById('addCommentDialog');
-    const closeButton = document.getElementById('deleteCommentIcon');
-        dialog.showModal();
+function updateCommentDialog(commentId, commentText) {
+    console.log(commentId);
+    console.log(commentText);
+    const dialog = document.getElementById('updateCommentDialog');
+    const commentIdInput = dialog.querySelector('input[name="commentId"]');
+    const commentContent = document.getElementById('commentContent');
+    const closeButton = document.getElementById('commentDialogBtnClose');
+    
+    // Injecter l'ID et le texte du commentaire dans les champs du formulaire
+    commentIdInput.value = commentId;
+    commentContent.value = commentText;
+    
+    // Ouvrir le dialogue
+    dialog.showModal();
+    
     closeButton.addEventListener("click", () => {
-    dialog.close();
+        dialog.close();
     });
 }

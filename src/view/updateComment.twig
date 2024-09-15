@@ -1,0 +1,10 @@
+<div id="commentDialogBtnClose" class="center-yz">
+    <i class="fa-solid fa-xmark" onclick="document.getElementById('updateCommentDialog').close()"></i>
+</div>
+<!-- Code spécifique pour le dialogue "updateCommentDialog" -->
+<form  method="POST" action="/updateComment">
+    <input type="hidden" name="commentId" id="commentIdInput">
+    <textarea id="commentContent" name="comment"></textarea>
+    <button id="updateCommentDialogBtnClose" type="button">Fermer</button>
+    <button type="submit">Modifier</button>
+</form>

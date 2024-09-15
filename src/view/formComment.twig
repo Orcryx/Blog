@@ -1,34 +1,21 @@
 <div id="commentDialogBtnClose" class="center-yz">
     <i class="fa-solid fa-xmark"></i>
 </div>
-{% if dialogId == 'addCommentDialog' %}
+
   <!-- Code spécifique pour le dialogue "addCommentDialog" -->
-    <p>Formulaire pour ajouter un commentaire</p>
- <form method="POST" action="/addComment">
+  <p>Formulaire pour ajouter un commentaire</p>
+  <form method="POST" action="/addComment">
     <div class="hidden">
-        <input type="text" id="postId" name="postId" value="{{post.postId}}" class="hidden"/>
-        <input type="text" id="nickname" name="nickname" value="{{session.user.nickname}}"/>
-        <input type="text" id="userId" name="userId" value="{{session.user.userId}}"  class="hidden" />
+      <input type="hidden" id="postId" name="postId" value="{{ post.postId }}" class="hidden"/>
+      <input type="hidden" id="userId" name="userId" value="{{ session.user.userId }}" class="hidden" />
     </div>
-    <div id="textareaZone"class="flex-column">
-        <label for="comment">Message:</label>
-        <textarea id="comment" name="comment"></textarea>
+    <div id="textareaZone" class="flex-column">
+      <label for="nickname">Pseudo:</label>
+      <input type="text" id="nickname" name="nickname" value="{{ session.user.nickname }}" readonly />
+      
+      <label for="comment">Message:</label>
+      <textarea id="comment" name="comment"></textarea>
     </div>
-        <button id="comment-btn" type="submit">Soumettre</button>
-</form>
-{% elseif dialogId == 'deleteCommentDialog' %}
-  <!-- Code spécifique pour le dialogue "deleteCommentDialog" -->
-   <form method="POST" action="/deleteComment">
-    <input type="hidden" name="dialogId" value="{{ dialogId }}">
-    <p>Formulaire pour supprimer un commentaire</p>
-    <p>{{comment.nickname}}</p>
-    <p>{{ comment.comment }}</p>
-    <!-- Le reste du formulaire pour supprimer un commentaire -->
+    <button id="comment-btn" type="submit">Soumettre</button>
   </form>
-{% else %}
-  <!-- Code pour les autres cas ou message d'erreur -->
-  <form>
-    <p>Erreur: le type de dialogue n'est pas reconnu.</p>
-    <!-- Le reste du formulaire ou message d'erreur -->
-  </form>
-{% endif %}
+

@@ -30,13 +30,13 @@ class CommentModel{
     public static function createFromEntities(array $commentEntities): array {
         $commentModelsNoValidated=[];
 
-        foreach ($commentEntities as $comment) {
+        foreach ($commentEntities as $commentEntity) {
             $commentModelsNoValidated[] = new self(
-                $comment->commentId,
-                $comment->comment,
-                $comment->postId,
-                $comment->nickname,
-                $comment->userId
+                $commentEntity->commentId,
+                $commentEntity->comment,
+                $commentEntity->postId,
+                $commentEntity->nickname,
+                $commentEntity->userId
             );
         }
         return  $commentModelsNoValidated;
