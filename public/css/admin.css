@@ -1,0 +1,89 @@
+h2, p, label{
+    color: var(--colorTextDark);
+}
+
+#dashboard{
+    position: relative;
+
+    height: 100%;
+    
+    /* border: 1px solid red; */
+}
+
+#tabs-container
+{
+    width: 100%;
+    margin: 10px 10px 0 0;
+
+    gap: 3px;
+    /* border: 1px solid aquamarine; */
+
+}
+
+#comment-icon
+{
+    width: 30%;
+    
+    justify-content: baseline;
+    gap: 20px;
+
+    padding-left: 10px;
+
+    color: var(--colorIcon);
+}
+
+#comment-zone
+{
+    overflow-y: scroll;
+    height: 92%;
+}
+
+
+/**LES CLASS**/
+
+.tabs
+{
+    font-weight: bold;
+    
+    padding: 20px;
+
+    border: none;
+    border-radius: 5px 5px 0 0;
+}
+
+.active
+{
+    background-color: var(--colorExtra);
+    
+    color: var(--colorTextWhite);
+ 
+}
+
+.content-dashboard
+{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+
+    opacity: 0;
+
+    padding: 20px;
+
+    /* border: 1px solid salmon; */
+}
+
+.activeContent
+{
+    animation : fade 0.5s forwards;
+}
+
+@keyframes fade {
+    from
+    {
+        opacity : 0;
+    }
+    to
+    {
+        opacity : 1;
+    }
+}
