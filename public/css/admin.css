@@ -7,6 +7,8 @@ h2, p, label{
 
     height: 100%;
     
+    overflow: hidden;
+
     /* border: 1px solid red; */
 }
 
@@ -29,7 +31,7 @@ h2, p, label{
 
     padding-left: 10px;
 
-    color: var(--colorIcon);
+    color: var(--colorExtra);
 }
 
 #comment-zone
@@ -38,6 +40,47 @@ h2, p, label{
     height: 92%;
 }
 
+#edition-zone
+{
+    width: 80%;
+    height: 92%;
+}
+#edition-zone form
+{
+    display: flex;
+    flex-direction: column;
+
+    height: 80%;
+
+    margin-top: 50px;
+    margin-left: 20%;
+
+}
+
+#edition-zone input
+{
+    margin-bottom: 10px;
+
+}
+
+
+#textarea-post
+{
+    height: 300px;
+}
+
+#addPost-btn
+{
+    background-color: var(--colorExtra);  
+    color: var(--colorTextWhite);
+
+    width: 33%;
+    height: 50px;
+
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+}
 
 /**LES CLASS**/
 

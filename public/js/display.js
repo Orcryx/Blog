@@ -2,7 +2,7 @@ function addCommentDialog()
 {
     const dialog = document.getElementById('addCommentDialog');
     const closeButton = document.getElementById('commentDialogBtnClose');
-        dialog.showModal();
+    dialog.showModal();
     closeButton.addEventListener("click", () => {
     dialog.close();
     });
@@ -13,11 +13,27 @@ function deleteCommentDialog(commentId)
     const dialog = document.getElementById('deleteCommentDialog');
     const commentIdInput = dialog.querySelector('input[name="commentId"]');
     const closeButton = document.getElementById('commentDialogBtnClose');
-        // Injecter l'ID du commentaire dans le champ caché du formulaire
-        commentIdInput.value = commentId;
-        // Ouvrir le dialogue
-        dialog.showModal();
+    // Injecter l'ID du commentaire dans le champ caché du formulaire
+    commentIdInput.value = commentId;
+    // Ouvrir le dialogue
+    dialog.showModal();
     closeButton.addEventListener("click", () => {
+    dialog.close();
+    });
+}
+
+function validNewCommentDialog(commentId)
+{
+    const dialog = document.getElementById('valdidNewCommentDialog');
+    const commentIdInput = dialog.querySelector('input[name="commentId"]');
+    const closeButton = document.getElementById('commentDialogBtnClose');
+    // Injecter l'ID du commentaire dans le champ caché du formulaire
+    commentIdInput.value = commentId;
+    // Ouvrir le dialogue
+    dialog.showModal();
+    closeButton.addEventListener("click", () => {
+        console.log(dialog);
+        console.log(closeButton);
     dialog.close();
     });
 }

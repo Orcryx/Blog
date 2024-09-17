@@ -15,10 +15,13 @@
 
  {% block dialogue %}
   <dialog id="addCommentDialog">
-    {% include 'formComment.twig' with {'dialogId': 'addCommentDialog'} %}
+    {% include 'formComment.twig' %}
   </dialog>
   <dialog id="deleteCommentDialog">
-    {% include 'deleteComment.twig' with { 'dialogId': 'deleteCommentDialog', 'id': 'id' } %}
+    {% include 'deleteComment.twig'%}
+  </dialog>
+  <dialog id="updateCommentDialog">
+    {% include 'updateComment.twig'  %}
   </dialog>
  {% endblock %}
 {% block content %}
@@ -58,8 +61,9 @@
           <div class="comment">
                {% if comment.isOwner %}
                   <div id="comment-manager" class="flex-around">
-                      <i class="fa-solid fa-pencil" id="updateCommentIcon" onclick="updateCommentDialog()"></i>
-                      <i class="fa-solid fa-trash-can" id="deleteCommentIcon" onclick="deleteCommentDialog('{{ comment.commentId }}')"></i>                  </div>
+                      <i class="fa-solid fa-pencil" id="updateCommentIcon" onclick="updateCommentDialog('{{ comment.commentId }}', '{{ comment.comment | e('js') }}')"></i>
+                      <i class="fa-solid fa-trash-can" id="deleteCommentIcon" onclick="deleteCommentDialog('{{ comment.commentId }}')"></i>                  
+                      </div>
               {% endif %} 
             <p>{{comment.nickname}}</p>
             <p>{{ comment.comment }}</p>
