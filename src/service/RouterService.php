@@ -127,8 +127,6 @@ class RouterService
                             $commentId = $_POST['commentId'];
                             // Appeler la méthode pour supprimer le commentaire
                             $result = $commentController->deleteComment($commentId);
-                            
-                           // echo $result;
                         }
                     }
                 break;
@@ -143,8 +141,6 @@ class RouterService
                             $comment = $_POST['comment'];
                             // Appeler la méthode pour modifier le commentaire
                             $result = $commentController->updateComment($commentId, $comment);
-                            
-                           // echo $result;
                         }
                     }
                 break;
@@ -152,13 +148,10 @@ class RouterService
                     return $this->twigService->render('contact_include.twig');
                     // Vérifie si le formulaire est soumis
                     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
                         // Récupérer les données du formulaire
                         $email = htmlspecialchars(trim($_POST['user-mail']));
                         $message = htmlspecialchars(trim($_POST['user-msg']));
-                     
                         return $this->twigService->render();
-
                     }
                 break;
                 case '/admin':
@@ -168,9 +161,80 @@ class RouterService
                     $commentManager = new CommentManager($commentRepo);
                     $AdminController = new AdminController($commentManager, $this->twigService, $userService);
                 
-                    
                     $AdminController->dashboardAdmin();
-                
+                break;
+                case '/validNewComment':
+                        // Instancier les services nécessaires
+                        $dataBD = new DatabaseService();
+                        $commentRepo = new CommentRepository($dataBD);
+                        $commentManager = new CommentManager($commentRepo);
+                        $commentController = new CommentController($commentManager, $this->twigService);
+                        if (isset($_POST['commentId'])){
+                            $commentId = $_POST['commentId'];
+                            // Appeler la méthode pour modifier le commentaire
+                            $result = $commentController->publishComment($commentId);
+                        }
+                break;
+                case '/createPost':
+                    $dataBD = new DatabaseService();
+                    $postRepo = new PostRepository($dataBD);
+                    $postManager = new PostManager($postRepo);
+                    $commentRepo = new CommentRepository($dataBD);
+                    $commentManager = new CommentManager($commentRepo);  
+                    $postController = new PostController($postManager, $commentManager, $this->twigService, $userService );
+                    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                        
+                        // Récupérer les données du formulaire (titre, contenun, userId)
+                        $title = $_POST['title'] ?? null;
+                        $message = $_POST['content'] ?? null;
+                        $userId = $_POST['userId'] ?? null;
+
+                        // Validation des données
+                        if (empty($title) || empty($message)) {
+                            echo $this->twigService->render('message.twig', ['message' => 'Le titre et le contenu sont obligatoires.']);
+                            return;
+                        }
+
+                        //créer la date de publication de l'article 
+                        $date = new \DateTime();
+
+                        // Formatage de la date au format désiré 'Y-m-d H:i:s'
+                        $createdAt = $date->format('Y-m-d H:i:s');
+                        $postController->createOnePost($title, $message, $userId, $createdAt);
+                    }
+                break;
+                case '/deletePost':
+                    $dataBD = new DatabaseService();
+                    $postRepo = new PostRepository($dataBD);
+                    $postManager = new PostManager($postRepo);
+                    $commentRepo = new CommentRepository($dataBD);
+                    $commentManager = new CommentManager($commentRepo);  
+                    $postController = new PostController($postManager, $commentManager, $this->twigService, $userService );
+                 
+                    if (isset($_POST['postId'])){
+                        $postId = $_POST['postId'];
+                        $postController->deleteOnePost($postId);
+                    }
+                break;
+                case '/updatePost':
+                    $dataBD = new DatabaseService();
+                    $postRepo = new PostRepository($dataBD);
+                    $postManager = new PostManager($postRepo);
+                    $commentRepo = new CommentRepository($dataBD);
+                    $commentManager = new CommentManager($commentRepo);  
+                    $postController = new PostController($postManager, $commentManager, $this->twigService, $userService );
+                    
+                    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                        
+                        // Récupérer les données du formulaire (titre, message ,postId)
+                        $postId = $_POST['postId'] ?? null;
+                        $title = $_POST['postTitle'] ?? null;
+                        $message = $_POST['postMessage'] ?? null;
+
+                        echo("je suis ID : . $postId. Je suis le titre du post : .$title. Je suis le message : .$message  ");
+
+                        $postController->updateOnePost($postId, $message, $title);
+                    }
                 break;
                 case '/test':
                     return $this->twigService->render('test.twig');

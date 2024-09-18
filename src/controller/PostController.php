@@ -61,6 +61,20 @@ class PostController
      }
 
 
+     public function createOnePost(string $title, string $message, int $userId, string $createdAt): void
+     {
+        $this->postManager->createOnePost($title, $message, $userId, $createdAt ); 
+     }
+
+     public function deleteOnePost(int $postId) : void
+     {
+         $this->postManager->deletePostById($postId); 
+     }
+  
+     public function updateOnePost(int $postId, string $title, string $message) : void
+     {
+         $this->postManager->updateOnePostById($postId, $title, $message); 
+     }
   
 
 }

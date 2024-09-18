@@ -29,7 +29,6 @@ class CommentRepository {
         ];
 
         $newcomment = $this->databaseService->prepareAndExecute('INSERT INTO comment (comment, isValidated, userId, postId) VALUES (:comment, :isValidated, :userId, :postId)',$params);
-        var_dump($newcomment);
         if ($newcomment === false) {
             echo"Echec de la requête SQL Insert Into";
             exit;
@@ -53,5 +52,11 @@ class CommentRepository {
     
         $comments = $this->databaseService->query('SELECT comment.commentId, comment.comment, comment.isValidated, comment.postId, comment.userId, user.nickname FROM comment JOIN user ON comment.userId = user.userId WHERE comment.isValidated = "0" ');        
         return $comments ;
+    }
+
+    public function publishCommentById(int $commentId): void {
+        $isValidated = 1; 
+        $comment = $this->databaseService->prepareAndExecuteOne('UPDATE comment SET isvalidated = :isValidated  WHERE comment.commentId = :commentId',  ['isValidated' => $isValidated, 'commentId' => $commentId]);
+        // return $comment ;
     }
 }  

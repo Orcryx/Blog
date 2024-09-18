@@ -38,4 +38,19 @@ class PostManager {
         }
         return false;
     }
+
+    public function createOnePost(string $title, string $message, int $userId, string  $createdAt) : void
+    {
+        $this->postRepository->createOnePost($title, $message, $userId, $createdAt);
+    }
+
+    public function deletePostById( int $postId) : void
+    {
+        $this->postRepository->deletePostById($postId);
+    }
+    
+    public function updateOnePostById(int $postId, string $title, string $message) : void
+    {
+        $this->postRepository->updateOnePostByI($postId, $title, $message);
+    }
 }

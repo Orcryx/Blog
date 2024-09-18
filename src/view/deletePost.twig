@@ -1,0 +1,9 @@
+<div id="DialogBtnClose" class="center-yz">
+    <i class="fa-solid fa-xmark" onclick="document.getElementById('deletePostDialog').close()"></i>
+</div>
+  <!-- Code spécifique pour le dialogue "deletePostDialog" -->
+<form method="POST" action="/deletePost">
+    <input type="hidden" name="postId"> 
+    <p>Êtes-vous sûr de vouloir supprimer le commentaire ?</p>
+    <button id="post-btn" type="submit">Supprimer</button>
+</form>

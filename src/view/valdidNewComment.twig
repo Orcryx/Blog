@@ -1,0 +1,9 @@
+<div id="commentDialogBtnClose" class="center-yz">
+    <i class="fa-solid fa-xmark" onclick="document.getElementById('validNewCommentDialog').close()"></i>
+</div>
+  <!-- Code spécifique pour le dialogue "validNewCommentDialog" -->
+<form method="POST" action="/validNewComment">
+    <input type="hidden" name="commentId"> 
+    <p>Êtes-vous sûr de vouloir publier le commentaire ?</p>
+    <button id="comment-btn" type="submit">Publier</button>
+</form>

@@ -23,6 +23,12 @@
   <dialog id="updateCommentDialog">
     {% include 'updateComment.twig'  %}
   </dialog>
+  <dialog id="updatePostDialog">
+    {% include 'updatePost.twig'  %}
+  </dialog>
+  <dialog id="deletePostDialog">
+    {% include 'deletePost.twig'%}
+  </dialog>
  {% endblock %}
 {% block content %}
 
@@ -46,8 +52,8 @@
       </article>
       {% if isAuthor%}
         <div id="article-manager" class="flex-around">
-            <a href="#" alt="Modifier un article"><i class="fa-solid fa-pencil"></i></a>
-            <a href="#" alt="Supprimer un article"><i class="fa-solid fa-trash-can"></i></a>
+            <a href="#" alt="Modifier un article" onclick="updatePostDialog('{{ post.postId }}', '{{ post.message | e('js') }}', '{{ post.title | e('js') }}')"><i class="fa-solid fa-pencil"></i></a>
+            <a href="#" alt="Supprimer un article" onclick="deletePostDialog('{{post.postId}}')"><i class="fa-solid fa-trash-can"></i></a>
         </div>
       {% endif %}
     </div>

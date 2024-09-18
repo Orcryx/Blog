@@ -124,6 +124,7 @@ class UserService
         exit();
     }
 
+
     public function getUserSession(): UserSessionModel | null 
     {
         if (isset($_SESSION['user']) && $_SESSION['user'] instanceof UserSessionModel) 
@@ -135,5 +136,6 @@ class UserService
             return null; // Retourner null si aucun utilisateur n'est connecté
         }
     }
+
 
 }

@@ -29,6 +29,38 @@ class PostRepository {
     }
 
 
+    public function createOnePost(string $title, string $message, int $userId, string $createdAt): void {
+     
+        $params = [
+            ':title' => $title,
+            ':message' => $message,
+            ':userId' => $userId,
+            ':createdAt' => $createdAt  // Correction ici: s'assurer que 'createdAt' est bien identique à celui de la requête
+        ];
+    
+        // Préparer et exécuter la requête
+        $newpost = $this->databaseService->prepareAndExecute(
+            'INSERT INTO post (title, message, userId, createAt) VALUES (:title, :message, :userId, :createdAt)',
+            $params
+        );
+    
+   
+        if ($newpost === false) {
+            echo "Echec de la requête SQL Insert Into";
+            exit;
+        }
+    }
+
+    public function deletePostById(int $postId) : void
+    {
+        $post = $this->databaseService->prepareAndExecuteOne('DELETE FROM post WHERE post.postId = :postId', ['postId' => $postId]);
+    }
+
+    public function updateOnePostByI(int $postId, string $title, string $message) : void
+    {
+       
+        $post = $this->databaseService->prepareAndExecuteOne('UPDATE post SET title = :title, message = :message WHERE postId = :postId', ['postId'=>$postId, 'title' => $title, 'message' =>$message]);
+    }
 
 }  
 

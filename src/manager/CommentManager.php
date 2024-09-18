@@ -54,4 +54,9 @@ class CommentManager {
         return  CommentModel::createFromEntities($commentNoValidatedEntities);
     }
 
+    public function publishCommentById(int $commentId) : void
+    {
+        $this->commentRepository->publishCommentById($commentId);
+    }
+
 }

@@ -36,4 +36,9 @@ class UserSessionModel{
         $this->isOwer = $isOwner;
     }
 
+    public function getUserId()
+    {
+       return $this->userId;
+    }
+
 }

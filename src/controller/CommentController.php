@@ -31,4 +31,10 @@ class CommentController
         $updateComment = $this->commentManager->updateCommentById($commentId, $comment);
         return $this->twigService->render('message.twig', ['message' => $updateComment]);
     }
+
+    public function publishComment(int $commentId) : string
+    {
+        $publishComment = $this->commentManager->publishCommentById($commentId);
+        return $this->twigService->render('message.twig', ['message' => $publishComment]);
+    }
 }

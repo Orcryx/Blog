@@ -1,0 +1,11 @@
+<div id="DialogBtnClose" class="center-yz">
+    <i class="fa-solid fa-xmark" onclick="document.getElementById('updatePostDialog').close()"></i>
+</div>
+<!-- Code spécifique pour le dialogue "updatePostDialog" -->
+<form  method="POST" action="/updatePost">
+    <input type="hidden" name="postId" id="postIdInput">
+    <input name="postTitle" id="postTitle">
+    <textarea id="postMessage" name="postMessage"></textarea>
+    <button id="updatePostDialogBtnClose" type="button">Fermer</button>
+    <button type="submit">Modifier</button>
+</form>
