@@ -108,6 +108,8 @@ h2, p, label{
     top: 0px;
     left: 0px;
 
+    display: none;
+
     opacity: 0;
 
     padding: 20px;
@@ -117,6 +119,7 @@ h2, p, label{
 
 .activeContent
 {
+    display: block;
     animation : fade 0.5s forwards;
 }
 
@@ -128,5 +131,5 @@ h2, p, label{
     to
     {
         opacity : 1;
-    }
+    } 
 }
