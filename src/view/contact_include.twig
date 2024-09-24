@@ -1,45 +1,40 @@
-
 {% extends "layout.twig" %}
 {% block title %}Page contact du {% endblock %}
 {% block css %}
   <link rel="stylesheet" href="../../public/css/profil.css"/>
 {% endblock %}
-
 {% block js %}{% endblock %}
-
-
 {% block dialogue %}{% endblock %}
  
 {% block content %}
   <div id="content">
     <div id="blurred">
       <div id="contact" class="flex-column">
-          <p>Ecrivez moi !</p>
-          <form id="contact-form" action="mailto:contact@example.com" method="get" enctype="text/plain">
+          <p>Écrivez-moi !</p>
+          <form id="contact-form" action="/contact" method="POST">
+                <input type="hidden" name="formType" value="contact">  <!-- Champ caché -->
+
                 <div class="form-field">
-                    <label for="name">Nom:</label>
-                    <input type="text" id="name" name="name" required>
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
                 </div>
 
                 <div class="form-field">
-                    <label for="subject">Sujet:</label>
-                    <input type="text" id="subject" name="subject" required>
+                    <label for="message">Message:</label>
+                    <textarea id="message" name="message" required></textarea>
                 </div>
 
                 <div class="form-field">
-                    <label for="body">Message:</label>
-                    <textarea id="body" name="body" required></textarea>
-                </div>
-
-                <div class="form-field">
-                    <button type="submit">Envoyer un e-mail</button>
+                    <button type="submit">Envoyer</button>
                 </div>
             </form>
+            
+            {% if app.request.query.get('success') == '1' %}
+                <p>Merci, votre message a bien été envoyé.</p>
+            {% endif %}
       </div>
-        <a href="/" alt="lien vers la page d'accueil" class="button-blog"><i class="fa-solid fa-house"></i>Index</a>
+      <a href="/" alt="Lien vers la page d'accueil" class="button-blog"><i class="fa-solid fa-house"></i>Index</a>
     </div>
  </div>
-
-
-
 {% endblock %}
+

@@ -4,6 +4,7 @@ namespace App\service;
 
 use App\controller\CommentController;
 use App\controller\PostController;
+use App\controller\ContactController;
 use App\manager\PostManager;
 use App\repository\PostRepository;
 
@@ -64,7 +65,21 @@ class RouterService
             case '/':
                 return $this->twigService->render('index.twig');
             break;
+            case '/contact':
+                $contactController = new ContactController($this->twigService);
 
+                if ($isMethodPost) {
+                    // Récupérer les données du formulaire
+                    $email = htmlspecialchars(trim($_POST['email'] ?? ''));
+                    $message = htmlspecialchars(trim($_POST['message'] ?? ''));
+
+                    // Appeler la méthode sendEmail
+                    $contactController->sendEmail($email, $message);
+                } else {
+                    // Afficher le formulaire de contact
+                    return $contactController->getForm();
+                }
+            break;
             case '/blog':
                 $dataBD = new DatabaseService();
                 $postRepo = new PostRepository($dataBD);
@@ -194,13 +209,18 @@ class RouterService
                             echo $this->twigService->render('message.twig', ['message' => 'Le titre et le contenu sont obligatoires.']);
                             return;
                         }
+                        else
+                        {
+                             //créer la date de publication de l'article 
+                            $date = new \DateTime();
 
-                        //créer la date de publication de l'article 
-                        $date = new \DateTime();
+                            // Formatage de la date au format désiré 'Y-m-d H:i:s'
+                            $createdAt = $date->format('Y-m-d H:i:s');
+                            $postController->createOnePost($title, $message, $userId, $createdAt);
+                            echo $this->twigService->render('message.twig', ['message' => 'Article ajouté']);
+                        }
 
-                        // Formatage de la date au format désiré 'Y-m-d H:i:s'
-                        $createdAt = $date->format('Y-m-d H:i:s');
-                        $postController->createOnePost($title, $message, $userId, $createdAt);
+                       
                     }
                 break;
                 case '/deletePost':
@@ -230,8 +250,6 @@ class RouterService
                         $postId = $_POST['postId'] ?? null;
                         $title = $_POST['postTitle'] ?? null;
                         $message = $_POST['postMessage'] ?? null;
-
-                        echo("je suis ID : . $postId. Je suis le titre du post : .$title. Je suis le message : .$message  ");
 
                         $postController->updateOnePost($postId, $message, $title);
                     }
