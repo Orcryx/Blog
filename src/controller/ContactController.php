@@ -29,8 +29,8 @@ class ContactController
                     $mail->isSMTP();
                     $mail->Host = 'smtp.gmail.com';
                     $mail->SMTPAuth = true;
-                    $mail->Username = 'lauryanndev@gmail.com';  
-                    $mail->Password = 'MmdpG082023.';  // Votre mot de passe ou mot de passe d'application
+                    $mail->Username = 'lauryanndev';  
+                    $mail->Password = '';  //mot de passe d'application
                     $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
                     $mail->Port = 587;
 
