@@ -14,27 +14,27 @@ class CommentController
         $this->twigService = $twigService;
     }
 
-    public function addComment(int $postId, string $comment, int $userId, bool $isValidated): string
+    public function addComment(int $postId, string $comment, int $userId, bool $isValidated): void
     {
-        $newComment = $this->commentManager->addCommentByPostId($postId, $comment, $userId, $isValidated);
-        return $this->twigService->render('message.twig', ['message' => $newComment]);
+       $this->commentManager->addCommentByPostId($postId, $comment, $userId, $isValidated);
+        // return $this->twigService->render('message.twig', ['message' => $newComment]);
     }
 
-    public function deleteComment(int $commentId) : string
+    public function deleteComment(int $commentId) : void
     {
-        $deleteComment = $this->commentManager->deleteCommentById($commentId);
-        return $this->twigService->render('message.twig', ['message' => $deleteComment]);
+         $this->commentManager->deleteCommentById($commentId);
+        // return $this->twigService->render('message.twig', ['message' => $deleteComment]);
     }
 
-    public function updateComment(int $commentId, string $comment) : string
+    public function updateComment(int $commentId, string $comment) : void
     {
-        $updateComment = $this->commentManager->updateCommentById($commentId, $comment);
-        return $this->twigService->render('message.twig', ['message' => $updateComment]);
+       $this->commentManager->updateCommentById($commentId, $comment);
+        // return $this->twigService->render('message.twig', ['message' => $updateComment]);
     }
 
-    public function publishComment(int $commentId) : string
+    public function publishComment(int $commentId) : void //string si message
     {
-        $publishComment = $this->commentManager->publishCommentById($commentId);
-        return $this->twigService->render('message.twig', ['message' => $publishComment]);
+         $this->commentManager->publishCommentById($commentId);
+        // return $this->twigService->render('message.twig', ['message' => $publishComment]);
     }
 }

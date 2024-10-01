@@ -15,6 +15,14 @@ class MessageService
 
     public function __construct(private readonly TwigService $twigService) {}
 
+     /**
+     * Getter pour TwigService
+     */
+    public function getTwigService(): TwigService
+    {
+        return $this->twigService;
+    }
+
     /**
      * Retourne un message d'alerte ou une chaîne vide
      * @param string|null $message

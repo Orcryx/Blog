@@ -5,6 +5,7 @@ use App\service\TwigService;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
+
 class ContactController
 {
     public function __construct(private readonly TwigService $twigService)
@@ -22,16 +23,18 @@ class ContactController
         if (!empty($email) && !empty($message)) {
             if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
 
-                $mail = new PHPMailer(true);
+                $mail = new PHPMailer();
+                //$mail->SMTPDebug = 3; // Active le débogage 
+           
 
                 try {
                     // Configuration du serveur SMTP
                     $mail->isSMTP();
-                    $mail->Host = 'smtp.gmail.com';
+                    $mail->Host = 'sandbox.smtp.mailtrap.io';
                     $mail->SMTPAuth = true;
-                    $mail->Username = 'lauryanndev';  
-                    $mail->Password = '';  //mot de passe d'application
-                    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+                    $mail->Username = '08883ea9ebf495';  
+                    $mail->Password = '5713b06b0eed8c';  //mot de passe d'application
+                    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; 
                     $mail->Port = 587;
 
                     // Destinataire et expéditeur
