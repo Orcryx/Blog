@@ -31,9 +31,16 @@ class RouterService
     {
         $path = explode('?', $uri)[0];
         //$environnement = $_SERVER["REQUEST_URI"];
+
+        //Préparer les class du projet
         $dataBD = new DatabaseService();
         $userRepo = new UserRepository($dataBD);
         $userService = new UserService($userRepo);
+        $postRepo = new PostRepository($dataBD);
+        $postManager = new PostManager($postRepo);
+        $commentRepo = new CommentRepository($dataBD);
+        $commentManager = new CommentManager($commentRepo);  
+
        
         $isMethodPost = $_SERVER['REQUEST_METHOD'] === 'POST';
         if ($isMethodPost)
@@ -80,13 +87,8 @@ class RouterService
                     return $contactController->getForm();
                 }
             break;
-            case '/blog':
-                $dataBD = new DatabaseService();
-                $postRepo = new PostRepository($dataBD);
-                $postManager = new PostManager($postRepo);
-                $commentRepo = new CommentRepository($dataBD);
-                $commentManager = new CommentManager($commentRepo);  
-                $blogController = new PostController($postManager, $commentManager, $this->twigService, $userService );
+            case '/blog': 
+                 $blogController = new PostController($postManager, $commentManager, $this->twigService, $userService );
             
                 if ($id !==null) {
                     //echo "ID de la page .$id";
@@ -109,9 +111,7 @@ class RouterService
             break;
             case '/addComment':
                 if ($isMethodPost) {
-                    $dataBD = new DatabaseService();
-                    $commentRepo = new CommentRepository($dataBD);
-                    $commentManager = new CommentManager($commentRepo);
+               
                     $commentController = new CommentController($commentManager, $this->twigService);
                     if (isset($_POST['comment']) && isset($_POST['postId']) && isset($_POST['userId'])) {
                         $commentText = $_POST['comment'];
@@ -134,9 +134,7 @@ class RouterService
                 break;
                 case '/deleteComment':
                     if ($isMethodPost) {
-                        $dataBD = new DatabaseService();
-                        $commentRepo = new CommentRepository($dataBD);
-                        $commentManager = new CommentManager($commentRepo);
+          
                         $commentController = new CommentController($commentManager, $this->twigService);
                         if (isset($_POST['commentId'])){
                             $commentId = $_POST['commentId'];
@@ -147,9 +145,7 @@ class RouterService
                 break;
                 case '/updateComment':
                     if ($isMethodPost) {
-                        $dataBD = new DatabaseService();
-                        $commentRepo = new CommentRepository($dataBD);
-                        $commentManager = new CommentManager($commentRepo);
+               
                         $commentController = new CommentController($commentManager, $this->twigService);
                         if (isset($_POST['commentId'])){
                             $commentId = $_POST['commentId'];
@@ -170,19 +166,13 @@ class RouterService
                     }
                 break;
                 case '/admin':
-                    // Instancier les services nécessaires
-                    $dataBD = new DatabaseService();
-                    $commentRepo = new CommentRepository($dataBD);
-                    $commentManager = new CommentManager($commentRepo);
+        
                     $AdminController = new AdminController($commentManager, $this->twigService, $userService);
                 
                     $AdminController->dashboardAdmin();
                 break;
                 case '/validNewComment':
-                        // Instancier les services nécessaires
-                        $dataBD = new DatabaseService();
-                        $commentRepo = new CommentRepository($dataBD);
-                        $commentManager = new CommentManager($commentRepo);
+          
                         $commentController = new CommentController($commentManager, $this->twigService);
                         if (isset($_POST['commentId'])){
                             $commentId = $_POST['commentId'];
@@ -191,12 +181,8 @@ class RouterService
                         }
                 break;
                 case '/createPost':
-                    $dataBD = new DatabaseService();
-                    $postRepo = new PostRepository($dataBD);
-                    $postManager = new PostManager($postRepo);
-                    $commentRepo = new CommentRepository($dataBD);
-                    $commentManager = new CommentManager($commentRepo);  
-                    $postController = new PostController($postManager, $commentManager, $this->twigService, $userService );
+               
+                     $postController = new PostController($postManager, $commentManager, $this->twigService, $userService );
                     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         
                         // Récupérer les données du formulaire (titre, contenun, userId)
@@ -224,11 +210,7 @@ class RouterService
                     }
                 break;
                 case '/deletePost':
-                    $dataBD = new DatabaseService();
-                    $postRepo = new PostRepository($dataBD);
-                    $postManager = new PostManager($postRepo);
-                    $commentRepo = new CommentRepository($dataBD);
-                    $commentManager = new CommentManager($commentRepo);  
+              
                     $postController = new PostController($postManager, $commentManager, $this->twigService, $userService );
                  
                     if (isset($_POST['postId'])){
@@ -237,11 +219,7 @@ class RouterService
                     }
                 break;
                 case '/updatePost':
-                    $dataBD = new DatabaseService();
-                    $postRepo = new PostRepository($dataBD);
-                    $postManager = new PostManager($postRepo);
-                    $commentRepo = new CommentRepository($dataBD);
-                    $commentManager = new CommentManager($commentRepo);  
+          
                     $postController = new PostController($postManager, $commentManager, $this->twigService, $userService );
                     
                     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -256,6 +234,10 @@ class RouterService
                 break;
                 case '/test':
                     return $this->twigService->render('test.twig');
+                break;
+                case '/logOut':
+                    $_SESSION['previous_url'] = $_SERVER['HTTP_REFERER'] ?? '/';
+                    $userService->logOut();
                 break;
                 default:
                     http_response_code(404);

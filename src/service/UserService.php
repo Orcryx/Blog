@@ -118,9 +118,11 @@ class UserService
 
     public function logOut():void
     {
+        $previousUrl = $_SESSION['previous_url'] ?? '/';
+
         session_unset(); 
         session_destroy(); 
-        header("Location: {$_SESSION['previous_url']}");
+        header("Location: $previousUrl");
         exit();
     }
 

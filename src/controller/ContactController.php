@@ -36,7 +36,7 @@ class ContactController
                     $mail->Password = '5713b06b0eed8c';  //mot de passe d'application
                     $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; 
                     $mail->Port = 587;
-
+                    
                     // Destinataire et expéditeur
                     $mail->setFrom($email);
                     $mail->addAddress('lauryanndev@gmail.com');  // Votre adresse de réception
