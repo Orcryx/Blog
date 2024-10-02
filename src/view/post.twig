@@ -5,31 +5,11 @@
   <link rel="stylesheet" href="../../public/css/article.css"/>
 {% endblock %}
 
-{% block js %}
-  <script src="../../public/js/display.js" crossorigin="anonymous"></script>
-{% endblock %}
 
 {% block nav %}
   {% include 'navigation_include.twig' %}
 {% endblock %}
 
- {% block dialogue %}
-  <dialog id="addCommentDialog">
-    {% include 'formComment.twig' %}
-  </dialog>
-  <dialog id="deleteCommentDialog">
-    {% include 'deleteComment.twig'%}
-  </dialog>
-  <dialog id="updateCommentDialog">
-    {% include 'updateComment.twig'  %}
-  </dialog>
-  <dialog id="updatePostDialog">
-    {% include 'updatePost.twig'  %}
-  </dialog>
-  <dialog id="deletePostDialog">
-    {% include 'deletePost.twig'%}
-  </dialog>
- {% endblock %}
 {% block content %}
 
   <div id="OneArticle" class="flex">
@@ -52,23 +32,44 @@
       </article>
       {% if isAuthor%}
         <div id="article-manager" class="flex-around">
-            <a href="#" alt="Modifier un article" onclick="updatePostDialog('{{ post.postId }}', '{{ post.message | e('js') }}', '{{ post.title | e('js') }}')"><i class="fa-solid fa-pencil"></i></a>
-            <a href="#" alt="Supprimer un article" onclick="deletePostDialog('{{post.postId}}')"><i class="fa-solid fa-trash-can"></i></a>
+            <form method="POST" action="/action">
+            <div class="hidden">
+                <input type="hidden" name="type" value="updatePost" class="hidden"/>
+                <input type="hidden" id="postId" name="postId" value="{{post.postId }}" class="hidden"/>
+                <input type="hidden" id="userId" name="userId" value="{{session.user.userId }}" class="hidden" />
+              </div>
+            <button type="submit" id="commentAdd-btn" class="center-yz" data-content="addComment">Editer un article</button>
+          </form>
+          <form method="POST" action="/action">
+            <div class="hidden">
+                <input type="hidden" name="type" value="deletePost" class="hidden"/>
+                <input type="hidden" id="postId" name="postId" value="{{post.postId }}" class="hidden"/>
+                <input type="hidden" id="userId" name="userId" value="{{session.user.userId }}" class="hidden" />
+              </div>
+            <button type="submit" id="commentAdd-btn" class="c center-yz">Supprimer un article</button>
+          </form>
         </div>
       {% endif %}
     </div>
     <div id="comment-zone">
       <h2 id="comment-title">Vos commentaires</h2>
       {% if session.status %}
-        <button id="commentAdd-btn" class="center-yz" type="button" onclick="addCommentDialog()">Ajouter un commentaire <i class="fa-solid fa-comment-medical"></i></button>
+      <form method="POST" action="/action">
+         <div class="hidden">
+            <input type="hidden" name="type" value="addComment" class="hidden"/>
+            <input type="hidden" id="postId" name="postId" value="{{post.postId }}" class="hidden"/>
+            <input type="hidden" id="userId" name="userId" value="{{session.user.userId }}" class="hidden" />
+          </div>
+        <button type="submit" id="commentAdd-btn" class="content-button center-yz" data-content="addComment">Ajouter un commentaire <i class="fa-solid fa-comment-medical"></i></button>
+      </form>
       {% endif %}
       {% if comments is not empty %}
         {% for comment in comments %}
           <div class="comment">
                {% if comment.isOwner %}
                   <div id="comment-manager" class="flex-around">
-                      <i class="fa-solid fa-pencil" id="updateCommentIcon" onclick="updateCommentDialog('{{ comment.commentId }}', '{{ comment.comment | e('js') }}')"></i>
-                      <i class="fa-solid fa-trash-can" id="deleteCommentIcon" onclick="deleteCommentDialog('{{ comment.commentId }}')"></i>                  
+                      <i class="fa-solid fa-pencil" id="updateCommentIcon"></i>
+                      <i class="fa-solid fa-trash-can" id="deleteCommentIcon"></i>                  
                       </div>
               {% endif %} 
             <p>{{comment.nickname}}</p>

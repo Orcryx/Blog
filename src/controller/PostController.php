@@ -61,14 +61,61 @@ class PostController
      }
 
 
-     public function createOnePost(string $title, string $message, int $userId, string $createdAt): void
+     public function createOnePost(): void
      {
-        $this->postManager->createOnePost($title, $message, $userId, $createdAt ); 
+        $environnement = "/admin";
+        if (isset($_POST['title'])||isset($_POST['content']) || isset($_POST['userId'])) 
+        {
+              // Récupérer les données du formulaire (titre, contenun, userId)
+              $title = $_POST['title'] ?? null;
+              $message = $_POST['content'] ?? null;
+              $userId = $_POST['userId'] ?? null;
+
+               // Validation des données
+               if (empty($title) || empty($message)) {
+                echo $this->twigService->render('message.twig', ['message' => 'Le titre et le contenu sont obligatoires.', 'origin'=>$environnement]);
+                return;
+            }
+            else
+            {
+                 //créer la date de publication de l'article 
+                $date = new \DateTime();
+
+                // Formatage de la date au format désiré 'Y-m-d H:i:s'
+                $createdAt = $date->format('Y-m-d H:i:s');
+                $this->postManager->createOnePost($title, $message, $userId, $createdAt ); 
+                echo $this->twigService->render('message.twig', ['message' => 'Article ajouté', 'origin'=>$environnement]);
+            }  
+
+        }else
+        {
+            echo $this->twigService->render('message.twig', ['message' => 'Erreur: tous les champs ne sont pas remplis.', 'origin'=>$environnement]);
+
+        }
      }
 
-     public function deleteOnePost(int $postId) : void
+     public function deleteOnePost() : void
      {
-         $this->postManager->deletePostById($postId); 
+        $environnement = "/blog";
+        if (isset($_POST['postId'])){
+            $postId = intval($_POST['postId']);
+            if (!empty($postId)) 
+            {
+                $message = "l'article a été supprimé";
+                $this->postManager->deletePostById($postId);
+            }else
+            {
+                $message = "Echec de la requête.";
+            }
+        }
+        else
+        {
+            // Affichez un message d'erreur si tous les champs requis ne sont pas remplis
+            $message = "Erreur: référence article introuvable.";
+        }
+          // Renvoyer le message avec Twig
+          echo $this->twigService->render('message.twig', ['message' => $message, 'origin'=>$environnement]);
+        
      }
   
      public function updateOnePost(int $postId, string $title, string $message) : void

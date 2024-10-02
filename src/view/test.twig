@@ -1,0 +1,43 @@
+
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exemple de dialogue avec conditions multiples</title>
+</head>
+<body>
+
+    <!-- Bouton pour ouvrir le dialog -->
+    <button id="open-dialog">Ouvrir le dialogue</button>
+    <!-- Déclaration du dialog -->
+    <dialog id="my-dialog">
+        {% if dialogContent == 'valeurX' %}
+            <p>Contenu pour la valeur X.</p>
+        {% elseif dialogContent == 'valeurY' %}
+            <p>Contenu pour la valeur Y.</p>
+        {% elseif dialogContent == 'valeurZ' %}
+            <p>Contenu pour la valeur Z.</p>
+        {% else %}
+            <p>Contenu par défaut du dialogue</p>
+        {% endif %}
+        <button id="close-dialog">Fermer</button>
+    </dialog>
+
+    <script>
+        const dialog = document.getElementById('my-dialog');
+        const openButton = document.getElementById('open-dialog');
+        const closeButton = document.getElementById('close-dialog');
+
+        // Ouvrir le dialog lorsque le bouton est cliqué
+        openButton.addEventListener('click', () => {
+            dialog.showModal();
+        });
+
+        // Fermer le dialog lorsque le bouton est cliqué
+        closeButton.addEventListener('click', () => {
+            dialog.close();
+        });
+    </script>
+
+</body>
+</html>

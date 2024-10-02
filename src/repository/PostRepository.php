@@ -53,6 +53,9 @@ class PostRepository {
 
     public function deletePostById(int $postId) : void
     {
+        // Supprimer d'abord tous les commentaires associés
+        $this->databaseService->prepareAndExecuteOne('DELETE FROM comment WHERE postId = :postId', ['postId' => $postId]);
+
         $post = $this->databaseService->prepareAndExecuteOne('DELETE FROM post WHERE post.postId = :postId', ['postId' => $postId]);
     }
 

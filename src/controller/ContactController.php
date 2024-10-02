@@ -4,12 +4,16 @@ namespace App\controller;
 use App\service\TwigService;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
+use App\service\UserService;
 
 
 class ContactController
 {
+    private UserService $userService;
     public function __construct(private readonly TwigService $twigService)
     {
+        $this->userService = new UserService();
+
     }
 
     // Méthode pour afficher le formulaire
@@ -20,6 +24,8 @@ class ContactController
 
     public function sendEmail(string $email, string $message)
     {
+        $environnement = "/";
+
         if (!empty($email) && !empty($message)) {
             if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
 
@@ -43,21 +49,23 @@ class ContactController
 
                     // Contenu de l'email
                     $mail->isHTML(false);  // Envoyer en texte brut
-                    $mail->Subject = 'Nouveau message de contact du projet Blog';
+                    $mail->Subject = 'Message du projet Blog';
                     $mail->Body = "Email: $email\n\nMessage:\n$message";
 
                     // Envoyer l'email
                     $mail->send();
-                    echo 'Merci, votre message a bien été envoyé.';
+                    $message =  'Merci, votre message a bien été envoyé.';
                 } catch (Exception $e) {
-                    echo "Erreur lors de l'envoi du message. Erreur PHPMailer: {$mail->ErrorInfo}";
+                   $message = "Erreur lors de l'envoi du message. Erreur PHPMailer: {$mail->ErrorInfo}";
                 }
             } else {
-                echo "Veuillez entrer une adresse email valide.";
+                $message = "Veuillez entrer une adresse email valide.";
             }
         } else {
-            echo "Tous les champs sont requis.";
+            $message = "Tous les champs sont requis.";
         }
+        // Renvoyer le message avec Twig
+        echo $this->twigService->render('message.twig', ['message' => $message, 'origin'=>$environnement]);
     }
 }
 

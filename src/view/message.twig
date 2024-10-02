@@ -6,15 +6,11 @@
 
 {% block js %}{% endblock %}
 
-
-{% block dialogue %}{% endblock %}
- 
 {% block content %}
    <!-- Zone pour afficher les messages d'alerte -->
     <div id="content">
         <div id="blurred">
             <!-- Vérification de la présence du message -->
-               <button type="button">X</button>
             {% if message %}
                 <div class="alert alert-warning">
                     {{ message|raw }}  
@@ -23,7 +19,7 @@
                 <p>Aucun message d'alerte trouvé. {{origin}}</p> 
             {% endif %}
             <div id="zoneArrow" class="zoneXmark">
-                <a href="/{{origin}}" alt="lien vers la page administration" class="userConnected"> 
+                <a href="{{origin}}" alt="lien vers la page administration" class="userConnected"> 
                     <i class="fa-solid fa-arrow-left"></i>Retour
                 </a>
             </div>

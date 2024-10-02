@@ -13,18 +13,6 @@
   {% include 'navigation_include.twig' %}
 {% endblock %}
 
-{% block dialogue %}
-  <dialog id="publishCommentDialog">
-    {% include 'formComment.twig' %}
-  </dialog>
-  <dialog id="deleteCommentDialog">
-    {% include './deleteComment.twig' %}
-  </dialog>
-  <dialog id="valdidNewCommentDialog">
-  {% include './valdidNewComment.twig' %}
-</dialog>
- {% endblock %}
-
 {% block content %}
     <div id="tabs-container" class="flex">
       <button type="button" class="tabs active" data-tab="1">Commentaires</button>
@@ -33,7 +21,7 @@
     <div id="dashboard">
       <div id="edition-zone" class="content-dashboard" data-tab="2">
         <h2 id="comment-title">Page d'édition d'un article</h2>
-          <form method="POST" action="/createPost">
+          <form method="POST" action="/Post/post">
             <input type="hidden" id="userId" name="userId" value="{{ session.user.userId }}" class="hidden" />
               <label for="title">Titre</label>
               <input type="text" id="title" name="title" />
@@ -52,8 +40,8 @@
                 <p>{{comment.nickname}}</p>
                 <p>{{ comment.comment }}</p>
                   <div id="comment-icon" class="flex">
-                    <i class="fa-solid fa-check-double" id="publishCommentIcon" onclick="validNewCommentDialog('{{comment.commentId}}')"></i>
-                    <i class="fa-solid fa-trash-can" id="deleteCommentIcon" onclick="deleteCommentDialog('{{ comment.commentId }}')"></i>                  
+                    <i class="fa-solid fa-check-double" id="publishCommentIcon"></i>
+                    <i class="fa-solid fa-trash-can" id="deleteCommentIcon"></i>                  
                   </div>
                   <hr>
          </div>
