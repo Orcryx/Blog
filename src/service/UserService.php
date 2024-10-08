@@ -44,16 +44,14 @@ class UserService
             }
             else
             {
-                echo  "echec de connexion";
-                // $message = MessageService::getMessage("echec de connexion !", MessageService::ALERT_WARNING, $twigService);              
+                 $message = "echec de connexion";
                   $_SESSION['login_attempts']++;
                 if ($_SESSION['login_attempts'] >= 3) {
                      $this->logOut();
                 } else {
-                    echo  "echec de connexion";
-                    // $message = MessageService::getMessage( "Echec d'authentification. Tentative " . $_SESSION['login_attempts'] . " / 3.", MessageService::ALERT_WARNING, $twigService);              
+                    $message =  "echec de connexion";
                     // header("Location: /auth");
-                    // exit();
+                    // exit();  
                 }
                     // Afficher la page de connexion avec le message d'erreur
                     echo $twigService->render('message.twig', ['message' => $message, 'origin' => $_SERVER['REQUEST_URI'] ]);
@@ -61,9 +59,8 @@ class UserService
         }
         else
         {
-            echo  "echec de connexion";
-            // $message = MessageService::getMessage("echec de connexion !", MessageService::ALERT_WARNING, $twigService);              
-            // echo $twigService->render('message.twig', ['message' => $message, 'origin' => $_SERVER['REQUEST_URI'] ]);
+            $message =  "echec de connexion";
+           
 
         }
     }

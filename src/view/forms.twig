@@ -20,10 +20,10 @@
                         </form>
                     {% elseif type == 'addComment' %}
                         <form method="POST" action="/comment/add">
-                            <!-- <div class="hidden"> -->
-                            <input type="text" id="postId" name="postId" value="{{postId}}"/>
-                            <input type="text" id="userId" name="userId" value="{{session.user.userId }}" />
-                            <!-- </div> -->
+                            <div class="hidden">
+                            <input type="hidden" id="postId" name="postId" value="{{postId}}"/>
+                            <input type="hidden" id="userId" name="userId" value="{{session.user.userId }}" />
+                            </div>
                             <div id="addComment" class="flex-column">
                             <label for="nickname">Pseudo:</label>
                             <input type="text" id="nickname" name="nickname" value="{{ session.user.nickname }}" readonly />
@@ -34,23 +34,22 @@
                             <button id="comment-btn" type="submit">Soumettre</button>
                         </form>
                     {% elseif type == 'updateComment' %}
-                        <form  method="POST" action="/updateComment">
-                            <input type="hidden" name="commentId" id="commentIdInput">
-                            <textarea id="commentContent" name="content"></textarea>
+                        <form  method="POST" action="/Comment/update">
+                            <input type="hidden" name="commentId" id="commentIdInput" value="{{commentId}}">
+                            <textarea id="commentContent" name="content">{{ comment }}</textarea>
                             <button type="submit">Modifier</button>
                         </form>
                     {% elseif type == 'updatePost' %}
-                        <form  method="POST" action="/updatePost">
-                            <input type="hidden" name="postId" id="postIdInput">
-                            <input name="title" id="postTitle">
-                            <textarea id="postMessage" name="content"></textarea>
-                            <button type="submit">Modifier</button>
+                        <form  method="POST" action="/Post/put">
+                            <input type="hidden" name="postId" id="postIdInput" value="{{postId}}">
+                            <input name="title" id="postTitle" value="{{ title }}">
+                            <textarea id="postMessage" name="content">{{ comment }}</textarea>                            <button type="submit">Modifier</button>
                         </form>
-                    {% elseif type == 'validNewComment' %}
-                    <form method="POST" action="/validNewComment">
-                        <input type="hidden" name="commentId"> 
+                    <!-- {% elseif type == 'publishComment' %}
+                    <form method="POST" action="/Comment/update">
+                        <input type="hidden" name="commentId" value="commentId"> 
                         <button id="comment-btn" type="submit">Publier</button>
-                    </form>
+                    </form> -->
 
                     <!-- {% elseif type == 'createPost' %}
                      <form method="POST" action="/Post/post">

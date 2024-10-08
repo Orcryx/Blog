@@ -46,7 +46,7 @@ class RouterService
         $form = new ElementsController($this->twigService );
        
         $isMethodPost = $_SERVER['REQUEST_METHOD'] === 'POST';
-        $isMethodGet = $_SERVER['REQUEST_METHOD'] === 'GET';
+        //$isMethodGet = $_SERVER['REQUEST_METHOD'] === 'GET';
         
         // Récupérer l'ID de l'URL s'il est présent
         $queryString = explode('?', $uri)[1] ?? ''; // Obtenir la partie de la chaîne après le '?'
@@ -88,7 +88,6 @@ class RouterService
                     // Récupérer les données du formulaire
                     $email = htmlspecialchars(trim($_POST['email'] ?? ''));
                     $message = htmlspecialchars(trim($_POST['message'] ?? ''));
-
                     // Appeler la méthode sendEmail
                     $contactController->sendEmail($email, $message);
                 } else {
@@ -97,22 +96,19 @@ class RouterService
                 }
             break;
             case '/blog': 
-            
                 if ($id !==null) {
                     //echo "ID de la page .$id";
                     $blogController->displayOnePost($id); 
                 }  else {
-                   
                     $blogController->displayGallery();  
                 }   
             break;
             case '/auth':
                 if (isset($_SERVER['HTTP_REFERER'])) {
                     $_SESSION['previous_url'] = $_SERVER['HTTP_REFERER'];
-                    // echo "si création de previous_url" .$_SESSION['previous_url'];
                 } else {
-                    $_SESSION['previous_url'] = '/auth'; // Page par défaut si HTTP_REFERER n'est pas défini
-                    // echo "si il n'y a pas de previous_url" . $_SESSION['previous_url'];
+                    // Page par défaut si HTTP_REFERER n'est pas défini
+                    $_SESSION['previous_url'] = '/auth'; 
                 }
                 $form->showLoginDialogue($_SESSION['previous_url']);
             break;
@@ -121,91 +117,60 @@ class RouterService
                 {   
                     $commentController->addComment();       
                 } else {
-                    // Gérer l'accès via GET ou d'autres méthodes HTTP
                     echo "Erreur: méthode non autorisée.";
                 }
-                break;
-                case '/deleteComment':
-                    if ($isMethodPost) {
-          
-                        if (isset($_POST['commentId'])){
-                            $commentId = $_POST['commentId'];
-                            // Appeler la méthode pour supprimer le commentaire
-                            $result = $commentController->deleteComment($commentId);
-                        }
-                    }
-                break;
-                case '/updateComment':
-                    if ($isMethodPost) {
-               
-                        if (isset($_POST['commentId'])){
-                            $commentId = $_POST['commentId'];
-                            $comment = $_POST['comment'];
-                            // Appeler la méthode pour modifier le commentaire
-                            $result = $commentController->updateComment($commentId, $comment);
-                        }
-                    }
-                break;
-                case '/contact':
-                    return $this->twigService->render('contact_include.twig');
-                    // Vérifie si le formulaire est soumis
-                    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                        // Récupérer les données du formulaire
-                        $email = htmlspecialchars(trim($_POST['user-mail']));
-                        $message = htmlspecialchars(trim($_POST['user-msg']));
-                        return $this->twigService->render();
-                    }
-                break;
-                case '/admin':
-        
-                    $AdminController = new AdminController($commentManager, $this->twigService, $userService);
-                
-                    $AdminController->dashboardAdmin();
-                break;
-                case '/validNewComment':
-          
-                        $commentController = new CommentController($commentManager, $this->twigService);
-                        if (isset($_POST['commentId'])){
-                            $commentId = $_POST['commentId'];
-                            // Appeler la méthode pour modifier le commentaire
-                            $result = $commentController->publishComment($commentId);
-                        }
-                break;
-                case '/Post/post':
-               
-                    if ($isMethodPost) {
-                        
-                        $postController->createOnePost();
-
-                    }
-                break;
-                case '/Post/delete':
-                 
-                        $postController->deleteOnePost();
+            break;
+            case '/Comment/delete':
+                if ($isMethodPost) 
+                {     
+                  $commentController->deleteComment();
+                }
+            break;
+            case '/Comment/update':
+                if ($isMethodPost) 
+                {
+                  $commentController->updateComment();
+                }
+            break;
+            case '/contact':
+                return $this->twigService->render('contact_include.twig');
+                if ($isMethodPost) {
+                    // Récupérer les données du formulaire
+                    $email = htmlspecialchars(trim($_POST['user-mail']));
+                    $message = htmlspecialchars(trim($_POST['user-msg']));
+                    return $this->twigService->render();
+                }
+            break;
+            case '/admin':
+                $AdminController = new AdminController($commentManager, $this->twigService, $userService);
+                $AdminController->dashboardAdmin();
+            break;
+            case '/Comment/put':
+                    $commentController = new CommentController($commentManager, $this->twigService);
+                    $commentController->publishComment();
+            break;
+            case '/Post/post':
+                if ($isMethodPost) {
+                    $postController->createOnePost();
+                }
+            break;
+            case '/Post/delete':
+                    $postController->deleteOnePost();   
+            break;
+            case '/Post/put':
+                if ($isMethodPost) {
                     
-                break;
-                case '/updatePost':
-                    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                        
-                        // Récupérer les données du formulaire (titre, message ,postId)
-                        $postId = $_POST['postId'] ?? null;
-                        $title = $_POST['postTitle'] ?? null;
-                        $message = $_POST['postMessage'] ?? null;
-
-                        $postController->updateOnePost($postId, $message, $title);
-                    }
-                break;
-                case '/test':
-                    return $this->twigService->render('test.twig');
-                break;
-                case '/logOut':
-                    $_SESSION['previous_url'] = $_SERVER['HTTP_REFERER'] ?? '/';
-                    $userService->logOut();
-                break;
-                default:
-                    http_response_code(404);
-                    echo $this->twigService->render('404.twig'); 
-                break;
+                    $postController->updateOnePost();
+                }
+            break;
+            case '/logOut':
+                $_SESSION['previous_url'] = $_SERVER['HTTP_REFERER'] ?? '/';
+                $userService->logOut();
+            break;
+            default:
+                http_response_code(404);
+                echo $this->twigService->render('404.twig'); 
+            break;
         }
 
     }

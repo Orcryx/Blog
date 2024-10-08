@@ -40,8 +40,16 @@
                 <p>{{comment.nickname}}</p>
                 <p>{{ comment.comment }}</p>
                   <div id="comment-icon" class="flex">
-                    <i class="fa-solid fa-check-double" id="publishCommentIcon"></i>
-                    <i class="fa-solid fa-trash-can" id="deleteCommentIcon"></i>                  
+                    <form method="POST" action="/Comment/put">
+                      <input type="hidden" name="type" value="publishComment" class="hidden"/>
+                      <input type="hidden" id="commentId" name="commentId" value="{{comment.commentId }}" />
+                      <button id="publishComment" type="submit"><i class="fa-solid fa-check-double" id="publishCommentIcon"></i></button>
+                    </form>
+                    <form method="POST" action="/Comment/delete">
+                        <input type="hidden" name="type" value="deleteComment" class="hidden"/>
+                      <input type="hidden" id="commentId" name="commentId" value="{{comment.commentId }}" />
+                     <button id="deleteComment" type="submit"><i class="fa-solid fa-trash-can" id="deleteCommentIcon"></i></button>                 
+                    </form>
                   </div>
                   <hr>
          </div>

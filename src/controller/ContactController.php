@@ -27,6 +27,7 @@ class ContactController
         $environnement = "/";
 
         if (!empty($email) && !empty($message)) {
+            
             if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
 
                 $mail = new PHPMailer();

@@ -56,8 +56,6 @@ class PostController
         {
             echo $this->twigService->render('post.twig',['post' => $articleModel, "comments"=>$commentModels ]);
         }
-
-
      }
 
 
@@ -114,13 +112,26 @@ class PostController
             $message = "Erreur: référence article introuvable.";
         }
           // Renvoyer le message avec Twig
-          echo $this->twigService->render('message.twig', ['message' => $message, 'origin'=>$environnement]);
-        
+          echo $this->twigService->render('message.twig', ['message' => $message, 'origin'=>$environnement]); 
      }
   
-     public function updateOnePost(int $postId, string $title, string $message) : void
+     public function updateOnePost() : void
      {
-         $this->postManager->updateOnePostById($postId, $title, $message); 
+        $environnement = $this->userService->getEnvironnement($_SESSION['previous_url']);
+        if (isset($_POST['title'])||isset($_POST['content']) || isset($_POST['postId'])) 
+        {
+            // Récupérer les données du formulaire (titre, message ,postId)
+            $postId = $_POST['postId'] ?? null;
+            $title = $_POST['title'] ?? null;
+            $message = $_POST['content'] ?? null;
+            $this->postManager->updateOnePostById($postId, $title, $message); 
+        }
+        else
+        {
+            $message = "Echec de la requête.";
+        }
+            // Renvoyer le message avec Twig
+            echo $this->twigService->render('message.twig', ['message' => $message, 'origin'=>$environnement]);  
      }
   
 

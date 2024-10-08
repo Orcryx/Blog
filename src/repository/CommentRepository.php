@@ -56,7 +56,7 @@ class CommentRepository {
 
     public function publishCommentById(int $commentId): void {
         $isValidated = 1; 
-        $comment = $this->databaseService->prepareAndExecuteOne('UPDATE comment SET isvalidated = :isValidated  WHERE comment.commentId = :commentId',  ['isValidated' => $isValidated, 'commentId' => $commentId]);
+        $commentId = $this->databaseService->prepareAndExecuteOne('UPDATE comment SET isvalidated = :isValidated  WHERE comment.commentId = :commentId',  ['isValidated' => $isValidated, 'commentId' => $commentId]);
         // return $comment ;
     }
 }  

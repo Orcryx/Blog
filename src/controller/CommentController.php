@@ -50,21 +50,53 @@ class CommentController
     
 
 
-    public function deleteComment(int $commentId) : void
+    public function deleteComment() : void
     {
-         $this->commentManager->deleteCommentById($commentId);
-        // return $this->twigService->render('message.twig', ['message' => $deleteComment]);
+        $environnement = $this->userService->getEnvironnement($_SESSION['previous_url']);
+        if (isset($_POST['commentId']))
+        {
+            $commentId = $_POST['commentId'];
+            $this->commentManager->deleteCommentById($commentId);
+            $message = "Le commentaire a été supprimé.";
+        }
+        else
+        {
+            $message = "Echec de la suppresion du commentaire";
+        }
+         echo $this->twigService->render('message.twig', ['message' => $message, 'origin'=>$environnement]);
     }
 
-    public function updateComment(int $commentId, string $comment) : void
-    {
-       $this->commentManager->updateCommentById($commentId, $comment);
-        // return $this->twigService->render('message.twig', ['message' => $updateComment]);
+    public function updateComment() : void
+    {       
+        $environnement = $this->userService->getEnvironnement($_SESSION['previous_url']);
+
+            if (isset($_POST['commentId']))
+            {
+                $commentId = $_POST['commentId'];
+                $comment = $_POST['content'];
+                $message = "Le commentaire est publié.";
+               $this->commentManager->updateCommentById($commentId, $comment);
+            }else
+            {
+                $message = "Echec de la publication du commentaire";
+            }
+            echo $this->twigService->render('message.twig', ['message' => $message, 'origin'=>$environnement]);
     }
 
-    public function publishComment(int $commentId) : void //string si message
+    public function publishComment() : void //string si message
     {
-         $this->commentManager->publishCommentById($commentId);
-        // return $this->twigService->render('message.twig', ['message' => $publishComment]);
+        $environnement = $this->userService->getEnvironnement($_SESSION['previous_url']);
+
+        if (isset($_POST['commentId']))
+        {
+            $commentId = $_POST['commentId'];
+            $this->commentManager->publishCommentById($commentId);
+            $message = "Le commentaire est publié.";
+        }
+        else
+        {
+            $message = "Echec de la publication du commentaire";
+        }
+         echo $this->twigService->render('message.twig', ['message' => $message, 'origin'=>$environnement]);
     }
 }
