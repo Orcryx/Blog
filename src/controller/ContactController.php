@@ -10,10 +10,18 @@ use App\service\UserService;
 class ContactController
 {
     private UserService $userService;
+    private readonly string $mail_pass;
+    private readonly string $mail_user;
+    private readonly string $mail_host;
+    private readonly string $mail_address;
+
     public function __construct(private readonly TwigService $twigService)
     {
         $this->userService = new UserService();
-
+        $this->mail_pass = $_ENV["MAIL_PASS"];
+        $this->mail_user = $_ENV["MAIL_USER"];
+        $this->mail_host = $_ENV["MAIL_HOST"];
+        $this->mail_address = $_ENV["MAIL_ADRESS"];
     }
 
     // Méthode pour afficher le formulaire
@@ -37,19 +45,19 @@ class ContactController
                 try {
                     // Configuration du serveur SMTP
                     $mail->isSMTP();
-                    $mail->Host = 'sandbox.smtp.mailtrap.io';
+                    $mail->Host = $this->mail_host;      
                     $mail->SMTPAuth = true;
-                    $mail->Username = '08883ea9ebf495';  
-                    $mail->Password = '5713b06b0eed8c';  //mot de passe d'application
+                    $mail->Username = $this->mail_user;  
+                    $mail->Password = $this->mail_pass;  
                     $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; 
                     $mail->Port = 587;
                     
                     // Destinataire et expéditeur
                     $mail->setFrom($email);
-                    $mail->addAddress('lauryanndev@gmail.com');  // Votre adresse de réception
+                    $mail->addAddress($this->mail_address);  
 
                     // Contenu de l'email
-                    $mail->isHTML(false);  // Envoyer en texte brut
+                    $mail->isHTML(false);  
                     $mail->Subject = 'Message du projet Blog';
                     $mail->Body = "Email: $email\n\nMessage:\n$message";
 
