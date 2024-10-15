@@ -23,13 +23,25 @@ class CommentController
     {
         $environnement = $this->userService->getEnvironnement($_SESSION['previous_url']);
 
-        // Vérifiez si les champs requis sont définis dans le tableau $_POST
-        if (isset($_POST['content'], $_POST['postId'], $_POST['userId'])) {
-            $comment = trim($_POST['content']); // Nettoyer le commentaire pour éviter les espaces superflus
-            $postId = intval($_POST['postId']); // Convertir l'ID du post en entier
-            $userId = intval($_POST['userId']); // Convertir l'ID de l'utilisateur en entier
+        // Utiliser filter_input_array pour récupérer et valider les données
+        $input = filter_input_array(INPUT_POST, [
+            'content' => [
+                'filter' => FILTER_CALLBACK,
+                'options' => function ($value) {
+                    return htmlspecialchars(trim($value), ENT_QUOTES); // Convertit les caractères spéciaux en entités HTML
+                },
+            ],
+            'postId' => FILTER_VALIDATE_INT,
+            'userId' => FILTER_VALIDATE_INT,
+        ]);
 
-            // Vérifiez si les champs sont valides (par exemple, le commentaire n'est pas vide)
+        // Vérifiez si les champs requis sont définis et valides
+        if ($input['content'] !== null && $input['postId'] !== null && $input['userId'] !== null) {
+            $comment = $input['content']; // Le commentaire est déjà nettoyé
+            $postId = $input['postId']; // L'ID du post est déjà un entier valide
+            $userId = $input['userId']; // L'ID de l'utilisateur est déjà un entier valide
+
+            // Vérifiez si le commentaire n'est pas vide
             if (!empty($comment)) {
                 $isValidated = 0; // Selon votre logique de validation par modération
                 $message = "Votre commentaire est en attente de validation";
@@ -37,11 +49,9 @@ class CommentController
                 // Ajoutez le commentaire si tout est valide
                 $this->commentManager->addCommentByPostId($postId, $comment, $userId, $isValidated);
             } else {
-                // Affichez un message d'erreur si le commentaire est vide
                 $message = "Erreur: le commentaire ne peut pas être vide.";
             }
         } else {
-            // Affichez un message d'erreur si tous les champs requis ne sont pas remplis
             $message = "Erreur: tous les champs ne sont pas remplis.";
         }
 
@@ -49,18 +59,20 @@ class CommentController
         echo $this->twigService->render('message.twig', ['message' => $message, 'origin' => $environnement]);
     }
 
-
-
     public function deleteComment(): void
     {
         $environnement = $this->userService->getEnvironnement($_SESSION['previous_url']);
-        if (isset($_POST['commentId'])) {
-            $commentId = $_POST['commentId'];
+
+        // Utiliser filter_input pour récupérer commentId
+        $commentId = filter_input(INPUT_POST, 'commentId', FILTER_VALIDATE_INT);
+
+        if ($commentId !== null) {
             $this->commentManager->deleteCommentById($commentId);
             $message = "Le commentaire a été supprimé.";
         } else {
-            $message = "Echec de la suppresion du commentaire";
+            $message = "Echec de la suppression du commentaire";
         }
+
         echo $this->twigService->render('message.twig', ['message' => $message, 'origin' => $environnement]);
     }
 
@@ -68,14 +80,21 @@ class CommentController
     {
         $environnement = $this->userService->getEnvironnement($_SESSION['previous_url']);
 
-        if (isset($_POST['commentId'])) {
-            $commentId = $_POST['commentId'];
-            $comment = $_POST['content'];
+        // Utiliser filter_input pour récupérer commentId et content
+        $commentId = filter_input(INPUT_POST, 'commentId', FILTER_VALIDATE_INT);
+        $comment = filter_input(INPUT_POST, 'content', FILTER_CALLBACK, [
+            'options' => function ($value) {
+                return htmlspecialchars(trim($value), ENT_QUOTES); // Convertit les caractères spéciaux en entités HTML
+            },
+        ]);
+
+        if ($commentId !== null && $comment !== null) {
             $message = "Le commentaire est publié.";
             $this->commentManager->updateCommentById($commentId, $comment);
         } else {
             $message = "Echec de la publication du commentaire";
         }
+
         echo $this->twigService->render('message.twig', ['message' => $message, 'origin' => $environnement]);
     }
 
@@ -83,13 +102,16 @@ class CommentController
     {
         $environnement = $this->userService->getEnvironnement($_SESSION['previous_url']);
 
-        if (isset($_POST['commentId'])) {
-            $commentId = $_POST['commentId'];
+        // Utiliser filter_input pour récupérer commentId
+        $commentId = filter_input(INPUT_POST, 'commentId', FILTER_VALIDATE_INT);
+
+        if ($commentId !== null) {
             $this->commentManager->publishCommentById($commentId);
             $message = "Le commentaire est publié.";
         } else {
             $message = "Echec de la publication du commentaire";
         }
+
         echo $this->twigService->render('message.twig', ['message' => $message, 'origin' => $environnement]);
     }
 }
