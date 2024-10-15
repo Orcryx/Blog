@@ -65,7 +65,7 @@ class RouterService
         //Les autres route en fonction de l'action
         switch ($path) {
             case '/':
-                return $this->twigService->render('index.twig');
+                echo $this->twigService->render('index.twig');
                 break;
             case '/action':
                 $form->showDynamicDialog();
