@@ -12,19 +12,58 @@ class PostRepository {
             $this->databaseService = $databaseService;
         }
 
-   public function getPosts():array{
+        /**
+         * @return array
+        */
+        public function getPosts():array
+            {
+                $postsObj = $this->databaseService->query('SELECT * FROM post');
+                return $postsObj;
+            }
+
     
-        $posts = $this->databaseService->query('SELECT * FROM post');
-        return $posts;
+    public function getOnePost(int $id):object{
+    
+        $onePost = $this->databaseService->prepareAndExecuteOne('SELECT * FROM post WHERE postId = :id', ['id' => $id]);
+        return $onePost ;
     }
 
-    public function getOnePost(int $id):array{
+
+    public function createOnePost(string $title, string $message, int $userId, string $createdAt): void {
+     
+        $params = [
+            ':title' => $title,
+            ':message' => $message,
+            ':userId' => $userId,
+            ':createdAt' => $createdAt  // Correction ici: s'assurer que 'createdAt' est bien identique à celui de la requête
+        ];
     
-        $onePost = $this->databaseService->prepareAndExecute('SELECT * FROM post WHERE postId = :id', ['id' => $id]);
-        return $onePost ? $onePost[0] : []; // Retourne le premier élément ou un tableau vide si aucun résultat
+        // Préparer et exécuter la requête
+        $newpost = $this->databaseService->prepareAndExecute(
+            'INSERT INTO post (title, message, userId, createAt) VALUES (:title, :message, :userId, :createdAt)',
+            $params
+        );
+    
+   
+        if ($newpost === false) {
+            echo "Echec de la requête SQL Insert Into";
+            exit;
+        }
     }
 
+    public function deletePostById(int $postId) : void
+    {
+        // Supprimer d'abord tous les commentaires associés
+        $this->databaseService->prepareAndExecuteOne('DELETE FROM comment WHERE postId = :postId', ['postId' => $postId]);
 
+        $post = $this->databaseService->prepareAndExecuteOne('DELETE FROM post WHERE post.postId = :postId', ['postId' => $postId]);
+    }
+
+    public function updateOnePostByI(int $postId, string $title, string $message) : void
+    {
+       
+        $post = $this->databaseService->prepareAndExecuteOne('UPDATE post SET title = :title, message = :message WHERE postId = :postId', ['postId'=>$postId, 'title' => $title, 'message' =>$message]);
+    }
 
 }  
 

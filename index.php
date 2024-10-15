@@ -15,6 +15,5 @@ session_start();
 
 //Init Router
 $router = new RouterService();
-
 //afficher le retour du routeur
 echo $router->run($_SERVER['REQUEST_URI']);

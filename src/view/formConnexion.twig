@@ -1,6 +1,8 @@
 {% extends "layout.twig" %}
 {% block css %}{% endblock %}
-{% block js %}{% endblock %}
+{% block js %}
+  <script src="../../public/js/formRegister.js" crossorigin="anonymous"></script>
+{% endblock %}
 {% block content %}
     <div id="content">
         <div id="blurred">
@@ -12,9 +14,11 @@
                 <button  type="button" class="connec-oglt" data-id="signUp" onclick="showDiv(this)">Créer un compte</button>
             </div>
             <div id='userAuthentication'>
-                <form method="POST" action="{{origin}}">
+                <!--  -->
+                <form method="POST" action="{{origin}}" >
                     <div id="signIn" data-id="signIn" class="content active">
                         <div id="connec-auth" class="flex-column">
+                             <input type="hidden" name="formType" value="login">
                             <div>
                                 <label for="email">Mail:</label>
                                 <input type="email" id="email" name="email" />
@@ -28,37 +32,43 @@
                         <button id="connec-btn" type="submit">Se connecter</button>
                         <!-- <p class="signIn" data-id="singUp">Vous n'avez pas de compte ?<a class="linkSign"> S'inscrire</a></p> -->
                     </div>
-                <form method="POST" action="{{origin}}">
+                    <!--  -->
+                <form method="POST" action="{{origin}}" id="registerForm">
                     <div id="singUp"  data-id="signUp" class="content">
                             <div id="connec-creation" class="flex-column">
+                                <input type="hidden" name="formType" value="register">
                                 <div>
                                     <label for="name">Nom:</label>
-                                    <input type="text" id="name" name="name" />
+                                    <input type="text" id="name" name="name"  required/>
                                 </div>
                                 <div>
                                     <label for="firstName">Prénom:</label>
-                                    <input type="text" id="firstName" name="firstName" />
+                                    <input type="text" id="firstName" name="firstName" required/>
                                 </div>
                                 <div>
                                     <label for="nickname">Pseudo:</label>
-                                    <input type="text" id="nickname" name="nickname" />
+                                    <input type="text" id="nickname" name="nickname" required/>
                                 </div>
                                 <div>
                                     <label for="email">Mail:</label>
-                                    <input type="email" id="mail" name="mail" />
+                                    <input type="email" id="mail" name="email" required/>
                                 </div>
                                 <div>
                                     <label for="password">Mot de passe:</label>
-                                    <input type="password" id="pswd" name="password" />
+                                    <input type="password" id="pswd" name="password" required />
+                                </div>
+                                 <div>
+                                    <label for="passwordConfirm">Confirmer le mot de passe:</label>
+                                    <input type="password" id="pswdC" name="passwordConfirm" required />
                                 </div>
                             </div>
-                            <button id="connec-btn" type="submit">Créer un compte</button> 
+                            <button id="register-btn" type="submit">Créer un compte</button> 
                             <!-- <p class="signIn" data-id="singIn">Vous avez déjà un compte ?<a class="linkSign"> Se connecter</a></p> -->
                     </div>
                 </form>
             </div>
         </div>    
     </div>
-
+    <div> 
 {% endblock %}
 

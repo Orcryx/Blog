@@ -3,42 +3,43 @@ namespace App\model;
 use App\manager\CommentManager;
 
 class CommentModel{
-    private int $commentId;
+    // protected int $commentId;
     private string $comment;
-   // private bool $isValidated;
-    // private int $userId;
     private int $postId;
     private string $nickname;
+    private int $userId;
+    public bool $isOwner = false; 
 
 
     // bool $isValidated
-    public function __construct(int $commentId, string $comment, int $postId, string $nickname)
+    public function __construct(public readonly int $commentId, string $comment, int $postId, string $nickname, int $userId)
     {
        
-        $this->commentId = $commentId;
+        //$this->commentId = $commentId;
         $this->comment = $comment;
         $this->postId = $postId;
         $this->nickname = $nickname;
+        $this->userId = $userId;
     }
 
 
     //Créer un post avec les donnnées de la BD et des données construites
-     /**
-     * @return CommentModel[]
-    */
+    //  /**
+    //  * @return CommentModel[]
+    // */
     public static function createFromEntities(array $commentEntities): array {
-        $commentModels=[];
+        $commentModelsNoValidated=[];
 
-        foreach ($commentEntities as $comment) {
-            # code...
-            $commentModels[] = new self(
-                $comment['commentId'],
-                $comment['comment'],
-                $comment['postId'],
-                $comment['nickname'],
+        foreach ($commentEntities as $commentEntity) {
+            $commentModelsNoValidated[] = new self(
+                $commentEntity->commentId,
+                $commentEntity->comment,
+                $commentEntity->postId,
+                $commentEntity->nickname,
+                $commentEntity->userId
             );
         }
-        return  $commentModels;
+        return  $commentModelsNoValidated;
     }
     
     // Getters
@@ -56,6 +57,10 @@ class CommentModel{
 
     public function getNickname(): string {
         return $this->nickname;
+    }
+
+    public function getUserId(): string {
+        return $this->userId;
     }
 
 }

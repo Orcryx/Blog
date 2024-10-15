@@ -1,0 +1,57 @@
+{% extends "layout.twig" %}
+{% block title %}Tableau de bord du {% endblock %}
+{% block css %}
+  <link rel="stylesheet" href="../../public/css/blog.css"/>
+  <link rel="stylesheet" href="../../public/css/admin.css"/>
+{% endblock %}
+
+{% block js %}
+  <script src="../../public/js/display.js" crossorigin="anonymous"></script>
+{% endblock %}
+
+{% block nav %}
+  {% include 'navigation_include.twig' %}
+{% endblock %}
+
+{% block content %}
+    <div id="tabs-container" class="flex">
+      <button type="button" class="tabs active" data-tab="1">Commentaires</button>
+      <button type="button" class="tabs" data-tab="2">Edition</button>
+    </div>
+    <div id="dashboard">
+      <div id="edition-zone" class="content-dashboard" data-tab="2">
+        <h2 id="comment-title">Page d'édition d'un article</h2>
+          <form method="POST" action="/Post/post">
+            <input type="hidden" id="userId" name="userId" value="{{ session.user.userId }}" class="hidden" />
+              <label for="title">Titre</label>
+              <input type="text" id="title" name="title" />
+    
+              <label for="content">Message:</label>
+              <textarea id="textarea-post" id="post" name="content"></textarea> 
+
+              <button id="addPost-btn" type="submit">Soumettre</button>
+          </form>
+        </div>
+        <div id="comment-zone" class="content-dashboard activeContent" data-tab="1">
+          <h2 id="comment-title">Commentaires en attente de validation</h2>
+            {% if comments is not empty %}
+              {% for comment in comments %}
+              <div class="comment">
+                <p>{{comment.nickname}}</p>
+                <p>{{ comment.comment }}</p>
+                  <div id="comment-icon" class="flex">
+                    <i class="fa-solid fa-check-double" id="publishCommentIcon"></i>
+                    <i class="fa-solid fa-trash-can" id="deleteCommentIcon"></i>                  
+                  </div>
+                  <hr>
+         </div>
+          {% endfor %}
+        {% else %}
+          <p>No comment available.</p>
+        {% endif %}
+   
+      </div>
+   </div>
+  {% include 'footer_include.twig' %}
+{% endblock %}
+  

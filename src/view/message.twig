@@ -1,0 +1,28 @@
+   {% extends "layout.twig" %}
+{% block title %}Page contact du {% endblock %}
+{% block css %}
+  <link rel="stylesheet" href="../../public/css/profil.css"/>
+{% endblock %}
+
+{% block js %}{% endblock %}
+
+{% block content %}
+   <!-- Zone pour afficher les messages d'alerte -->
+    <div id="content">
+        <div id="blurred">
+            <!-- Vérification de la présence du message -->
+            {% if message %}
+                <div class="alert alert-warning">
+                    {{ message|raw }}  
+                </div>
+            {% else %}
+                <p>Aucun message d'alerte trouvé. {{origin}}</p> 
+            {% endif %}
+            <div id="zoneArrow" class="zoneXmark">
+                <a href="{{origin}}" alt="lien vers la page administration" class="userConnected"> 
+                    <i class="fa-solid fa-arrow-left"></i>Retour
+                </a>
+            </div>
+        </div>    
+    </div>
+{% endblock %}

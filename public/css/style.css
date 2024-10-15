@@ -162,7 +162,7 @@ padding: 10px;
  margin-bottom : 20px;
 }
 
-#connec-btn, .connec-oglt{
+#connec-btn, #register-btn, .connec-oglt{
     width: 100%;
     height: 50px;
     

@@ -1,18 +1,39 @@
- <div id="contact" class="flex-column">
-    <p>Ecrivez moi !</p>
-    <form action="" method="post">
-                <div class="field-contact">
-                <label for="user-name">Nom:</label>
-                <input type="text" id="user-name" name="user-name" />
+{% extends "layout.twig" %}
+{% block title %}Page contact du {% endblock %}
+{% block css %}
+  <link rel="stylesheet" href="../../public/css/profil.css"/>
+{% endblock %}
+{% block js %}{% endblock %}
+
+{% block content %}
+  <div id="content">
+    <div id="blurred">
+      <div id="contact" class="flex-column">
+          <h1>Écrivez-moi !</h1>
+          <form id="contact-form" action="/contact" method="POST">
+                <input type="hidden" name="formType" value="contact">  <!-- Champ caché -->
+
+                <div class="form-field">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
                 </div>
-                <div class="field-contact">
-                <label for="user-mail">E-mail:</label>
-                <input type="email" id="muser-mailil" name="user-mail" />
+
+                <div class="form-field">
+                    <label for="message">Message:</label>
+                    <textarea id="message" name="message" required></textarea>
                 </div>
-                <div class="field-contact">
-                <label for="user-msg">Message:</label>
-                <textarea id="user-msg" name="user-msg"></textarea>
+
+                <div class="form-field">
+                    <button type="submit">Envoyer</button>
                 </div>
-            <button id="button-contact"></button>
-        </form>
-</div>
+            </form>
+            
+            {% if app.request.query.get('success') == '1' %}
+                <p>Merci, votre message a bien été envoyé.</p>
+            {% endif %}
+      </div>
+      <a href="/" alt="Lien vers la page d'accueil" class="button-blog"><i class="fa-solid fa-house"></i></a>
+    </div>
+ </div>
+{% endblock %}
+

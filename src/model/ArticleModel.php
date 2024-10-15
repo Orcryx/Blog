@@ -22,17 +22,17 @@ class ArticleModel{
 
     //TODO : créer une fonction createFromEntity(array $postEntity) qui retourn un ArticleModel!
     
-    public static function createFromEntity(array $postEntity): ArticleModel {
+    public static function createFromEntity(object $postEntity): ArticleModel {
      
         // Construction de la date au format français
-        $date = date("d/m/Y", strtotime($postEntity['createAt']));
+        $date = date("d/m/Y", strtotime($postEntity->createAt));
         
         // Ajouter l'instance de la classe au tableau $postModel
         $postModel = new self(
-            $postEntity['postId'],
-            $postEntity['title'],
-            $postEntity['message'],
-            $postEntity['userId'],
+            $postEntity->postId,
+            $postEntity->title,
+            $postEntity->message,
+            $postEntity->userId,
             $date
         );
       

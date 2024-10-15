@@ -1,24 +1,42 @@
-// ***
-//Fichier de base pour le layout
+document.addEventListener('DOMContentLoaded', () => {
+    const tabs = document.querySelectorAll('.tabs'); 
+    const content = document.querySelectorAll('.content-dashboard'); 
+    let index = 0;
+    tabs.forEach(tab => {
+        tab.addEventListener('click', ()=>{
 
+            if (tab.classList.contains('active'))
+            {
+                return;
+            }
+            else
+            {   
+                tab.classList.add('active');
+            }
 
-// Afficher et masquer la div de connexion présente dans le layout
+            index = tab.getAttribute('data-tab'); 
 
-document.addEventListener('DOMContentLoaded', function() {
-    let div = document.getElementById('dialogue');
-    div.style.display = 'none';   
-});
+            for (i=0; i<tabs.length; i++)
+            {
+                if (tabs[i].getAttribute('data-tab') != index)
+                    {
+                        tabs[i].classList.remove('active');
+                    }
+            }
 
-function showDialogue(){
-    let div = document.getElementById('dialogue');
-    if(div)
-    {
-        div.removeAttribute('style');
-    }
-}
+            for (j=0; j<content.length; j++)
+            {
+                if (content[j].getAttribute('data-tab') === index)
+                    {
+                        content[j].classList.add('activeContent');
+                    }
+                else
+                    {
+                        content[j].classList.remove('activeContent');
+                    }
+            }
 
-function hideDialogue(){
-    let div = document.getElementById('dialogue');
-    div.style.display = 'none';  
-}
+        })
+    })
+})
 

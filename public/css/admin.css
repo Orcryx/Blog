@@ -1,0 +1,135 @@
+h2, p, label{
+    color: var(--colorTextDark);
+}
+
+#dashboard{
+    position: relative;
+
+    height: 100%;
+    
+    overflow: hidden;
+
+    /* border: 1px solid red; */
+}
+
+#tabs-container
+{
+    width: 100%;
+    margin: 10px 10px 0 0;
+
+    gap: 3px;
+    /* border: 1px solid aquamarine; */
+
+}
+
+#comment-icon
+{
+    width: 30%;
+    
+    justify-content: baseline;
+    gap: 20px;
+
+    padding-left: 10px;
+
+    color: var(--colorExtra);
+}
+
+#comment-zone
+{
+    overflow-y: scroll;
+    height: 92%;
+}
+
+#edition-zone
+{
+    width: 80%;
+    height: 92%;
+}
+#edition-zone form
+{
+    display: flex;
+    flex-direction: column;
+
+    height: 80%;
+
+    margin-top: 50px;
+    margin-left: 20%;
+
+}
+
+#edition-zone input
+{
+    margin-bottom: 10px;
+
+}
+
+
+#textarea-post
+{
+    height: 300px;
+}
+
+#addPost-btn
+{
+    background-color: var(--colorExtra);  
+    color: var(--colorTextWhite);
+
+    width: 33%;
+    height: 50px;
+
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/**LES CLASS**/
+
+.tabs
+{
+    font-weight: bold;
+    
+    padding: 20px;
+
+    border: none;
+    border-radius: 5px 5px 0 0;
+}
+
+.active
+{
+    background-color: var(--colorExtra);
+    
+    color: var(--colorTextWhite);
+ 
+}
+
+.content-dashboard
+{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+
+    display: none;
+
+    opacity: 0;
+
+    padding: 20px;
+
+    /* border: 1px solid salmon; */
+}
+
+.activeContent
+{
+    display: block;
+    animation : fade 0.5s forwards;
+}
+
+@keyframes fade {
+    from
+    {
+        opacity : 0;
+    }
+    to
+    {
+        opacity : 1;
+    } 
+}
