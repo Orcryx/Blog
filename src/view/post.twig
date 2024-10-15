@@ -1,5 +1,5 @@
 {% extends "layout.twig" %}
-{% block title %}Mon {% endblock %}
+{% block title %}Article {% endblock %}
 {% block css %}
   <link rel="stylesheet" href="../../public/css/blog.css"/>
   <link rel="stylesheet" href="../../public/css/article.css"/>
@@ -14,9 +14,9 @@
 
   <div id="OneArticle" class="flex">
     <div id="article">
-      <div id="image" class="flex-around">
+      <!-- <div id="image" class="flex-around">
           <img src="../../public/image/{{post.postId}}.jpg" id="image"/>
-        </div>
+        </div> -->
       <article id="article-contain">
         
             <div class="">
@@ -37,6 +37,8 @@
                 <input type="hidden" name="type" value="updatePost" class="hidden"/>
                 <input type="hidden" id="postId" name="postId" value="{{post.postId }}" class="hidden"/>
                 <input type="hidden" id="userId" name="userId" value="{{session.user.userId }}" class="hidden" />
+                <input type="hidden" id="postMessage" name="content" value="{{ post.message }}" class="hidden" />
+                <input type="hidden" id="postTitle" name="title" value="{{ post.title }}" class="hidden" />
               </div>
             <button type="submit" id="commentAdd-btn" class="center-yz" data-content="addComment">Editer un article</button>
           </form>
@@ -68,8 +70,17 @@
           <div class="comment">
                {% if comment.isOwner %}
                   <div id="comment-manager" class="flex-around">
-                      <i class="fa-solid fa-pencil" id="updateCommentIcon"></i>
-                      <i class="fa-solid fa-trash-can" id="deleteCommentIcon"></i>                  
+                      <form method="POST" action="/action">
+                        <input type="hidden" name="type" value="updateComment" class="hidden"/>
+                        <input type="hidden" name="commentId" value="{{comment.commentId }}" />
+                        <input type="hidden" id="commentContent" name="content" value="{{comment.comment }}" />
+                        <button class="content-button center-yz" id="publishComment" type="submit"><i class="fa-solid fa-pencil" id="upadateCommentIcon"></i></button>
+                      </form>
+                      <form method="POST" action="/Comment/delete">
+                        <!-- <input type="hidden" name="type" value="deleteComment" class="hidden"/> -->
+                        <input type="hidden" name="commentId" value="{{comment.commentId }}" />
+                        <button class="content-button center-yz" id="deleteComment" type="submit"><i class="fa-solid fa-trash-can" id="deleteCommentIcon"></i></button>                 
+                      </form>    
                       </div>
               {% endif %} 
             <p>{{comment.nickname}}</p>

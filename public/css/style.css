@@ -4,25 +4,24 @@
     box-sizing: border-box;
     overflow: hidden;
     background-color: var(--background);
-    background-image: url("../image/5053309.jpg");
+    background-image: url('../image/5053309.jpg');
     color: var(--colorText);
-   
 
     /* Variable de couleurs */
     --background: #1c2026;
     --blur: #1c202698;
     --backgroundTransparent: #1c2026c9;
-    --backgroundWhite : #fefefe;
-    --colorIcon : #4e607b;
-    --colorTextDark :#1c2026; ;
-    --colorText: #ffffff; 
-    --colorExtra :#514355; 
+    --backgroundWhite: #fefefe;
+    --colorIcon: #4e607b;
+    --colorTextDark: #1c2026;
+    --colorText: #ffffff;
+    --colorExtra: #514355;
     --colorAlert: #9c544f;
 }
 
 /* GLOBALE */
 
-html{
+html {
     width: 100%;
     height: 100%;
 
@@ -30,42 +29,47 @@ html{
     justify-content: center;
     align-items: center;
 
-
     /* border: 3px solid whitesmoke; */
 }
 
-h1, h2, h3, h4, h5, h6{
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     color: var(--colorText);
     font-weight: 500;
     margin: 5px;
 }
 
-a,i, button {
+a,
+i,
+button {
     cursor: pointer;
 }
 
-a{ 
+a {
     text-decoration: none;
 }
 
-main
-{
-position: relative;
+main {
+    position: relative;
 }
 
 /* FLEX BOX */
 
-.flex{
+.flex {
     display: flex;
 }
 
-.flex-around{
+.flex-around {
     display: flex;
     justify-content: space-around;
     align-items: center;
 }
 
-.flex-between{
+.flex-between {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -73,18 +77,17 @@ position: relative;
     margin: 20px;
 }
 
-
-.flex-column{
+.flex-column {
     display: flex;
     flex-direction: column;
 }
 
-.flex-center{
+.flex-center {
     display: flex;
     justify-content: center;
 }
 
-.center-yz{
+.center-yz {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -92,12 +95,11 @@ position: relative;
 
 /*LES DISPLAY */
 
-.hidden{
+.hidden {
     display: none;
 }
 
-.content{
-
+.content {
     display: none;
 }
 
@@ -105,15 +107,15 @@ position: relative;
     display: block;
 }
 
-.noActive{
+.noActive {
     background-color: var(--backgroundWhite);
     color: var(--colorExtra);
 }
 
 /* LES ID */
 
-#dialogue, #auth
-{
+#dialogue,
+#auth {
     position: absolute;
     z-index: 9;
 
@@ -123,62 +125,59 @@ position: relative;
     padding: 20px;
 
     border: 1px solid white;
-    
-    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
 
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
 }
 
-#auth
-{
+#auth {
     width: 280px;
     min-height: 300px;
-   
 }
 
-
-#zoneArrow
-{
+#zoneArrow {
     justify-content: flex-end;
     margin-bottom: 10px;
 }
 
-
-#userAuthentication{
-position:  relative; 
-max-height:700px ;
-padding: 10px;
+#userAuthentication {
+    position: relative;
+    max-height: 700px;
+    padding: 10px;
 }
-#userAuthentication input{
+#userAuthentication input {
     width: 100%;
     height: auto;
 }
 
-#ZoneOnglet{
+#ZoneOnglet {
     margin-bottom: 20px;
 }
 
-#connec-auth, #connec-creation{
- gap : 10px;
- margin-bottom : 20px;
+#connec-auth,
+#connec-creation {
+    gap: 10px;
+    margin-bottom: 20px;
 }
 
-#connec-btn, #register-btn, .connec-oglt{
+#connec-btn,
+#register-btn,
+.connec-oglt {
     width: 100%;
     height: 50px;
-    
+
     background-color: var(--colorExtra);
-    color:var(--colorText);
+    color: var(--colorText);
     font-weight: 700;
 }
 
-#signIn, #signUp{
+#signIn,
+#signUp {
     position: absolute;
 }
 
-#blurred{
-
-    width: 90%; 
-    min-height:  300px;
+#blurred {
+    width: 90%;
+    min-height: 300px;
     padding: 10px;
     /* border: 1px solid yellow;  */
     border-radius: 10px;
@@ -187,14 +186,13 @@ padding: 10px;
     box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
 }
 
-
 /* LES CLASS */
 
-.userConnected{
+.userConnected {
     color: var(--colorText);
 }
 
-.button-blog{
+.button-blog {
     width: 100px;
 
     margin-left: auto;
@@ -203,47 +201,36 @@ padding: 10px;
 
     border: none;
     border-radius: 15px;
-  
+
     background-color: var(--colorExtra);
-    
+
     font-size: 1.5em;
     font-weight: 700;
     text-align: center;
     color: var(--colorText);
 
-    box-shadow: rgba(50, 50, 105, 0.15) 0px 2px 5px 0px, rgba(0, 0, 0, 0.05) 0px 1px 1px 0px;
+    box-shadow: rgba(50, 50, 105, 0.15) 0px 2px 5px 0px,
+        rgba(0, 0, 0, 0.05) 0px 1px 1px 0px;
 }
 
-.linkSign{
+.linkSign {
     font-size: 0.8em;
     color: var(--colorExtra);
 }
 
-
 /* LE RESPONSIF */
 
 @media (max-width: 400px) {
-  
 }
 
 @media (max-width: 767px) {
-  
 }
 
 @media (max-width: 992px) {
-
 }
 
-
 @media (min-width: 768px) and (max-width: 1024px) {
-
 }
 
 @media (min-width: 1024px) and (max-width: 1366px) {
-
 }
-
-
-
-
-

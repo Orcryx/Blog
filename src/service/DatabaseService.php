@@ -1,10 +1,11 @@
 <?php
 
 namespace App\service;
-use \PDO;
 
-class DatabaseService{
+use PDO;
 
+class DatabaseService
+{
     private readonly string $db_name;
     private readonly string $db_user;
     private readonly string $db_pass;
@@ -13,14 +14,14 @@ class DatabaseService{
 
     public function __construct()
     {
-        //relier les variables de la class aux valeurs passées en paramètre 
+        //relier les variables de la class aux valeurs passées en paramètre
         $this->db_name =  $_ENV["DB_NAME"];
         $this->db_user = $_ENV["DB_USER"];
         $this->db_pass =  $_ENV["DB_PASS"];
-        $this->db_host=  $_ENV["DB_HOST"]; 
+        $this->db_host =  $_ENV["DB_HOST"];
     }
 
-    private function getPDO():PDO
+    private function getPDO(): PDO
     {
         //créer un accesseur pour éviter d'avoir plusieurs fois la connexion à la base de données
         if ($this->pdo === null) {
@@ -32,15 +33,14 @@ class DatabaseService{
         return $this->pdo;
     }
 
-    public function query($statement){
+    public function query($statement)
+    {
         //on a besoin de récupérer PDO
         $req = $this->getPDO()->query($statement);
         $data = $req->fetchAll(PDO::FETCH_OBJ);
         //var_dump($data);
         return $data;
-
     }
-
 
     public function prepareAndExecute(string $statement, array $params): array
     {
@@ -48,7 +48,6 @@ class DatabaseService{
         $stmt->execute($params);
         return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
-
 
     public function prepareAndExecuteOne(string $statement, array $params): object|false
     {

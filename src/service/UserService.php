@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 namespace App\service;
+
 use App\repository\UserRepository;
 use App\model\UserSessionModel;
 use App\Service\MessageService;
@@ -15,95 +16,80 @@ class UserService
 
     public function __construct()
     {
-        $this->user= new UserRepository(new DatabaseService);
+        $this->user = new UserRepository(new DatabaseService());
     }
 
     public function logIn(): void
     {
-        $twigService = new TwigService(); 
+        $twigService = new TwigService();
         $email = $_POST['email'];
         /** @var object|false  $user  **/
-        $user = $this->user->getUserByEmail($email); 
+        $user = $this->user->getUserByEmail($email);
 
-         //Initialiser le nombre de tentative de connexion dans une variable de session
-         if (!isset($_SESSION['login_attempts'])) 
-            {
-                $_SESSION['login_attempts'] = 0;
-            }
-            $message = '';
-         if ($user !== null && $user !==false) {
+        //Initialiser le nombre de tentative de connexion dans une variable de session
+        if (!isset($_SESSION['login_attempts'])) {
+            $_SESSION['login_attempts'] = 0;
+        }
+        $message = '';
+        if ($user !== null && $user !== false) {
             $hashedPassword = password_hash($user->password, PASSWORD_DEFAULT);
-            if(password_verify($_POST['password'],  $hashedPassword))
-            {
+            if (password_verify($_POST['password'], $hashedPassword)) {
                 echo "reussite !";
                 $_SESSION['status'] = true;
-                $_SESSION['user'] = new UserSessionModel($user->userId,$user->email,$user->role, $user->nickname);
+                $_SESSION['user'] = new UserSessionModel($user->userId, $user->email, $user->role, $user->nickname);
                 $_SESSION['login_attempts'] = 0; // Reset login attempts
                 header("Location: {$_SESSION['previous_url']}");
                 exit();
-            }
-            else
-            {
-                echo  "echec de connexion";
-                // $message = MessageService::getMessage("echec de connexion !", MessageService::ALERT_WARNING, $twigService);              
-                  $_SESSION['login_attempts']++;
+            } else {
+                $message = "echec de connexion";
+                $_SESSION['login_attempts']++;
                 if ($_SESSION['login_attempts'] >= 3) {
-                     $this->logOut();
+                    $this->logOut();
                 } else {
-                    echo  "echec de connexion";
-                    // $message = MessageService::getMessage( "Echec d'authentification. Tentative " . $_SESSION['login_attempts'] . " / 3.", MessageService::ALERT_WARNING, $twigService);              
+                    $message =  "echec de connexion";
                     // header("Location: /auth");
                     // exit();
                 }
-                    // Afficher la page de connexion avec le message d'erreur
-                    echo $twigService->render('message.twig', ['message' => $message, 'origin' => $_SERVER['REQUEST_URI'] ]);
-            }     
-        }
-        else
-        {
-            echo  "echec de connexion";
-            // $message = MessageService::getMessage("echec de connexion !", MessageService::ALERT_WARNING, $twigService);              
-            // echo $twigService->render('message.twig', ['message' => $message, 'origin' => $_SERVER['REQUEST_URI'] ]);
-
+                // Afficher la page de connexion avec le message d'erreur
+                echo $twigService->render('message.twig', ['message' => $message, 'origin' => $_SERVER['REQUEST_URI']]);
+            }
+        } else {
+            $message =  "echec de connexion";
         }
     }
 
-    public function register():void
+    public function register(): void
     {
         $email = $_POST['email'];
         /** @var object|false  $user  **/
-        $user = $this->user->getUserByEmail($email); 
-        if($user == null && $user == false)
-        {
+        $user = $this->user->getUserByEmail($email);
+        if ($user == null && $user == false) {
             //filtrer les données et crypter le mot de passe
             $name = $_POST['name'];
             $firstName = $_POST['firstName'];
             $nickname = $_POST['nickname'];
             $password = $_POST['password'];
-           
+
             // 5var_dump( $name, $firstName, $nickname, $password);
-            $this->user->insertUser($name, $firstName,$email, $password, $nickname);
+            $this->user->insertUser($name, $firstName, $email, $password, $nickname);
             echo "création de compte possible";
             header("Location: {$_SESSION['previous_url']}");
             exit();
-        }
-        else
-        {
+        } else {
             echo "création de compte impossible";
         }
-       
     }
 
-    public function getEnvironnement($environnement) 
+    public function getEnvironnement($environnement)
     {
-       return $this->environnement = $environnement;
+        return $this->environnement = $environnement;
     }
 
-    private function isConnected() : bool
+    private function isConnected(): bool
     {
         if (isset($_SESSION['status']) && $_SESSION['status'] === true) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
@@ -116,28 +102,23 @@ class UserService
         }
     }
 
-    public function logOut():void
+    public function logOut(): void
     {
         $previousUrl = $_SESSION['previous_url'] ?? '/';
 
-        session_unset(); 
-        session_destroy(); 
+        session_unset();
+        session_destroy();
         header("Location: $previousUrl");
         exit();
     }
 
 
-    public function getUserSession(): UserSessionModel | null 
+    public function getUserSession(): UserSessionModel | null
     {
-        if (isset($_SESSION['user']) && $_SESSION['user'] instanceof UserSessionModel) 
-        {            
+        if (isset($_SESSION['user']) && $_SESSION['user'] instanceof UserSessionModel) {
             return $_SESSION['user'];
-        }
-        else
-        {
+        } else {
             return null; // Retourner null si aucun utilisateur n'est connecté
         }
     }
-
-
 }

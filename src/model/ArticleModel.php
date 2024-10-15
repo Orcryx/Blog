@@ -1,8 +1,11 @@
 <?php
+
 namespace App\model;
+
 use App\manager\PostManager;
 
-class ArticleModel{
+class ArticleModel
+{
     private int $postId;
     private string $title;
     private string $message;
@@ -12,7 +15,7 @@ class ArticleModel{
 
     public function __construct(int $postId, string $title, string $message, int $userId, string $date)
     {
-       
+
         $this->postId = $postId;
         $this->title = $title;
         $this->userId = $userId;
@@ -21,12 +24,13 @@ class ArticleModel{
     }
 
     //TODO : créer une fonction createFromEntity(array $postEntity) qui retourn un ArticleModel!
-    
-    public static function createFromEntity(object $postEntity): ArticleModel {
-     
+
+    public static function createFromEntity(object $postEntity): ArticleModel
+    {
+
         // Construction de la date au format français
         $date = date("d/m/Y", strtotime($postEntity->createAt));
-        
+
         // Ajouter l'instance de la classe au tableau $postModel
         $postModel = new self(
             $postEntity->postId,
@@ -35,28 +39,33 @@ class ArticleModel{
             $postEntity->userId,
             $date
         );
-      
+
         return $postModel;
     }
 
     // Getters
-    public function getPostId(): int {
+    public function getPostId(): int
+    {
         return $this->postId;
     }
 
-    public function getTitle(): string {
+    public function getTitle(): string
+    {
         return $this->title;
     }
 
-    public function getMessage(): string {
+    public function getMessage(): string
+    {
         return $this->message;
     }
 
-    public function getUserId(): int {
+    public function getUserId(): int
+    {
         return $this->userId;
     }
 
-    public function getDate(): string {
+    public function getDate(): string
+    {
         return $this->date;
     }
 }

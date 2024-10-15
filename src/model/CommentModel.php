@@ -1,20 +1,28 @@
 <?php
+
 namespace App\model;
+
 use App\manager\CommentManager;
 
-class CommentModel{
+class CommentModel
+{
     // protected int $commentId;
     private string $comment;
     private int $postId;
     private string $nickname;
     private int $userId;
-    public bool $isOwner = false; 
+    public bool $isOwner = false;
 
 
     // bool $isValidated
-    public function __construct(public readonly int $commentId, string $comment, int $postId, string $nickname, int $userId)
-    {
-       
+    public function __construct(
+        public readonly int $commentId,
+        string $comment,
+        int $postId,
+        string $nickname,
+        int $userId
+    ) {
+
         //$this->commentId = $commentId;
         $this->comment = $comment;
         $this->postId = $postId;
@@ -27,8 +35,9 @@ class CommentModel{
     //  /**
     //  * @return CommentModel[]
     // */
-    public static function createFromEntities(array $commentEntities): array {
-        $commentModelsNoValidated=[];
+    public static function createFromEntities(array $commentEntities): array
+    {
+        $commentModelsNoValidated = [];
 
         foreach ($commentEntities as $commentEntity) {
             $commentModelsNoValidated[] = new self(
@@ -41,26 +50,30 @@ class CommentModel{
         }
         return  $commentModelsNoValidated;
     }
-    
+
     // Getters
-    public function getCommentId(): int {
+    public function getCommentId(): int
+    {
         return $this->commentId;
     }
 
-    public function getComment(): string {
+    public function getComment(): string
+    {
         return $this->comment;
     }
 
-    public function getPostId(): int {
+    public function getPostId(): int
+    {
         return $this->postId;
     }
 
-    public function getNickname(): string {
+    public function getNickname(): string
+    {
         return $this->nickname;
     }
 
-    public function getUserId(): string {
+    public function getUserId(): string
+    {
         return $this->userId;
     }
-
 }
