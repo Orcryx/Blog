@@ -121,4 +121,9 @@ class UserService
             return null; // Retourner null si aucun utilisateur n'est connecté
         }
     }
+
+    public function getPreviousUrl(): ?string
+    {
+        return $_SESSION['previous_url'] ?? null;
+    }
 }
