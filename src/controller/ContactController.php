@@ -18,6 +18,7 @@ class ContactController
     public function __construct(private readonly TwigService $twigService)
     {
         $this->userService = new UserService();
+        //variable d'environnement
         $this->mail_pass = $_ENV["MAIL_PASS"];
         $this->mail_user = $_ENV["MAIL_USER"];
         $this->mail_host = $_ENV["MAIL_HOST"];
