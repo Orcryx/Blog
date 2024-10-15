@@ -45,8 +45,7 @@ class PostController
                 $id = $commentModel->commentId;
                 // Vérifier si l'utilisateur connecté est l'auteur du commentaire
                 $isCommentOwner = $this->commentManager->isOwner($id, $userSession);
-
-                //Ajouter au model du commentaire une valeur IsOwer (pour chaque commentaire)
+                //Ajouter au model du commentaire une valeur IsOwner (pour chaque commentaire)
                 $commentModel->isOwner = $isCommentOwner;
             }
             // Mettre à jour la session avec l'objet modifié
@@ -63,38 +62,29 @@ class PostController
         }
     }
 
-
     public function createOnePost(): void
     {
         $environnement = "/admin";
-        if (isset($_POST['title']) || isset($_POST['content']) || isset($_POST['userId'])) {
-            // Récupérer les données du formulaire (titre, contenun, userId)
-            $title = $_POST['title'] ?? null;
-            $message = $_POST['content'] ?? null;
-            $userId = $_POST['userId'] ?? null;
 
-            // Validation des données
-            if (empty($title) || empty($message)) {
-                echo $this->twigService->render(
-                    'message.twig',
-                    ['message' => 'Le titre et le contenu sont obligatoires.', 'origin' => $environnement]
-                );
-                return;
-            } else {
-                $date = new \DateTime();
+        // Utilisation de filter_input pour récupérer et valider les entrées
+        $title = filter_input(INPUT_POST, 'title', FILTER_SANITIZE_SPECIAL_CHARS);
+        $message = filter_input(INPUT_POST, 'content', FILTER_SANITIZE_SPECIAL_CHARS);
+        $userId = filter_input(INPUT_POST, 'userId', FILTER_VALIDATE_INT);
 
-                // Formatage de la date au format désiré 'Y-m-d H:i:s'
-                $createdAt = $date->format('Y-m-d H:i:s');
-                $this->postManager->createOnePost($title, $message, $userId, $createdAt);
-                echo $this->twigService->render(
-                    'message.twig',
-                    ['message' => 'Article ajouté', 'origin' => $environnement]
-                );
-            }
-        } else {
+        // Validation des données
+        if (empty($title) || empty($message)) {
             echo $this->twigService->render(
                 'message.twig',
-                ['message' => 'Erreur: tous les champs ne sont pas remplis.', 'origin' => $environnement]
+                ['message' => 'Le titre et le contenu sont obligatoires.', 'origin' => $environnement]
+            );
+            return;
+        } else {
+            $date = new \DateTime();
+            $createdAt = $date->format('Y-m-d H:i:s');
+            $this->postManager->createOnePost($title, $message, $userId, $createdAt);
+            echo $this->twigService->render(
+                'message.twig',
+                ['message' => 'Article ajouté', 'origin' => $environnement]
             );
         }
     }
@@ -102,19 +92,17 @@ class PostController
     public function deleteOnePost(): void
     {
         $environnement = "/blog";
-        if (isset($_POST['postId'])) {
-            $postId = intval($_POST['postId']);
-            if (!empty($postId)) {
-                $message = "l'article a été supprimé";
-                $this->postManager->deletePostById($postId);
-            } else {
-                $message = "Echec de la requête.";
-            }
+
+        // Utilisation de filter_input pour valider l'ID du post
+        $postId = filter_input(INPUT_POST, 'postId', FILTER_VALIDATE_INT);
+
+        if ($postId !== false && $postId !== null) {
+            $message = "L'article a été supprimé";
+            $this->postManager->deletePostById($postId);
         } else {
-            // Affichez un message d'erreur si tous les champs requis ne sont pas remplis
             $message = "Erreur: référence article introuvable.";
         }
-        // Renvoyer le message avec Twig
+
         echo $this->twigService->render(
             'message.twig',
             ['message' => $message, 'origin' => $environnement]
@@ -124,16 +112,19 @@ class PostController
     public function updateOnePost(): void
     {
         $environnement = $this->userService->getEnvironnement($_SESSION['previous_url']);
-        if (isset($_POST['title']) || isset($_POST['content']) || isset($_POST['postId'])) {
-            // Récupérer les données du formulaire (titre, message ,postId)
-            $postId = $_POST['postId'] ?? null;
-            $title = $_POST['title'] ?? null;
-            $message = $_POST['content'] ?? null;
+
+        // Récupérer les données POST avec validation
+        $postId = filter_input(INPUT_POST, 'postId', FILTER_VALIDATE_INT);
+        $title = filter_input(INPUT_POST, 'title', FILTER_SANITIZE_SPECIAL_CHARS);
+        $message = filter_input(INPUT_POST, 'content', FILTER_SANITIZE_SPECIAL_CHARS);
+
+        if ($postId && $title && $message) {
             $this->postManager->updateOnePostById($postId, $title, $message);
+            $message = "Article mis à jour avec succès.";
         } else {
             $message = "Echec de la requête.";
         }
-        // Renvoyer le message avec Twig
+
         echo $this->twigService->render(
             'message.twig',
             ['message' => $message, 'origin' => $environnement]
