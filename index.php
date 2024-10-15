@@ -7,7 +7,7 @@ use Symfony\Component\Dotenv\Dotenv;
 
 //Init variables d'env
 $dotenv = new Dotenv();
-$dotenv->load(__DIR__.'/.env', __DIR__.'/.env.dev');
+$dotenv->load(__DIR__ . '/.env', __DIR__ . '/.env.dev');
 
 //session start
 session_set_cookie_params(600);

@@ -1,8 +1,11 @@
 <?php
+
 namespace App\model;
+
 use App\manager\PostManager;
 
-class PostModel{
+class PostModel
+{
     private int $postId;
     private string $title;
     private string $message;
@@ -11,9 +14,15 @@ class PostModel{
     private string $createdAt;
 
 
-    public function __construct(int $postId, string $title, string $message, string $chapo, int $userId, string $createdAt)
-    {
-       
+    public function __construct(
+        int $postId,
+        string $title,
+        string $message,
+        string $chapo,
+        int $userId,
+        string $createdAt
+    ) {
+
         $this->postId = $postId;
         $this->title = $title;
         $this->chapo = $chapo;
@@ -24,23 +33,19 @@ class PostModel{
 
 
     //Créer un post avec les donnnées de la BD et des données construites
-     /**
-      * @param PostEntity[] : pour plus tard
+    /**
+     * @param PostEntity[] : pour plus tard
      * @return PostModel[]
-    */
-    public static function createFromEntities(array $postEntities): array {
-        $postModels=[];
-
-        foreach ($postEntities as $postEntity) 
-        {
+     */
+    public static function createFromEntities(array $postEntities): array
+    {
+        $postModels = [];
+        foreach ($postEntities as $postEntity) {
             // Construction de la date au format français
             $createdAt = date("d/m/Y", strtotime($postEntity->createAt));
-            
             // Récupération des 20 premières lignes du contenu (chapo)
-        
             $chapo = strlen($postEntity->message) > 100 ? substr($postEntity->message, 0, 100) . '...' : $postEntity->message;
-
-           $postModels[] = new self(
+            $postModels[] = new self(
                 $postEntity->postId,
                 $postEntity->title,
                 $postEntity->message,
@@ -52,35 +57,40 @@ class PostModel{
         return $postModels;
     }
 
-    
     // Getters
 
-    public function getOwer(UserSessionModel $userSession): bool {
+    public function getOwer(UserSessionModel $userSession): bool
+    {
         return $userSession->isOwer($this->userId);
     }
-    
-    public function getPostId(): int {
+
+    public function getPostId(): int
+    {
         return $this->postId;
     }
 
-    public function getTitle(): string {
+    public function getTitle(): string
+    {
         return $this->title;
     }
 
-    
-    public function getMessage(): string {
+    public function getMessage(): string
+    {
         return $this->message;
     }
 
-    public function getChapo(): string {
+    public function getChapo(): string
+    {
         return $this->chapo;
     }
 
-    public function getUserId(): int {
+    public function getUserId(): int
+    {
         return $this->userId;
     }
 
-    public function getCreatedAt(): string {
+    public function getCreatedAt(): string
+    {
         return $this->createdAt;
     }
 }

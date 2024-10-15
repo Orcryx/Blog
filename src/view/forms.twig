@@ -14,9 +14,18 @@
                         </form>
                     {% elseif type == 'deletePost' %}
                         <form method="POST" action="/Post/delete">
-                            <input type="text" name="postId" value="{{postId}}"> 
+                            <input type="hidden" name="postId" value="{{postId}}"> 
                             <p>Êtes-vous sûr de vouloir supprimer le commentaire ?</p>
                             <button id="post-btn" type="submit">Supprimer</button>
+                        </form>
+                    {% elseif type == 'updatePost' %}
+                        <form  method="POST" action="/Post/put">
+                            <!-- <input type="hidden" name="action" id="postActionId" value="put"> : A tester pour modifier l'URL -->
+
+                            <input type="hidden" name="postId" id="postIdInput" value="{{postId}}">
+                            <input name="title" id="postTitle" value="{{ title }}">
+                            <textarea id="postMessage" name="content">{{ comment }}</textarea>                            
+                            <button type="submit">Modifier</button>
                         </form>
                     {% elseif type == 'addComment' %}
                         <form method="POST" action="/comment/add">
@@ -39,12 +48,7 @@
                             <textarea id="commentContent" name="content">{{ comment }}</textarea>
                             <button type="submit">Modifier</button>
                         </form>
-                    {% elseif type == 'updatePost' %}
-                        <form  method="POST" action="/Post/put">
-                            <input type="hidden" name="postId" id="postIdInput" value="{{postId}}">
-                            <input name="title" id="postTitle" value="{{ title }}">
-                            <textarea id="postMessage" name="content">{{ comment }}</textarea>                            <button type="submit">Modifier</button>
-                        </form>
+                    
                     <!-- {% elseif type == 'publishComment' %}
                     <form method="POST" action="/Comment/update">
                         <input type="hidden" name="commentId" value="commentId"> 

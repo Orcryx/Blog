@@ -1,14 +1,15 @@
 <?php
+
 namespace App\controller;
+
 use App\service\TwigService;
 
 class HomeController
 {
-
-    //constructeur de la class 
-    public function __construct(private readonly TwigService $twigService)
-    {
-
+    public function __construct(
+        private readonly TwigService $twigService
+    ) {
+        //contenu du constructeur
     }
 
     public function displayHome()

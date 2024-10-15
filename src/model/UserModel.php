@@ -2,12 +2,11 @@
 
 namespace App\model;
 
-
-class UserModel{
-
-    const ROLE_ADMIN = "isAdmin";
-    const ROLE_USER = "isUser";
-    const ROLES = [
+class UserModel
+{
+    public const ROLE_ADMIN = "isAdmin";
+    public const ROLE_USER = "isUser";
+    public const ROLES = [
         self::ROLE_ADMIN,
         self::ROLE_USER
     ];
@@ -19,8 +18,4 @@ class UserModel{
     public string $password;
     public bool $isValidated;
     public string $nickname;
-
-
-  
-
 }

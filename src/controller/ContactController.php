@@ -1,11 +1,11 @@
 <?php
+
 namespace App\controller;
 
 use App\service\TwigService;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 use App\service\UserService;
-
 
 class ContactController
 {
@@ -33,31 +33,25 @@ class ContactController
     public function sendEmail(string $email, string $message)
     {
         $environnement = "/";
-
         if (!empty($email) && !empty($message)) {
-            
             if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-
                 $mail = new PHPMailer();
-                //$mail->SMTPDebug = 3; // Active le débogage 
-           
-
                 try {
                     // Configuration du serveur SMTP
                     $mail->isSMTP();
-                    $mail->Host = $this->mail_host;      
+                    $mail->Host = $this->mail_host;
                     $mail->SMTPAuth = true;
-                    $mail->Username = $this->mail_user;  
-                    $mail->Password = $this->mail_pass;  
-                    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; 
+                    $mail->Username = $this->mail_user;
+                    $mail->Password = $this->mail_pass;
+                    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
                     $mail->Port = 587;
-                    
+
                     // Destinataire et expéditeur
                     $mail->setFrom($email);
-                    $mail->addAddress($this->mail_address);  
+                    $mail->addAddress($this->mail_address);
 
                     // Contenu de l'email
-                    $mail->isHTML(false);  
+                    $mail->isHTML(false);
                     $mail->Subject = 'Message du projet Blog';
                     $mail->Body = "Email: $email\n\nMessage:\n$message";
 
@@ -65,7 +59,7 @@ class ContactController
                     $mail->send();
                     $message =  'Merci, votre message a bien été envoyé.';
                 } catch (Exception $e) {
-                   $message = "Erreur lors de l'envoi du message. Erreur PHPMailer: {$mail->ErrorInfo}";
+                    $message = "Erreur lors de l'envoi du message. Erreur PHPMailer: {$mail->ErrorInfo}";
                 }
             } else {
                 $message = "Veuillez entrer une adresse email valide.";
@@ -74,8 +68,6 @@ class ContactController
             $message = "Tous les champs sont requis.";
         }
         // Renvoyer le message avec Twig
-        echo $this->twigService->render('message.twig', ['message' => $message, 'origin'=>$environnement]);
+        echo $this->twigService->render('message.twig', ['message' => $message, 'origin' => $environnement]);
     }
 }
-
-
