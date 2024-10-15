@@ -24,7 +24,7 @@ class UserSessionModel
         }
     }
 
-    public function IsAdmin(): bool
+    public function isAdmin(): bool
     {
         if ($this->role == UserModel::ROLE_ADMIN) {
             return true;
