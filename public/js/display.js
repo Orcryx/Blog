@@ -2,6 +2,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const tabs = document.querySelectorAll('.tabs'); 
     const content = document.querySelectorAll('.content-dashboard'); 
     let index = 0;
+    let i = 0;
+    let j = 0;
     tabs.forEach(tab => {
         tab.addEventListener('click', ()=>{
 
