@@ -37,13 +37,11 @@ class CommentController
 
         // Vérifiez si les champs requis sont définis et valides
         if ($input['content'] !== null && $input['postId'] !== null && $input['userId'] !== null) {
-            $comment = $input['content']; // Le commentaire est déjà nettoyé
-            $postId = $input['postId']; // L'ID du post est déjà un entier valide
-            $userId = $input['userId']; // L'ID de l'utilisateur est déjà un entier valide
-
-            // Vérifiez si le commentaire n'est pas vide
+            $comment = $input['content'];
+            $postId = $input['postId'];
+            $userId = $input['userId'];
             if (!empty($comment)) {
-                $isValidated = 0; // Selon votre logique de validation par modération
+                $isValidated = 0;
                 $message = "Votre commentaire est en attente de validation";
 
                 // Ajoutez le commentaire si tout est valide
@@ -57,8 +55,8 @@ class CommentController
 
         // Renvoyer le message avec Twig
         echo $this->twigService->render('message.twig', [
-            'message' => htmlspecialchars($message, ENT_QUOTES), // Explicitly escape the message
-            'origin' => htmlspecialchars($environnement, ENT_QUOTES) // Explicitly escape the origin
+            'message' => htmlspecialchars($message, ENT_QUOTES),
+            'origin' => htmlspecialchars($environnement, ENT_QUOTES)
         ]);
     }
 
