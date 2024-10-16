@@ -44,11 +44,9 @@ class CommentController
         } else {
             $message = "Erreur: tous les champs ne sont pas remplis.";
         }
-
-        // Laisser Twig gérer l'échappement des caractères spéciaux
         echo $this->twigService->render('message.twig', [
             'message' => htmlspecialchars($message, ENT_QUOTES, 'UTF-8'),
-            'origin' => $this->userService->getEnvironnement($this->userService->getPreviousUrl())
+            'origin' => htmlspecialchars($this->userService->getEnvironnement($this->userService->getPreviousUrl()), ENT_QUOTES, 'UTF-8')
         ]);
     }
 
@@ -56,18 +54,15 @@ class CommentController
     {
         // Utiliser FILTER_VALIDATE_INT sans échappement
         $commentId = filter_input(INPUT_POST, 'commentId', FILTER_VALIDATE_INT);
-
         if ($commentId !== null) {
             $this->commentManager->deleteCommentById($commentId);
             $message = "Le commentaire a été supprimé.";
         } else {
             $message = "Échec de la suppression du commentaire";
         }
-
-        // Laisser Twig gérer l'échappement
         echo $this->twigService->render('message.twig', [
             'message' => htmlspecialchars($message, ENT_QUOTES, 'UTF-8'),
-            'origin' => $this->userService->getEnvironnement($this->userService->getPreviousUrl())
+            'origin' => htmlspecialchars($this->userService->getEnvironnement($this->userService->getPreviousUrl()), ENT_QUOTES, 'UTF-8')
         ]);
     }
 
@@ -83,11 +78,9 @@ class CommentController
         } else {
             $message = "Échec de la mise à jour du commentaire";
         }
-
-        // Laisser Twig gérer l'échappement
         echo $this->twigService->render('message.twig', [
             'message' => htmlspecialchars($message, ENT_QUOTES, 'UTF-8'),
-            'origin' => $this->userService->getEnvironnement($this->userService->getPreviousUrl())
+            'origin' => htmlspecialchars($this->userService->getEnvironnement($this->userService->getPreviousUrl()), ENT_QUOTES, 'UTF-8')
         ]);
     }
 
@@ -102,11 +95,9 @@ class CommentController
         } else {
             $message = "Échec de la publication du commentaire";
         }
-
-        // Laisser Twig gérer l'échappement
         echo $this->twigService->render('message.twig', [
             'message' => htmlspecialchars($message, ENT_QUOTES, 'UTF-8'),
-            'origin' => $this->userService->getEnvironnement($this->userService->getPreviousUrl())
+            'origin' => htmlspecialchars($this->userService->getEnvironnement($this->userService->getPreviousUrl()), ENT_QUOTES, 'UTF-8')
         ]);
     }
 }
