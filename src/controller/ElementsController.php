@@ -15,14 +15,12 @@ class ElementsController
 
     public function showLoginDialogue(string $previous_url)
     {
-        $environnement = $this->userService->getEnvironnement($_SESSION['previous_url']);
-
-        echo $this->twigService->render('formConnexion.twig', ["origin" => $environnement]);
+        echo $this->twigService->render('formConnexion.twig', ["origin" => $previous_url]);
     }
 
     public function showDynamicDialog()
     {
-        $environnement = $this->userService->getEnvironnement($_SESSION['previous_url']);
+        $environnement = $this->userService->getEnvironnement($this->userService->getPreviousUrl());
         $params = [
             'origine' => $environnement ?: null,
             'type' => isset($_POST['type']) ? $_POST['type'] : null,
@@ -33,5 +31,13 @@ class ElementsController
             'title' => isset($_POST['title']) ? $_POST['title'] : null
         ];
         echo $this->twigService->render('forms.twig', $params);
+    }
+
+    public function showDialog(string $message)
+    {
+        echo $this->twigService->render('message.twig', [
+            'message' => htmlspecialchars($message, ENT_QUOTES, 'UTF-8'),
+            'origin' => htmlspecialchars($this->userService->getEnvironnement($this->userService->getPreviousUrl()), ENT_QUOTES, 'UTF-8')
+        ]);
     }
 }

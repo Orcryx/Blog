@@ -5,18 +5,21 @@ namespace App\controller;
 use App\service\TwigService;
 use App\manager\CommentManager;
 use App\service\UserService;
+use App\controller\ElementsController;
 
 class CommentController
 {
     private CommentManager $commentManager;
     private TwigService $twigService;
     private UserService $userService;
+    private ElementsController $element;
 
     public function __construct(CommentManager $commentManager, TwigService $twigService)
     {
         $this->commentManager = $commentManager;
         $this->twigService = $twigService;
         $this->userService = new UserService();
+        $this->element = new ElementsController($this->twigService);;
     }
 
     public function addComment(): void
@@ -44,10 +47,7 @@ class CommentController
         } else {
             $message = "Erreur: tous les champs ne sont pas remplis.";
         }
-        echo $this->twigService->render('message.twig', [
-            'message' => htmlspecialchars($message, ENT_QUOTES, 'UTF-8'),
-            'origin' => htmlspecialchars($this->userService->getEnvironnement($this->userService->getPreviousUrl()), ENT_QUOTES, 'UTF-8')
-        ]);
+        $this->element->showDialog($message);
     }
 
     public function deleteComment(): void
@@ -60,10 +60,7 @@ class CommentController
         } else {
             $message = "Échec de la suppression du commentaire";
         }
-        echo $this->twigService->render('message.twig', [
-            'message' => htmlspecialchars($message, ENT_QUOTES, 'UTF-8'),
-            'origin' => htmlspecialchars($this->userService->getEnvironnement($this->userService->getPreviousUrl()), ENT_QUOTES, 'UTF-8')
-        ]);
+        $this->element->showDialog($message);;
     }
 
     public function updateComment(): void
@@ -78,10 +75,7 @@ class CommentController
         } else {
             $message = "Échec de la mise à jour du commentaire";
         }
-        echo $this->twigService->render('message.twig', [
-            'message' => htmlspecialchars($message, ENT_QUOTES, 'UTF-8'),
-            'origin' => htmlspecialchars($this->userService->getEnvironnement($this->userService->getPreviousUrl()), ENT_QUOTES, 'UTF-8')
-        ]);
+        $this->element->showDialog($message);
     }
 
     public function publishComment(): void
@@ -95,9 +89,6 @@ class CommentController
         } else {
             $message = "Échec de la publication du commentaire";
         }
-        echo $this->twigService->render('message.twig', [
-            'message' => htmlspecialchars($message, ENT_QUOTES, 'UTF-8'),
-            'origin' => htmlspecialchars($this->userService->getEnvironnement($this->userService->getPreviousUrl()), ENT_QUOTES, 'UTF-8')
-        ]);
+        $this->element->showDialog($message);
     }
 }
