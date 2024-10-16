@@ -21,8 +21,6 @@ class CommentController
 
     public function addComment(): void
     {
-        $environnement = $this->userService->getEnvironnement($this->userService->getPreviousUrl());
-
         // Utiliser FILTER_DEFAULT pour récupérer les données sans les échapper
         $input = filter_input_array(INPUT_POST, [
             'content' => FILTER_DEFAULT, // On n'échappe pas ici
@@ -49,15 +47,13 @@ class CommentController
 
         // Laisser Twig gérer l'échappement des caractères spéciaux
         echo $this->twigService->render('message.twig', [
-            'message' => $message,
-            'origin' => $environnement
+            'message' => htmlspecialchars($message, ENT_QUOTES, 'UTF-8'),
+            'origin' => $this->userService->getEnvironnement($this->userService->getPreviousUrl())
         ]);
     }
 
     public function deleteComment(): void
     {
-        $environnement = $this->userService->getEnvironnement($this->userService->getPreviousUrl());
-
         // Utiliser FILTER_VALIDATE_INT sans échappement
         $commentId = filter_input(INPUT_POST, 'commentId', FILTER_VALIDATE_INT);
 
@@ -70,15 +66,13 @@ class CommentController
 
         // Laisser Twig gérer l'échappement
         echo $this->twigService->render('message.twig', [
-            'message' => $message,
-            'origin' => $environnement
+            'message' => htmlspecialchars($message, ENT_QUOTES, 'UTF-8'),
+            'origin' => $this->userService->getEnvironnement($this->userService->getPreviousUrl())
         ]);
     }
 
     public function updateComment(): void
     {
-        $environnement = $this->userService->getEnvironnement($this->userService->getPreviousUrl());
-
         // Utiliser FILTER_DEFAULT pour le contenu sans échappement
         $commentId = filter_input(INPUT_POST, 'commentId', FILTER_VALIDATE_INT);
         $comment = filter_input(INPUT_POST, 'content', FILTER_DEFAULT);  // Pas d'échappement ici
@@ -92,15 +86,13 @@ class CommentController
 
         // Laisser Twig gérer l'échappement
         echo $this->twigService->render('message.twig', [
-            'message' => $message,
-            'origin' => $environnement
+            'message' => htmlspecialchars($message, ENT_QUOTES, 'UTF-8'),
+            'origin' => $this->userService->getEnvironnement($this->userService->getPreviousUrl())
         ]);
     }
 
     public function publishComment(): void
     {
-        $environnement = $this->userService->getEnvironnement($this->userService->getPreviousUrl());
-
         // Utiliser FILTER_VALIDATE_INT sans échappement
         $commentId = filter_input(INPUT_POST, 'commentId', FILTER_VALIDATE_INT);
 
@@ -113,8 +105,8 @@ class CommentController
 
         // Laisser Twig gérer l'échappement
         echo $this->twigService->render('message.twig', [
-            'message' => $message,
-            'origin' => $environnement
+            'message' => htmlspecialchars($message, ENT_QUOTES, 'UTF-8'),
+            'origin' => $this->userService->getEnvironnement($this->userService->getPreviousUrl())
         ]);
     }
 }
