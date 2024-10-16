@@ -25,7 +25,7 @@ class UserService
         $email = $_POST['email'];
         /** @var object|false  $user  **/
         $user = $this->user->getUserByEmail($email);
-
+        $origin = $this->backUrl();
         //Initialiser le nombre de tentative de connexion dans une variable de session
         if (!isset($_SESSION['login_attempts'])) {
             $_SESSION['login_attempts'] = 0;
@@ -38,7 +38,7 @@ class UserService
                 $_SESSION['status'] = true;
                 $_SESSION['user'] = new UserSessionModel($user->userId, $user->email, $user->role, $user->nickname);
                 $_SESSION['login_attempts'] = 0; // Reset login attempts
-                header("Location: {$_SESSION['previous_url']}");
+                header("Location: $origin");
                 exit();
             } else {
                 $message = "echec de connexion";
@@ -46,16 +46,14 @@ class UserService
                 if ($_SESSION['login_attempts'] >= 3) {
                     $this->logOut();
                 } else {
-                    $message =  "echec de connexion";
-                    // header("Location: /auth");
-                    // exit();
+                    $message =  "echec de connexion " . $_SESSION['login_attempts'] . "/ 3";
                 }
-                // Afficher la page de connexion avec le message d'erreur
-                echo $twigService->render('message.twig', ['message' => $message, 'origin' => $_SERVER['REQUEST_URI']]);
             }
         } else {
             $message =  "echec de connexion";
         }
+        // Afficher la page de connexion avec le message d'erreur
+        echo $twigService->render('info.twig', ['message' => $message]);
     }
 
     public function register(): void
@@ -125,5 +123,17 @@ class UserService
     public function getPreviousUrl(): ?string
     {
         return $_SESSION['previous_url'] ?? null;
+    }
+
+    public function backUrl()
+    {
+        // Stocker l'URL actuelle dans une variable PHP
+        $current_url = $_SERVER['HTTP_REFERER'];
+        // Si le formulaire est soumis, stockez l'URL dans la session
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $_SESSION['last_url'] = $_POST['current_url'];
+            $current_url = $_SESSION['last_url'];
+        }
+        return $current_url;
     }
 }

@@ -1,0 +1,10 @@
+{% extends "layoutSecondary.twig" %}
+{% block content %}
+    {% if message %}
+        <div class="alert alert-warning">
+            {{ message}}  
+        </div>
+    {% else %}
+        <p>Aucun message d'alerte trouvé.</p> 
+    {% endif %}
+{% endblock %}

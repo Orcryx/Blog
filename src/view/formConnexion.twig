@@ -9,13 +9,19 @@
             <div id="zoneArrow" class="zoneXmark">
                 <a href="{{origin}}" alt="lien vers la page administration" class="userConnected"> <i class="fa-solid fa-arrow-left"></i> </a>
             </div>
+              {% if message %}
+                <div class="alert alert-warning">
+                    {{ message}}  
+                </div>
+            {% endif %}
             <div id="ZoneOnglet" class="flex">
                 <button type="button" class="connec-oglt" data-id="signIn" onclick="showDiv(this)">Se connecter</button>
                 <button  type="button" class="connec-oglt" data-id="signUp" onclick="showDiv(this)">Créer un compte</button>
             </div>
             <div id='userAuthentication'>
                 <!--  -->
-                <form method="POST" action="{{origin}}" >
+                <form method="POST" action="/auth" >
+                    <input type="hidden" name="current_url" value="{{origin}}">
                     <div id="signIn" data-id="signIn" class="content active">
                         <div id="connec-auth" class="flex-column">
                              <input type="hidden" name="formType" value="login">
@@ -27,11 +33,12 @@
                                 <label for="password">Mot de passe:</label>
                                 <input type="password" id="password" name="password" />
                             </div>
-                </form>
-                        </div>
+                             </div>
                         <button id="connec-btn" type="submit">Se connecter</button>
                         <!-- <p class="signIn" data-id="singUp">Vous n'avez pas de compte ?<a class="linkSign"> S'inscrire</a></p> -->
                     </div>
+                </form>
+                       
                     <!--  -->
                 <form method="POST" action="{{origin}}" id="registerForm">
                     <div id="singUp"  data-id="signUp" class="content">
