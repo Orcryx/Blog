@@ -23,19 +23,14 @@ class CommentController
     {
         $environnement = $this->userService->getEnvironnement($this->userService->getPreviousUrl());
 
-        // Utiliser filter_input_array pour récupérer et valider les données
+        // Utiliser FILTER_DEFAULT pour récupérer les données sans les échapper
         $input = filter_input_array(INPUT_POST, [
-            'content' => [
-                'filter' => FILTER_CALLBACK,
-                'options' => function ($value) {
-                    return htmlspecialchars(trim($value), ENT_QUOTES);
-                },
-            ],
-            'postId' => FILTER_VALIDATE_INT,
-            'userId' => FILTER_VALIDATE_INT,
+            'content' => FILTER_DEFAULT, // On n'échappe pas ici
+            'postId'  => FILTER_VALIDATE_INT,
+            'userId'  => FILTER_VALIDATE_INT,
         ]);
 
-        // Vérifiez si les champs requis sont définis et valides
+        // Vérifier si les champs requis sont définis et valides
         if ($input['content'] !== null && $input['postId'] !== null && $input['userId'] !== null) {
             $comment = $input['content'];
             $postId = $input['postId'];
@@ -43,8 +38,7 @@ class CommentController
             if (!empty($comment)) {
                 $isValidated = 0;
                 $message = "Votre commentaire est en attente de validation";
-
-                // Ajoutez le commentaire si tout est valide
+                // Ajouter le commentaire
                 $this->commentManager->addCommentByPostId($postId, $comment, $userId, $isValidated);
             } else {
                 $message = "Erreur: le commentaire ne peut pas être vide.";
@@ -53,10 +47,10 @@ class CommentController
             $message = "Erreur: tous les champs ne sont pas remplis.";
         }
 
-        // Renvoyer le message avec Twig
+        // Laisser Twig gérer l'échappement des caractères spéciaux
         echo $this->twigService->render('message.twig', [
-            'message' => htmlspecialchars($message, ENT_QUOTES),
-            'origin' => htmlspecialchars($environnement, ENT_QUOTES)
+            'message' => $message,
+            'origin' => $environnement
         ]);
     }
 
@@ -64,20 +58,20 @@ class CommentController
     {
         $environnement = $this->userService->getEnvironnement($this->userService->getPreviousUrl());
 
-        // Utiliser filter_input pour récupérer commentId
+        // Utiliser FILTER_VALIDATE_INT sans échappement
         $commentId = filter_input(INPUT_POST, 'commentId', FILTER_VALIDATE_INT);
 
         if ($commentId !== null) {
             $this->commentManager->deleteCommentById($commentId);
             $message = "Le commentaire a été supprimé.";
         } else {
-            $message = "Echec de la suppression du commentaire";
+            $message = "Échec de la suppression du commentaire";
         }
 
-        // Renvoyer le message avec Twig
+        // Laisser Twig gérer l'échappement
         echo $this->twigService->render('message.twig', [
-            'message' => htmlspecialchars($message, ENT_QUOTES),
-            'origin' => htmlspecialchars($environnement, ENT_QUOTES)
+            'message' => $message,
+            'origin' => $environnement
         ]);
     }
 
@@ -85,46 +79,42 @@ class CommentController
     {
         $environnement = $this->userService->getEnvironnement($this->userService->getPreviousUrl());
 
-        // Utiliser filter_input pour récupérer commentId et content
+        // Utiliser FILTER_DEFAULT pour le contenu sans échappement
         $commentId = filter_input(INPUT_POST, 'commentId', FILTER_VALIDATE_INT);
-        $comment = filter_input(INPUT_POST, 'content', FILTER_CALLBACK, [
-            'options' => function ($value) {
-                return htmlspecialchars(trim($value), ENT_QUOTES);
-            },
-        ]);
+        $comment = filter_input(INPUT_POST, 'content', FILTER_DEFAULT);  // Pas d'échappement ici
 
         if ($commentId !== null && $comment !== null) {
-            $message = "Le commentaire est publié.";
+            $message = "Le commentaire est mis à jour.";
             $this->commentManager->updateCommentById($commentId, $comment);
         } else {
-            $message = "Echec de la publication du commentaire";
+            $message = "Échec de la mise à jour du commentaire";
         }
 
-        // Renvoyer le message avec Twig
+        // Laisser Twig gérer l'échappement
         echo $this->twigService->render('message.twig', [
-            'message' => htmlspecialchars($message, ENT_QUOTES),
-            'origin' => htmlspecialchars($environnement, ENT_QUOTES)
+            'message' => $message,
+            'origin' => $environnement
         ]);
     }
 
-    public function publishComment(): void //string si message
+    public function publishComment(): void
     {
         $environnement = $this->userService->getEnvironnement($this->userService->getPreviousUrl());
 
-        // Utiliser filter_input pour récupérer commentId
+        // Utiliser FILTER_VALIDATE_INT sans échappement
         $commentId = filter_input(INPUT_POST, 'commentId', FILTER_VALIDATE_INT);
 
         if ($commentId !== null) {
             $this->commentManager->publishCommentById($commentId);
             $message = "Le commentaire est publié.";
         } else {
-            $message = "Echec de la publication du commentaire";
+            $message = "Échec de la publication du commentaire";
         }
 
-        // Renvoyer le message avec Twig
+        // Laisser Twig gérer l'échappement
         echo $this->twigService->render('message.twig', [
-            'message' => htmlspecialchars($message, ENT_QUOTES),
-            'origin' => htmlspecialchars($environnement, ENT_QUOTES)
+            'message' => $message,
+            'origin' => $environnement
         ]);
     }
 }
