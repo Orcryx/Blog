@@ -45,6 +45,7 @@ class PostController
                 $id = $commentModel->commentId;
                 // Vérifier si l'utilisateur connecté est l'auteur du commentaire
                 $isCommentOwner = $this->commentManager->isOwner($id, $userSession);
+
                 //Ajouter au model du commentaire une valeur IsOwner (pour chaque commentaire)
                 $commentModel->isOwner = $isCommentOwner;
             }
@@ -66,9 +67,9 @@ class PostController
     {
         $environnement = "/admin";
 
-        // Utilisation de filter_input pour récupérer et valider les entrées
-        $title = filter_input(INPUT_POST, 'title', FILTER_SANITIZE_SPECIAL_CHARS);
-        $message = filter_input(INPUT_POST, 'content', FILTER_SANITIZE_SPECIAL_CHARS);
+        // Utilisation de filter_input pour récupérer les entrées sans les échapper
+        $title = filter_input(INPUT_POST, 'title', FILTER_DEFAULT);
+        $message = filter_input(INPUT_POST, 'content', FILTER_DEFAULT);
         $userId = filter_input(INPUT_POST, 'userId', FILTER_VALIDATE_INT);
 
         // Validation des données
@@ -82,10 +83,12 @@ class PostController
             $date = new \DateTime();
             $createdAt = $date->format('Y-m-d H:i:s');
             $this->postManager->createOnePost($title, $message, $userId, $createdAt);
-            echo $this->twigService->render(
-                'message.twig',
-                ['message' => 'Article ajouté', 'origin' => $environnement]
-            );
+
+            // Ici, Twig échappe automatiquement les caractères spéciaux
+            echo $this->twigService->render('message.twig', [
+                'message' => 'Article ajouté',
+                'origin' => $environnement
+            ]);
         }
     }
 
@@ -111,12 +114,12 @@ class PostController
 
     public function updateOnePost(): void
     {
-        $environnement = $this->userService->getEnvironnement($_SESSION['previous_url']);
+        $environnement = $this->userService->getEnvironnement($this->userService->getPreviousUrl());
 
-        // Récupérer les données POST avec validation
+        // Récupérer les données POST sans échapper les caractères
         $postId = filter_input(INPUT_POST, 'postId', FILTER_VALIDATE_INT);
-        $title = filter_input(INPUT_POST, 'title', FILTER_SANITIZE_SPECIAL_CHARS);
-        $message = filter_input(INPUT_POST, 'content', FILTER_SANITIZE_SPECIAL_CHARS);
+        $title = filter_input(INPUT_POST, 'title', FILTER_DEFAULT);
+        $message = filter_input(INPUT_POST, 'content', FILTER_DEFAULT);
 
         if ($postId && $title && $message) {
             $this->postManager->updateOnePostById($postId, $title, $message);
@@ -125,9 +128,13 @@ class PostController
             $message = "Echec de la requête.";
         }
 
+        // Ici, Twig échappe automatiquement les caractères spéciaux
         echo $this->twigService->render(
             'message.twig',
-            ['message' => $message, 'origin' => $environnement]
+            [
+                'message' => $message,
+                'origin' => $environnement
+            ]
         );
     }
 }
