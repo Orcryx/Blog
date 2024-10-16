@@ -7,15 +7,18 @@ use App\service\TwigService;
 use App\manager\PostManager;
 use App\service\UserService;
 
+
 class PostController
 {
+    private ElementsController $element;
+
     public function __construct(
         private readonly PostManager $postManager,
         private readonly CommentManager $commentManager,
         private readonly TwigService $twigService,
         private readonly UserService $userService
     ) {
-        //contenu du constructeur
+        $this->element = new ElementsController($this->twigService);
     }
 
     public function displayGallery()
@@ -51,12 +54,12 @@ class PostController
             }
             // Mettre à jour la session avec l'objet modifié
             $_SESSION['user'] = $userSession;
-            echo $this->twigService->render(
+            $this->element->renderTemplate(
                 'post.twig',
                 ['post' => $articleModel, "comments" => $commentModels, "isAuthor" => $isPostOwner]
             );
         } else {
-            echo $this->twigService->render(
+            $this->element->renderTemplate(
                 'post.twig',
                 ['post' => $articleModel, "comments" => $commentModels]
             );
@@ -74,21 +77,15 @@ class PostController
 
         // Validation des données
         if (empty($title) || empty($message)) {
-            echo $this->twigService->render(
-                'message.twig',
-                ['message' => 'Le titre et le contenu sont obligatoires.', 'origin' => $environnement]
-            );
+            $message = 'Le titre et le contenu sont obligatoires.';
+            $this->element->showDialog($message);
             return;
         } else {
             $date = new \DateTime();
             $createdAt = $date->format('Y-m-d H:i:s');
             $this->postManager->createOnePost($title, $message, $userId, $createdAt);
-
-            // Ici, Twig échappe automatiquement les caractères spéciaux
-            echo $this->twigService->render('message.twig', [
-                'message' => 'Article ajouté',
-                'origin' => $environnement
-            ]);
+            $textMessage = "Article ajouté";
+            $this->element->showDialog($textMessage, $environnement);
         }
     }
 
@@ -105,17 +102,11 @@ class PostController
         } else {
             $message = "Erreur: référence article introuvable.";
         }
-
-        echo $this->twigService->render(
-            'message.twig',
-            ['message' => $message, 'origin' => $environnement]
-        );
+        $this->element->showDialog($message, $environnement);
     }
 
     public function updateOnePost(): void
     {
-        $environnement = $this->userService->getEnvironnement($this->userService->getPreviousUrl());
-
         // Récupérer les données POST sans échapper les caractères
         $postId = filter_input(INPUT_POST, 'postId', FILTER_VALIDATE_INT);
         $title = filter_input(INPUT_POST, 'title', FILTER_DEFAULT);
@@ -127,14 +118,6 @@ class PostController
         } else {
             $message = "Echec de la requête.";
         }
-
-        // Ici, Twig échappe automatiquement les caractères spéciaux
-        echo $this->twigService->render(
-            'message.twig',
-            [
-                'message' => $message,
-                'origin' => $environnement
-            ]
-        );
+        $this->element->showDialog($message);
     }
 }

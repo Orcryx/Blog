@@ -33,11 +33,24 @@ class ElementsController
         echo $this->twigService->render('forms.twig', $params);
     }
 
-    public function showDialog(string $message)
+    public function showDialog(string $message, ?string $origin = null)
     {
+        $escapedMessage = htmlspecialchars($message, ENT_QUOTES, 'UTF-8');
+
+        // Si $origin est défini, échappe-le, sinon échappe la valeur retournée par getEnvironnement()
+        $escapedOrigin = $origin !== null
+            ? htmlspecialchars($origin, ENT_QUOTES, 'UTF-8')
+            : htmlspecialchars($this->userService->getEnvironnement($this->userService->getPreviousUrl()), ENT_QUOTES, 'UTF-8');
+
+        // Utilisation de Twig pour rendre le template avec les variables échappées
         echo $this->twigService->render('message.twig', [
-            'message' => htmlspecialchars($message, ENT_QUOTES, 'UTF-8'),
-            'origin' => htmlspecialchars($this->userService->getEnvironnement($this->userService->getPreviousUrl()), ENT_QUOTES, 'UTF-8')
+            'message' => $escapedMessage,
+            'origin' => $escapedOrigin
         ]);
+    }
+
+    public function renderTemplate(string $template, array $data): void
+    {
+        echo $this->twigService->render($template, $data);
     }
 }

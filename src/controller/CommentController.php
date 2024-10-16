@@ -19,7 +19,7 @@ class CommentController
         $this->commentManager = $commentManager;
         $this->twigService = $twigService;
         $this->userService = new UserService();
-        $this->element = new ElementsController($this->twigService);;
+        $this->element = new ElementsController($this->twigService);
     }
 
     public function addComment(): void
