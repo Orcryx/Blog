@@ -11,14 +11,14 @@ class CommentController
 {
     private CommentManager $commentManager;
     private TwigService $twigService;
-    private UserManager $userManager;
+    // private UserManager $userManager;
     private ElementsController $element;
 
     public function __construct(CommentManager $commentManager, TwigService $twigService)
     {
         $this->commentManager = $commentManager;
         $this->twigService = $twigService;
-        $this->userManager = new UserManager();
+        // $this->userManager = new UserManager();
         $this->element = new ElementsController($this->twigService);
     }
 

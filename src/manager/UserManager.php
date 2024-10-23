@@ -13,7 +13,6 @@ use App\service\RouterService;
 class UserManager
 {
     private UserRepository $user;
-    private $environnement;
     private RouterService $url;
 
     public function __construct()
@@ -79,11 +78,6 @@ class UserManager
         } else {
             echo "création de compte impossible";
         }
-    }
-
-    public function getEnvironnement($environnement)
-    {
-        return $this->environnement = $environnement;
     }
 
     // private function isConnected(): bool
