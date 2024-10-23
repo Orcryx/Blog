@@ -40,13 +40,12 @@ class ElementsController extends AbstractController
     public function showDialog(string $message, ?string $origin = null)
     {
         $escapedMessage = htmlspecialchars($message, ENT_QUOTES, 'UTF-8');
-
-        // Si $origin est défini, échappe-le, sinon échappe la valeur retournée par getEnvironnement()
-        $escapedOrigin = $origin !== null
-            ? htmlspecialchars($origin, ENT_QUOTES, 'UTF-8')
-            : htmlspecialchars($this->userManager->getEnvironnement($this->userManager->getPreviousUrl()), ENT_QUOTES, 'UTF-8');
-
-        // Utilisation de Twig pour rendre le template avec les variables échappées
+        if ($origin !== null) {
+            $escapedOrigin = htmlspecialchars($origin, ENT_QUOTES, 'UTF-8');
+        } else {
+            $environment = $this->userManager->getEnvironnement($this->userManager->getPreviousUrl());
+            $escapedOrigin = $environment !== null ? htmlspecialchars($environment, ENT_QUOTES, 'UTF-8') : '';
+        }
         $this->renderTemplate('message.twig', [
             'message' => $escapedMessage,
             'origin' => $escapedOrigin

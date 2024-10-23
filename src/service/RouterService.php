@@ -5,15 +5,16 @@ namespace App\service;
 use App\controller\CommentController;
 use App\controller\PostController;
 use App\controller\ContactController;
-use App\manager\PostManager;
-use App\repository\PostRepository;
-use App\manager\CommentManager;
-use App\repository\CommentRepository;
-use App\service\DatabaseService;
-use App\manager\UserManager;
-use App\repository\UserRepository;
 use App\controller\ElementsController;
 use App\controller\AdminController;
+use App\controller\UserModel;
+use App\repository\CommentRepository;
+use App\repository\PostRepository;
+use App\repository\UserRepository;
+use App\manager\CommentManager;
+use App\manager\UserManager;
+use App\manager\PostManager;
+use App\service\DatabaseService;
 
 class RouterService
 {
@@ -40,6 +41,7 @@ class RouterService
         $commentController = new CommentController($commentManager, $this->twigService);
         $postController = new PostController($postManager, $commentManager, $this->twigService, $userManager);
         $form = new ElementsController($this->twigService);
+        $user = new UserModel($this->twigService);
         $isMethodPost = $_SERVER['REQUEST_METHOD'] === 'POST';
         //$isMethodGet = $_SERVER['REQUEST_METHOD'] === 'GET';
         // Récupérer l'ID de l'URL s'il est présent
@@ -77,27 +79,9 @@ class RouterService
                 }
                 break;
             case '/auth':
-                // if (isset($_SERVER['HTTP_REFERER'])) {
-                //     $_SESSION['previous_url'] = $_SERVER['HTTP_REFERER'];
-                // } else {
-                //     // Page par défaut si HTTP_REFERER n'est pas défini
-                //     $_SESSION['previous_url'] = '/auth';
-                // }
-                // $form->showLoginDialogue($_SESSION['previous_url']);
-                $url = $userManager->backUrl();
-                //Spécifique à l'authentification
+                $url = $this->backUrl();
                 if ($isMethodPost) {
-                    $formType = $_POST['formType'] ?? '';
-                    if ($formType === 'login' && isset($_POST['email']) && isset($_POST['password'])) {
-                        // Action de connexion
-                        $userManager->logIn($_POST['email']);
-                    } elseif (
-                        $formType === 'register' && isset($_POST['name']) && isset($_POST['firstName'])
-                        && isset($_POST['nickname']) && isset($_POST['email']) && isset($_POST['password'])
-                    ) {
-                        // Action d'enregistrement
-                        $userManager->register();
-                    }
+                    $user->showAuth();
                 }
                 $form->showLoginDialogue($url);
                 break;
@@ -159,5 +143,17 @@ class RouterService
                 echo $this->twigService->render('404.twig');
                 break;
         }
+    }
+
+    public function backUrl()
+    {
+        // Stocker l'URL actuelle dans une variable PHP
+        $current_url = $_SERVER['HTTP_REFERER'];
+        // Si le formulaire est soumis, stockez l'URL dans la session
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $_SESSION['last_url'] = $_POST['current_url'];
+            $current_url = $_SESSION['last_url'];
+        }
+        return $current_url;
     }
 }

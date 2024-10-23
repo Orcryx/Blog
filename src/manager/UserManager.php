@@ -8,16 +8,18 @@ use App\repository\UserRepository;
 use App\model\UserSessionModel;
 use App\Service\DatabaseService;
 use App\service\TwigService;
+use App\service\RouterService;
 
 class UserManager
 {
     private UserRepository $user;
-    private $environnement;
-    private $session;
+    // private $environnement;
+    private RouterService $url;
 
     public function __construct()
     {
         $this->user = new UserRepository(new DatabaseService());
+        $this->url = new RouterService();
     }
 
     public function logIn(string $email): void
@@ -26,8 +28,7 @@ class UserManager
         // $email = $_POST['email'];
         /** @var object|false  $user  **/
         $user = $this->user->getUserByEmail($email);
-        $origin = $this->backUrl();
-        //Initialiser le nombre de tentative de connexion dans une variable de session
+        $origin = $this->url->backUrl();
         if (!isset($_SESSION['login_attempts'])) {
             $_SESSION['login_attempts'] = 0;
         }
@@ -80,24 +81,23 @@ class UserManager
         }
     }
 
-    public function getEnvironnement($environnement)
-    {
-        return $this->environnement = $environnement;
-    }
+    // public function getEnvironnement($environnement)
+    // {
+    //     return $this->environnement = $environnement;
+    // }
 
-    private function isConnected(): bool
-    {
-        if (isset($_SESSION['status']) && $_SESSION['status'] === true) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+    // private function isConnected(): bool
+    // {
+    //     if (isset($_SESSION['status']) && $_SESSION['status'] === true) {
+    //         return true;
+    //     } else {
+    //         return false;
+    //     }
+    // }
 
     public function checkSessionExpiration(): void
     {
         if (isset($_SESSION['start']) && (time() - $_SESSION['start'] > 600)) {
-            // Si durée session >= 10 minutes, détruire la session.
             $this->logOut();
         }
     }
@@ -125,17 +125,5 @@ class UserManager
     public function getPreviousUrl(): ?string
     {
         return $_SESSION['previous_url'] ?? null;
-    }
-
-    public function backUrl()
-    {
-        // Stocker l'URL actuelle dans une variable PHP
-        $current_url = $_SERVER['HTTP_REFERER'];
-        // Si le formulaire est soumis, stockez l'URL dans la session
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $_SESSION['last_url'] = $_POST['current_url'];
-            $current_url = $_SESSION['last_url'];
-        }
-        return $current_url;
     }
 }
