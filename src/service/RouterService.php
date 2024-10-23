@@ -28,7 +28,7 @@ class RouterService
     public function run(string $uri)
     {
         $path = explode('?', $uri)[0];
-        //$environnement = $_SERVER["REQUEST_URI"];
+        // $environnement = $_SERVER["REQUEST_URI"];
         //Préparer les class du projet
         $dataBD = new DatabaseService();
         $userRepo = new UserRepository($dataBD);

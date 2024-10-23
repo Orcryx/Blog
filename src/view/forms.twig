@@ -8,20 +8,21 @@
                     </div>
                     {% if type == 'commentId' %}
                         <form method="POST" action="/deleteComment">
+                            <input type="hidden" name="current_url" value="{{origine}}">
                             <input type="hidden" name="commentId"> 
                             <p>Êtes-vous sûr de vouloir supprimer le commentaire ?</p>
                             <button id="comment-btn" type="submit">Supprimer</button>
                         </form>
                     {% elseif type == 'deletePost' %}
                         <form method="POST" action="/Post/delete">
+                            <input type="hidden" name="current_url" value="{{origine}}">
                             <input type="hidden" name="postId" value="{{postId}}"> 
                             <p>Êtes-vous sûr de vouloir supprimer le commentaire ?</p>
                             <button id="post-btn" type="submit">Supprimer</button>
                         </form>
                     {% elseif type == 'updatePost' %}
                         <form  method="POST" action="/Post/put">
-                            <!-- <input type="hidden" name="action" id="postActionId" value="put"> : A tester pour modifier l'URL -->
-
+                            <input type="hidden" name="current_url" value="{{origine}}">
                             <input type="hidden" name="postId" id="postIdInput" value="{{postId}}">
                             <input name="title" id="postTitle" value="{{ title }}">
                             <textarea id="postMessage" name="content">{{ comment }}</textarea>                            
@@ -29,6 +30,7 @@
                         </form>
                     {% elseif type == 'addComment' %}
                         <form method="POST" action="/comment/add">
+                            <input type="hidden" name="current_url" value="{{origine}}">
                             <div class="hidden">
                             <input type="hidden" id="postId" name="postId" value="{{postId}}"/>
                             <input type="hidden" id="userId" name="userId" value="{{session.user.userId }}" />
@@ -36,7 +38,6 @@
                             <div id="addComment" class="flex-column">
                             <label for="nickname">Pseudo:</label>
                             <input type="text" id="nickname" name="nickname" value="{{ session.user.nickname }}" readonly />
-                            
                             <label for="content">Message:</label>
                             <textarea id="comment" name="content"></textarea>
                             </div>
@@ -44,28 +45,11 @@
                         </form>
                     {% elseif type == 'updateComment' %}
                         <form  method="POST" action="/Comment/update">
+                            <input type="hidden" name="current_url" value="{{origine}}">
                             <input type="hidden" name="commentId" id="commentIdInput" value="{{commentId}}">
                             <textarea id="commentContent" name="content">{{ comment }}</textarea>
                             <button type="submit">Modifier</button>
                         </form>
-                    
-                    <!-- {% elseif type == 'publishComment' %}
-                    <form method="POST" action="/Comment/update">
-                        <input type="hidden" name="commentId" value="commentId"> 
-                        <button id="comment-btn" type="submit">Publier</button>
-                    </form> -->
-
-                    <!-- {% elseif type == 'createPost' %}
-                     <form method="POST" action="/Post/post">
-                        <input type="text" id="userId" name="userId" value="{{userId }}" class="hidden" />
-                        <label for="title">Titre</label>
-                        <input type="text" id="title" name="title" />
-                
-                        <label for="content">Message:</label>
-                        <textarea id="textarea-post" id="post" name="content"></textarea> 
-
-                        <button id="addPost-btn" type="submit">Soumettre</button>
-                    </form> -->
                     {% endif %}
             </div>
         </div>

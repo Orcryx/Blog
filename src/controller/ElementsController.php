@@ -3,18 +3,16 @@
 namespace App\controller;
 
 use App\service\TwigService;
-use App\manager\UserManager;
-//rename ElementsController en DialogController
+// use App\manager\UserManager;
 
 class ElementsController extends AbstractController
 {
-
-    private UserManager $userManager;
+    // private UserManager $userManager;
     public function __construct(TwigService $twigService)
     {
         //indiquer comment est construite le constructeur de la class Parent
         parent::__construct($twigService);
-        $this->userManager = new UserManager();
+        // $this->userManager = new UserManager();
     }
 
     public function showLoginDialogue(string $previous_url)
@@ -24,9 +22,9 @@ class ElementsController extends AbstractController
 
     public function showDynamicDialog()
     {
-        $environnement = $this->userManager->getEnvironnement($this->userManager->getPreviousUrl());
+        $currentUrl = $this->getUrl(); // Récupérer l'URL actuelle via getUrl()
         $params = [
-            'origine' => $environnement ?: null,
+            'origine' =>  $currentUrl ?? '',
             'type' => isset($_POST['type']) ? $_POST['type'] : null,
             'postId' => isset($_POST['postId']) ? $_POST['postId'] : null,
             'userId' => isset($_POST['userId']) ? $_POST['userId'] : null,
@@ -39,11 +37,12 @@ class ElementsController extends AbstractController
 
     public function showDialog(string $message, ?string $origin = null)
     {
+        $currentUrl = $this->getUrl();
         $escapedMessage = htmlspecialchars($message, ENT_QUOTES, 'UTF-8');
         if ($origin !== null) {
             $escapedOrigin = htmlspecialchars($origin, ENT_QUOTES, 'UTF-8');
         } else {
-            $environment = $this->userManager->getEnvironnement($this->userManager->getPreviousUrl());
+            $environment = $currentUrl;
             $escapedOrigin = $environment !== null ? htmlspecialchars($environment, ENT_QUOTES, 'UTF-8') : '';
         }
         $this->renderTemplate('message.twig', [
@@ -66,5 +65,15 @@ class ElementsController extends AbstractController
     public function showFormContact()
     {
         $this->renderTemplate('contact_include.twig', []);
+    }
+
+    public function getUrl()
+    {
+        $previousUrl = $_SERVER['HTTP_REFERER'] ?? null;
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $previousUrl = $_POST['current_url'] ?? $_SESSION['last_url'] ?? $previousUrl;
+            $_SESSION['last_url'] = $previousUrl;
+        }
+        return $previousUrl;
     }
 }
