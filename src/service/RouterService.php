@@ -40,10 +40,11 @@ class RouterService
         $blogController = new PostController($postManager, $commentManager, $this->twigService, $userManager);
         $commentController = new CommentController($commentManager, $this->twigService);
         $postController = new PostController($postManager, $commentManager, $this->twigService, $userManager);
+        $AdminController = new AdminController($commentManager, $this->twigService, $userManager);
+        $contactController = new ContactController($this->twigService);
         $form = new ElementsController($this->twigService);
         $user = new UserModel($this->twigService);
         $isMethodPost = $_SERVER['REQUEST_METHOD'] === 'POST';
-        //$isMethodGet = $_SERVER['REQUEST_METHOD'] === 'GET';
         // Récupérer l'ID de l'URL s'il est présent
         $queryString = explode('?', $uri)[1] ?? ''; // Obtenir la partie de la chaîne après le '?'
         $id = intval($queryString);
@@ -52,22 +53,16 @@ class RouterService
         //Les autres route en fonction de l'action
         switch ($path) {
             case '/':
-                echo $this->twigService->render('index.twig');
+                $form->showIndex();
                 break;
             case '/action':
                 $form->showDynamicDialog();
                 break;
             case '/contact':
-                $contactController = new ContactController($this->twigService);
                 if ($isMethodPost) {
-                    // Récupérer les données du formulaire
-                    $email = htmlspecialchars(trim($_POST['email'] ?? ''));
-                    $message = htmlspecialchars(trim($_POST['message'] ?? ''));
-                    // Appeler la méthode sendEmail
-                    $contactController->sendEmail($email, $message);
+                    $contactController->sendEmail();
                 } else {
-                    // Afficher le formulaire de contact
-                    return $contactController->getForm();
+                    $form->showFormContact();
                 }
                 break;
             case '/blog':
@@ -102,21 +97,10 @@ class RouterService
                     $commentController->updateComment();
                 }
                 break;
-            case '/contact':
-                return $this->twigService->render('contact_include.twig');
-                if ($isMethodPost) {
-                    // Récupérer les données du formulaire
-                    $email = htmlspecialchars(trim($_POST['user-mail']));
-                    $message = htmlspecialchars(trim($_POST['user-msg']));
-                    return $this->twigService->render();
-                }
-                break;
             case '/admin':
-                $AdminController = new AdminController($commentManager, $this->twigService, $userManager);
                 $AdminController->dashboardAdmin();
                 break;
             case '/Comment/put':
-                $commentController = new CommentController($commentManager, $this->twigService);
                 $commentController->publishComment();
                 break;
             case '/Post/post':
@@ -135,12 +119,10 @@ class RouterService
                 }
                 break;
             case '/logOut':
-                $_SESSION['previous_url'] = $_SERVER['HTTP_REFERER'] ?? '/';
                 $userManager->logOut();
                 break;
             default:
-                http_response_code(404);
-                echo $this->twigService->render('404.twig');
+                $form->showPage404();
                 break;
         }
     }

@@ -13,7 +13,7 @@ use App\service\RouterService;
 class UserManager
 {
     private UserRepository $user;
-    // private $environnement;
+    private $environnement;
     private RouterService $url;
 
     public function __construct()
@@ -81,10 +81,10 @@ class UserManager
         }
     }
 
-    // public function getEnvironnement($environnement)
-    // {
-    //     return $this->environnement = $environnement;
-    // }
+    public function getEnvironnement($environnement)
+    {
+        return $this->environnement = $environnement;
+    }
 
     // private function isConnected(): bool
     // {
@@ -104,6 +104,7 @@ class UserManager
 
     public function logOut(): void
     {
+        $_SESSION['previous_url'] = $_SERVER['HTTP_REFERER'] ?? '/';
         $previousUrl = $_SESSION['previous_url'] ?? '/';
 
         session_unset();

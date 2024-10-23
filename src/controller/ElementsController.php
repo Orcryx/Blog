@@ -51,4 +51,20 @@ class ElementsController extends AbstractController
             'origin' => $escapedOrigin
         ]);
     }
+
+    public function showIndex()
+    {
+        $this->renderTemplate('index.twig', []);
+    }
+
+    public function showPage404()
+    {
+        http_response_code(404);
+        $this->renderTemplate('404.twig', []);
+    }
+
+    public function showFormContact()
+    {
+        $this->renderTemplate('contact_include.twig', []);
+    }
 }

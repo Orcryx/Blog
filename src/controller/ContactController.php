@@ -31,8 +31,11 @@ class ContactController
         return $this->twigService->render('contact_include.twig');
     }
 
-    public function sendEmail(string $email, string $message)
+    public function sendEmail()
     {
+        // Récupérer les données du formulaire
+        $email = htmlspecialchars(trim($_POST['email'] ?? ''));
+        $message = htmlspecialchars(trim($_POST['message'] ?? ''));
         $environnement = "/";
         if (!empty($email) && !empty($message)) {
             if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
