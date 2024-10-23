@@ -2,13 +2,14 @@
 
 declare(strict_types=1);
 
-namespace App\service;
+namespace App\manager;
 
 use App\repository\UserRepository;
 use App\model\UserSessionModel;
-use App\Service\MessageService;
+use App\Service\DatabaseService;
+use App\service\TwigService;
 
-class UserService
+class UserManager
 {
     private UserRepository $user;
     private $environnement;
@@ -19,10 +20,10 @@ class UserService
         $this->user = new UserRepository(new DatabaseService());
     }
 
-    public function logIn(): void
+    public function logIn(string $email): void
     {
         $twigService = new TwigService();
-        $email = $_POST['email'];
+        // $email = $_POST['email'];
         /** @var object|false  $user  **/
         $user = $this->user->getUserByEmail($email);
         $origin = $this->backUrl();
@@ -54,6 +55,7 @@ class UserService
         }
         // Afficher la page de connexion avec le message d'erreur
         echo $twigService->render('info.twig', ['message' => $message]);
+        // return $message
     }
 
     public function register(): void

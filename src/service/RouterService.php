@@ -10,7 +10,7 @@ use App\repository\PostRepository;
 use App\manager\CommentManager;
 use App\repository\CommentRepository;
 use App\service\DatabaseService;
-use App\service\UserService;
+use App\manager\UserManager;
 use App\repository\UserRepository;
 use App\controller\ElementsController;
 use App\controller\AdminController;
@@ -31,14 +31,14 @@ class RouterService
         //Préparer les class du projet
         $dataBD = new DatabaseService();
         $userRepo = new UserRepository($dataBD);
-        $userService = new UserService($userRepo);
+        $userManager = new UserManager($userRepo);
         $postRepo = new PostRepository($dataBD);
         $postManager = new PostManager($postRepo);
         $commentRepo = new CommentRepository($dataBD);
         $commentManager = new CommentManager($commentRepo);
-        $blogController = new PostController($postManager, $commentManager, $this->twigService, $userService);
+        $blogController = new PostController($postManager, $commentManager, $this->twigService, $userManager);
         $commentController = new CommentController($commentManager, $this->twigService);
-        $postController = new PostController($postManager, $commentManager, $this->twigService, $userService);
+        $postController = new PostController($postManager, $commentManager, $this->twigService, $userManager);
         $form = new ElementsController($this->twigService);
         $isMethodPost = $_SERVER['REQUEST_METHOD'] === 'POST';
         //$isMethodGet = $_SERVER['REQUEST_METHOD'] === 'GET';
@@ -46,7 +46,6 @@ class RouterService
         $queryString = explode('?', $uri)[1] ?? ''; // Obtenir la partie de la chaîne après le '?'
         $id = intval($queryString);
         $id = ($id === 0 && $queryString !== "0") ? null : $id;
-
 
         //Les autres route en fonction de l'action
         switch ($path) {
@@ -85,19 +84,19 @@ class RouterService
                 //     $_SESSION['previous_url'] = '/auth';
                 // }
                 // $form->showLoginDialogue($_SESSION['previous_url']);
-                $url = $userService->backUrl();
+                $url = $userManager->backUrl();
                 //Spécifique à l'authentification
                 if ($isMethodPost) {
                     $formType = $_POST['formType'] ?? '';
                     if ($formType === 'login' && isset($_POST['email']) && isset($_POST['password'])) {
                         // Action de connexion
-                        $userService->logIn();
+                        $userManager->logIn($_POST['email']);
                     } elseif (
                         $formType === 'register' && isset($_POST['name']) && isset($_POST['firstName'])
                         && isset($_POST['nickname']) && isset($_POST['email']) && isset($_POST['password'])
                     ) {
                         // Action d'enregistrement
-                        $userService->register();
+                        $userManager->register();
                     }
                 }
                 $form->showLoginDialogue($url);
@@ -129,7 +128,7 @@ class RouterService
                 }
                 break;
             case '/admin':
-                $AdminController = new AdminController($commentManager, $this->twigService, $userService);
+                $AdminController = new AdminController($commentManager, $this->twigService, $userManager);
                 $AdminController->dashboardAdmin();
                 break;
             case '/Comment/put':
@@ -153,7 +152,7 @@ class RouterService
                 break;
             case '/logOut':
                 $_SESSION['previous_url'] = $_SERVER['HTTP_REFERER'] ?? '/';
-                $userService->logOut();
+                $userManager->logOut();
                 break;
             default:
                 http_response_code(404);

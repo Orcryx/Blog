@@ -5,7 +5,7 @@ namespace App\controller;
 use App\manager\CommentManager;
 use App\service\TwigService;
 use App\manager\PostManager;
-use App\service\UserService;
+use App\manager\UserManager;
 
 
 class PostController
@@ -16,7 +16,7 @@ class PostController
         private readonly PostManager $postManager,
         private readonly CommentManager $commentManager,
         private readonly TwigService $twigService,
-        private readonly UserService $userService
+        private readonly UserManager $userManager
     ) {
         $this->element = new ElementsController($this->twigService);
     }
@@ -32,8 +32,8 @@ class PostController
     {
         $articleModel =  $this->postManager->getOne($postId);
         $commentModels = $this->commentManager->getCommentByPost($articleModel->getPostId());
-        // Utilisation de UserService pour obtenir la session utilisateur
-        $userSession = $this->userService->getUserSession();
+        // Utilisation de UserManager pour obtenir la session utilisateur
+        $userSession = $this->userManager->getUserSession();
         $isCommentOwner = false;
         $isPostOwner = false;
         if ($userSession !== null) {

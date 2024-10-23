@@ -4,7 +4,7 @@ namespace App\controller;
 
 use App\service\TwigService;
 use App\manager\CommentManager;
-use App\service\UserService;
+use App\manager\UserManager;
 use App\model\CommentModel;
 
 class AdminController
@@ -12,7 +12,7 @@ class AdminController
     public function __construct(
         private readonly CommentManager $commentManager,
         private readonly TwigService $twigService,
-        private readonly UserService $userService
+        private readonly UserManager $userManager
     ) {
         //contenu du constructeur
     }

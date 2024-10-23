@@ -5,11 +5,11 @@ namespace App\controller;
 use App\service\TwigService;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
-use App\service\UserService;
+use App\manager\UserManager;
 
 class ContactController
 {
-    private UserService $userService;
+    private UserManager $userManager;
     private readonly string $mail_pass;
     private readonly string $mail_user;
     private readonly string $mail_host;
@@ -17,7 +17,7 @@ class ContactController
 
     public function __construct(private readonly TwigService $twigService)
     {
-        $this->userService = new UserService();
+        $this->userManager = new UserManager();
         //variable d'environnement
         $this->mail_pass = $_ENV["MAIL_PASS"];
         $this->mail_user = $_ENV["MAIL_USER"];
