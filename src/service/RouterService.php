@@ -46,22 +46,8 @@ class RouterService
         $queryString = explode('?', $uri)[1] ?? ''; // Obtenir la partie de la chaîne après le '?'
         $id = intval($queryString);
         $id = ($id === 0 && $queryString !== "0") ? null : $id;
-        //Spécifique à l'authentification
-        if ($isMethodPost) {
-            $formType = $_POST['formType'] ?? '';
-            if ($formType === 'login' && isset($_POST['email']) && isset($_POST['password'])) {
-                // Action de connexion
-                $userService->logIn();
-            } elseif (
-                $formType === 'register' && isset($_POST['name']) && isset($_POST['firstName'])
-                && isset($_POST['nickname']) && isset($_POST['email']) && isset($_POST['password'])
-            ) {
-                // Action d'enregistrement
-                $userService->register();
-            } else {
-                //Gérer les erreurs ici
-            }
-        }
+
+
         //Les autres route en fonction de l'action
         switch ($path) {
             case '/':
@@ -92,13 +78,29 @@ class RouterService
                 }
                 break;
             case '/auth':
-                if (isset($_SERVER['HTTP_REFERER'])) {
-                    $_SESSION['previous_url'] = $_SERVER['HTTP_REFERER'];
-                } else {
-                    // Page par défaut si HTTP_REFERER n'est pas défini
-                    $_SESSION['previous_url'] = '/auth';
+                // if (isset($_SERVER['HTTP_REFERER'])) {
+                //     $_SESSION['previous_url'] = $_SERVER['HTTP_REFERER'];
+                // } else {
+                //     // Page par défaut si HTTP_REFERER n'est pas défini
+                //     $_SESSION['previous_url'] = '/auth';
+                // }
+                // $form->showLoginDialogue($_SESSION['previous_url']);
+                $url = $userService->backUrl();
+                //Spécifique à l'authentification
+                if ($isMethodPost) {
+                    $formType = $_POST['formType'] ?? '';
+                    if ($formType === 'login' && isset($_POST['email']) && isset($_POST['password'])) {
+                        // Action de connexion
+                        $userService->logIn();
+                    } elseif (
+                        $formType === 'register' && isset($_POST['name']) && isset($_POST['firstName'])
+                        && isset($_POST['nickname']) && isset($_POST['email']) && isset($_POST['password'])
+                    ) {
+                        // Action d'enregistrement
+                        $userService->register();
+                    }
                 }
-                $form->showLoginDialogue($_SESSION['previous_url']);
+                $form->showLoginDialogue($url);
                 break;
             case '/comment/add':
                 if ($isMethodPost) {
