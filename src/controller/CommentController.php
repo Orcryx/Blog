@@ -4,21 +4,21 @@ namespace App\controller;
 
 use App\service\TwigService;
 use App\manager\CommentManager;
-use App\service\UserService;
+use App\manager\UserManager;
 use App\controller\ElementsController;
 
 class CommentController
 {
     private CommentManager $commentManager;
     private TwigService $twigService;
-    private UserService $userService;
+    private UserManager $userManager;
     private ElementsController $element;
 
     public function __construct(CommentManager $commentManager, TwigService $twigService)
     {
         $this->commentManager = $commentManager;
         $this->twigService = $twigService;
-        $this->userService = new UserService();
+        $this->userManager = new UserManager();
         $this->element = new ElementsController($this->twigService);
     }
 

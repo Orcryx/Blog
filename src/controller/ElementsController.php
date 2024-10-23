@@ -3,24 +3,28 @@
 namespace App\controller;
 
 use App\service\TwigService;
-use App\service\UserService;
+use App\manager\UserManager;
+//rename ElementsController en DialogController
 
-class ElementsController
+class ElementsController extends AbstractController
 {
-    private UserService $userService;
-    public function __construct(private readonly TwigService $twigService)
+
+    private UserManager $userManager;
+    public function __construct(TwigService $twigService)
     {
-        $this->userService = new UserService();
+        //indiquer comment est construite le constructeur de la class Parent
+        parent::__construct($twigService);
+        $this->userManager = new UserManager();
     }
 
     public function showLoginDialogue(string $previous_url)
     {
-        echo $this->twigService->render('formConnexion.twig', ["origin" => $previous_url]);
+        $this->renderTemplate('formConnexion.twig', ["origin" => $previous_url]);
     }
 
     public function showDynamicDialog()
     {
-        $environnement = $this->userService->getEnvironnement($this->userService->getPreviousUrl());
+        $environnement = $this->userManager->getEnvironnement($this->userManager->getPreviousUrl());
         $params = [
             'origine' => $environnement ?: null,
             'type' => isset($_POST['type']) ? $_POST['type'] : null,
@@ -30,27 +34,37 @@ class ElementsController
             'comment' => isset($_POST['content']) ? $_POST['content'] : null,
             'title' => isset($_POST['title']) ? $_POST['title'] : null
         ];
-        echo $this->twigService->render('forms.twig', $params);
+        $this->renderTemplate('forms.twig', $params);
     }
 
     public function showDialog(string $message, ?string $origin = null)
     {
         $escapedMessage = htmlspecialchars($message, ENT_QUOTES, 'UTF-8');
-
-        // Si $origin est défini, échappe-le, sinon échappe la valeur retournée par getEnvironnement()
-        $escapedOrigin = $origin !== null
-            ? htmlspecialchars($origin, ENT_QUOTES, 'UTF-8')
-            : htmlspecialchars($this->userService->getEnvironnement($this->userService->getPreviousUrl()), ENT_QUOTES, 'UTF-8');
-
-        // Utilisation de Twig pour rendre le template avec les variables échappées
-        echo $this->twigService->render('message.twig', [
+        if ($origin !== null) {
+            $escapedOrigin = htmlspecialchars($origin, ENT_QUOTES, 'UTF-8');
+        } else {
+            $environment = $this->userManager->getEnvironnement($this->userManager->getPreviousUrl());
+            $escapedOrigin = $environment !== null ? htmlspecialchars($environment, ENT_QUOTES, 'UTF-8') : '';
+        }
+        $this->renderTemplate('message.twig', [
             'message' => $escapedMessage,
             'origin' => $escapedOrigin
         ]);
     }
 
-    public function renderTemplate(string $template, array $data): void
+    public function showIndex()
     {
-        echo $this->twigService->render($template, $data);
+        $this->renderTemplate('index.twig', []);
+    }
+
+    public function showPage404()
+    {
+        http_response_code(404);
+        $this->renderTemplate('404.twig', []);
+    }
+
+    public function showFormContact()
+    {
+        $this->renderTemplate('contact_include.twig', []);
     }
 }

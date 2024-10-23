@@ -120,6 +120,7 @@ h2, p, label{
 .activeContent
 {
     display: block;
+    width: 100%;
     animation : fade 0.5s forwards;
 }
 
