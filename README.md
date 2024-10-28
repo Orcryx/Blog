@@ -52,8 +52,13 @@ Accédez à l’application dans votre navigateur via http://localhost:3000.
 ## Structure du projet
 
 Voici un aperçu de la structure du projet :
+
 .
+
 ├── src/ # Dossier principal de l'application PHP
+
 ├── public/ # Dossier public accessible par le serveur web
+
 ├── views/ # Templates Twig
+
 ├── documentation/ # Documentation, UML, bdd
