@@ -68,7 +68,7 @@ class PostRepository
         );
     }
 
-    public function updateOnePostByI(int $postId, string $title, string $message): void
+    public function updateOnePostById(int $postId, string $title, string $message): void
     {
         $post = $this->databaseService->prepareAndExecuteOne(
             'UPDATE post SET title = :title, message = :message WHERE postId = :postId',

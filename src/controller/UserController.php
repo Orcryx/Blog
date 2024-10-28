@@ -5,17 +5,16 @@ namespace App\controller;
 use App\service\TwigService;
 use App\manager\UserManager;
 
-class UserModel
+class UserController
 {
   private UserManager $userManager;
+  private ElementsController $element;
+
+
   public function __construct(private readonly TwigService $twigService)
   {
     $this->userManager = new UserManager();
-  }
-
-  public function renderTemplate(string $template, array $data): void
-  {
-    echo $this->twigService->render($template, $data);
+    $this->element = new ElementsController($this->twigService);
   }
 
   public function showAuth(): void
@@ -24,12 +23,21 @@ class UserModel
     if ($formType === 'login' && isset($_POST['email']) && isset($_POST['password'])) {
       // Action de connexion
       $this->userManager->logIn($_POST['email']);
-    } elseif (
+    }
+  }
+
+  public function addOneUser(): void
+  {
+    $environnement = "/auth";
+    $formType = $_POST['formType'] ?? '';
+    if (
       $formType === 'register' && isset($_POST['name']) && isset($_POST['firstName'])
       && isset($_POST['nickname']) && isset($_POST['email']) && isset($_POST['password'])
     ) {
-      // Action d'enregistrement
       $this->userManager->register();
+    } else {
+      $textMessage = "echec";
     }
+    $this->element->showDialog($textMessage, $environnement);
   }
 }

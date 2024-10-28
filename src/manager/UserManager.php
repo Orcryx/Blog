@@ -35,7 +35,6 @@ class UserManager
         if ($user !== null && $user !== false) {
             $hashedPassword = password_hash($user->password, PASSWORD_DEFAULT);
             if (password_verify($_POST['password'], $hashedPassword)) {
-                echo "reussite !";
                 $_SESSION['status'] = true;
                 $_SESSION['user'] = new UserSessionModel($user->userId, $user->email, $user->role, $user->nickname);
                 $_SESSION['login_attempts'] = 0; // Reset login attempts
@@ -55,11 +54,12 @@ class UserManager
         }
         // Afficher la page de connexion avec le message d'erreur
         echo $twigService->render('info.twig', ['message' => $message]);
-        // return $message
     }
 
     public function register(): void
     {
+        $twigService = new TwigService();
+        // $origin = $this->url->backUrl();
         $email = $_POST['email'];
         /** @var object|false  $user  **/
         $user = $this->user->getUserByEmail($email);
@@ -69,14 +69,7 @@ class UserManager
             $firstName = $_POST['firstName'];
             $nickname = $_POST['nickname'];
             $password = $_POST['password'];
-
-            // 5var_dump( $name, $firstName, $nickname, $password);
             $this->user->insertUser($name, $firstName, $email, $password, $nickname);
-            echo "création de compte possible";
-            header("Location: {$_SESSION['previous_url']}");
-            exit();
-        } else {
-            echo "création de compte impossible";
         }
     }
 
