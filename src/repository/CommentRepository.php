@@ -34,15 +34,11 @@ class CommentRepository
             ':postId' => $postId
         ];
 
-        $newcomment = $this->databaseService->prepareAndExecute(
+        $this->databaseService->prepareAndExecute(
             'INSERT INTO comment (comment, isValidated, userId, postId) 
             VALUES (:comment, :isValidated, :userId, :postId)',
             $params
         );
-        if ($newcomment === false) {
-            echo "Echec de la requête SQL Insert Into";
-            exit;
-        }
     }
 
     public function getCommentById(int $commentId): object
@@ -56,14 +52,14 @@ class CommentRepository
 
     public function deleteCommentById(int $commentId): void
     {
-        $comment = $this->databaseService->prepareAndExecuteOne(
+        $this->databaseService->prepareAndExecuteOne(
             'DELETE FROM comment WHERE comment.commentId = :commentId',
             ['commentId' => $commentId]
         );
     }
     public function updateCommentById(int $commentId, string $comment): void
     {
-        $comment = $this->databaseService->prepareAndExecuteOne(
+        $this->databaseService->prepareAndExecuteOne(
             'UPDATE comment SET comment = :comment WHERE commentId = :commentId',
             ['commentId' => $commentId, 'comment' => $comment]
         );
@@ -80,7 +76,7 @@ class CommentRepository
     public function publishCommentById(int $commentId): void
     {
         $isValidated = 1;
-        $commentId = $this->databaseService->prepareAndExecuteOne(
+        $this->databaseService->prepareAndExecuteOne(
             'UPDATE comment SET isvalidated = :isValidated  WHERE comment.commentId = :commentId',
             ['isValidated' => $isValidated, 'commentId' => $commentId]
         );

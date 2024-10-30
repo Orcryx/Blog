@@ -58,9 +58,5 @@ class UserRepository
             VALUES (:name, :firstName, :email, :password, :isValidated, :nickname, :role)',
             $params
         );
-        // if ($newUser === false) {
-        //     echo "Echec de la requête SQL Insert Into";
-        //     exit;
-        // }
     }
 }
