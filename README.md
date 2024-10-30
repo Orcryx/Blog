@@ -1,6 +1,7 @@
 # Blog OCR PHP - Projet
 
 Ce projet est une application de blog construite en PHP8 sans framework. Il utilise Twig pour les templates, PHPMailer pour l'envoi d'emails, et PHP Dotenv pour la gestion des variables d'environnement sensibles.
+Lien Codacy : https://app.codacy.com/gh/Orcryx/Blog/dashboard 
 
 ## Table des matières
 
