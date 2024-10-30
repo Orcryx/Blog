@@ -49,6 +49,14 @@ Lien Codacy : https://app.codacy.com/gh/Orcryx/Blog/dashboard
 
 Pour exécuter le projet, démarrez votre serveur local (Apache, Nginx, ou un serveur intégré comme celui de PHP) et accédez à l’index de l'application.
 Accédez à l’application dans votre navigateur via http://localhost:3000.
+Utilisateur : 
+- Admin
+    - ID : userAdminBlog@mailinator.com
+    - Mtp : oY4L4p3q
+      
+- User
+    - ID : userBlog@mailinator.com
+    - Mtp : x5plex    
 
 ## Structure du projet
 
