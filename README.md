@@ -1,5 +1,7 @@
 # Blog OCR PHP - Projet
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/d3dc691f30a24dfeabef5513de3cdfe8)](https://app.codacy.com/gh/Orcryx/Blog?utm_source=github.com&utm_medium=referral&utm_content=Orcryx/Blog&utm_campaign=Badge_Grade)
+
 Ce projet est une application de blog construite en PHP8 sans framework. Il utilise Twig pour les templates, PHPMailer pour l'envoi d'emails, et PHP Dotenv pour la gestion des variables d'environnement sensibles.
 
 ## Table des matières
