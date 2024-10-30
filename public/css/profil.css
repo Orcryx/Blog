@@ -57,6 +57,12 @@
     /* border: 1px solid violet; */
 }
 
+#email-message
+{
+    width: 90%;
+    margin-bottom: 10px;
+}
+
 /* LES CLASS */
 
 /* .head-profil{
@@ -82,7 +88,11 @@
     
 }
 
-
+.field 
+{
+    width: 100%;
+    max-width: 200px;
+}
 
 /* LE RESPONSIF */
 

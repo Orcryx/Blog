@@ -93,6 +93,14 @@ main {
     align-items: center;
 }
 
+.flex-column-center
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 /*LES DISPLAY */
 
 .hidden {
@@ -176,20 +184,63 @@ main {
 }
 
 #blurred {
-    width: 90%;
+    width: 100%;
     min-height: 300px;
     padding: 10px;
-    /* border: 1px solid yellow;  */
+    border-radius: 10px;
+
+    background-color: rgba(255, 255, 255, 0.7);
+    box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+}
+#mini-blurred
+{
+    width: 100%;
+    padding: 10px;
     border-radius: 10px;
 
     background-color: rgba(255, 255, 255, 0.7);
     box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
 }
 
+#textarea-message, .textarea-message
+{
+    min-height: 250px;
+    max-width: 200px;
+    margin-bottom: 10px;
+}
+
+
+
 /* LES CLASS */
 
 .userConnected {
     color: var(--colorText);
+}
+
+.button-mini {
+    max-width: 250px;
+
+    margin-left: auto;
+    margin-right: auto;
+    padding: 5px;
+
+    border: none;
+    border-radius: 15px;
+
+    background-color: var(--colorExtra);
+
+    font-size: 1.2em;
+    font-weight: 700;
+    text-align: center;
+    color: var(--colorText);
+
+    box-shadow: rgba(50, 50, 105, 0.15) 0px 2px 5px 0px,
+        rgba(0, 0, 0, 0.05) 0px 1px 1px 0px;
+}
+.btn-center
+{
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .button-blog {
@@ -216,6 +267,11 @@ main {
 .linkSign {
     font-size: 0.8em;
     color: var(--colorExtra);
+}
+
+.bottom-link
+{
+    font-size: 0.6em;
 }
 
 /* LE RESPONSIF */
