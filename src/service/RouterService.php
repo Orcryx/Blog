@@ -7,7 +7,7 @@ use App\controller\PostController;
 use App\controller\ContactController;
 use App\controller\ElementsController;
 use App\controller\AdminController;
-use App\controller\UserModel;
+use App\controller\UserController;
 use App\repository\CommentRepository;
 use App\repository\PostRepository;
 use App\repository\UserRepository;
@@ -19,119 +19,193 @@ use App\service\DatabaseService;
 class RouterService
 {
     private TwigService $twigService;
-    //constructeur de la class routeur
+    private ?UserController $userController = null;
+    private ?CommentController $commentController = null;
+    private ?PostController $postController = null;
+    private ?AdminController $adminController = null;
+    private ?ContactController $contactController = null;
+    private ?ElementsController $elementsController = null;
+    private ?UserManager $userManager = null;
+    private ?CommentManager $commentManager = null;
+    private ?PostManager $postManager = null;
+
     public function __construct()
     {
         $this->twigService = new TwigService();
     }
 
+    private function getUserManager(): UserManager
+    {
+        if ($this->userManager === null) {
+            $dataBD = new DatabaseService();
+            $userRepo = new UserRepository($dataBD);
+            $this->userManager = new UserManager($userRepo);
+        }
+        return $this->userManager;
+    }
+
+    private function getCommentManager(): CommentManager
+    {
+        if ($this->commentManager === null) {
+            $dataBD = new DatabaseService();
+            $commentRepo = new CommentRepository($dataBD);
+            $this->commentManager = new CommentManager($commentRepo);
+        }
+        return $this->commentManager;
+    }
+
+    private function getPostManager(): PostManager
+    {
+        if ($this->postManager === null) {
+            $dataBD = new DatabaseService();
+            $postRepo = new PostRepository($dataBD);
+            $this->postManager = new PostManager($postRepo);
+        }
+        return $this->postManager;
+    }
+
+    private function getUserController(): UserController
+    {
+        if ($this->userController === null) {
+            $this->userController = new UserController($this->twigService);
+        }
+        return $this->userController;
+    }
+
+    private function getCommentController(): CommentController
+    {
+        if ($this->commentController === null) {
+            $this->commentController = new CommentController($this->getCommentManager(), $this->twigService);
+        }
+        return $this->commentController;
+    }
+
+    private function getPostController(): PostController
+    {
+        if ($this->postController === null) {
+            $this->postController = new PostController($this->getPostManager(), $this->getCommentManager(), $this->twigService, $this->getUserManager());
+        }
+        return $this->postController;
+    }
+
+    private function getAdminController(): AdminController
+    {
+        if ($this->adminController === null) {
+            $this->adminController = new AdminController($this->getCommentManager(), $this->twigService, $this->getUserManager());
+        }
+        return $this->adminController;
+    }
+
+    private function getContactController(): ContactController
+    {
+        if ($this->contactController === null) {
+            $this->contactController = new ContactController($this->twigService);
+        }
+        return $this->contactController;
+    }
+
+    private function getElementsController(): ElementsController
+    {
+        if ($this->elementsController === null) {
+            $this->elementsController = new ElementsController($this->twigService);
+        }
+        return $this->elementsController;
+    }
+
     public function run(string $uri)
     {
+        // var_dump($_SESSION);
         $path = explode('?', $uri)[0];
-        // $environnement = $_SERVER["REQUEST_URI"];
-        //Préparer les class du projet
-        $dataBD = new DatabaseService();
-        $userRepo = new UserRepository($dataBD);
-        $userManager = new UserManager($userRepo);
-        $postRepo = new PostRepository($dataBD);
-        $postManager = new PostManager($postRepo);
-        $commentRepo = new CommentRepository($dataBD);
-        $commentManager = new CommentManager($commentRepo);
-        $blogController = new PostController($postManager, $commentManager, $this->twigService, $userManager);
-        $commentController = new CommentController($commentManager, $this->twigService);
-        $postController = new PostController($postManager, $commentManager, $this->twigService, $userManager);
-        $AdminController = new AdminController($commentManager, $this->twigService, $userManager);
-        $contactController = new ContactController($this->twigService);
-        $form = new ElementsController($this->twigService);
-        $user = new UserModel($this->twigService);
         $isMethodPost = $_SERVER['REQUEST_METHOD'] === 'POST';
+
         // Récupérer l'ID de l'URL s'il est présent
-        $queryString = explode('?', $uri)[1] ?? ''; // Obtenir la partie de la chaîne après le '?'
+        $queryString = explode('?', $uri)[1] ?? '';
         $id = intval($queryString);
         $id = ($id === 0 && $queryString !== "0") ? null : $id;
 
-        //Les autres route en fonction de l'action
         switch ($path) {
             case '/':
-                $form->showIndex();
+                $this->getElementsController()->showIndex();
                 break;
             case '/action':
-                $form->showDynamicDialog();
+                $this->getElementsController()->showDynamicDialog();
                 break;
             case '/contact':
                 if ($isMethodPost) {
-                    $contactController->sendEmail();
+                    $this->getContactController()->sendEmail();
                 } else {
-                    $form->showFormContact();
+                    $this->getElementsController()->showFormContact();
                 }
                 break;
             case '/blog':
                 if ($id !== null) {
-                    //echo "ID de la page .$id";
-                    $blogController->displayOnePost($id);
+                    $this->getPostController()->displayOnePost($id);
                 } else {
-                    $blogController->displayGallery();
+                    $this->getPostController()->displayGallery();
                 }
                 break;
             case '/auth':
                 $url = $this->backUrl();
                 if ($isMethodPost) {
-                    $user->showAuth();
+                    $this->getUserController()->showAuth();
                 }
-                $form->showLoginDialogue($url);
+                $this->getElementsController()->showLoginDialogue($url);
+                break;
+            case '/register':
+                if ($isMethodPost) {
+                    $this->getUserController()->addOneUser();
+                }
                 break;
             case '/comment/add':
                 if ($isMethodPost) {
-                    $commentController->addComment();
+                    $this->getCommentController()->addComment();
                 } else {
                     echo "Erreur: méthode non autorisée.";
                 }
                 break;
             case '/Comment/delete':
                 if ($isMethodPost) {
-                    $commentController->deleteComment();
+                    $this->getCommentController()->deleteComment();
                 }
                 break;
             case '/Comment/update':
                 if ($isMethodPost) {
-                    $commentController->updateComment();
+                    $this->getCommentController()->updateComment();
                 }
                 break;
             case '/admin':
-                $AdminController->dashboardAdmin();
+                $this->getAdminController()->dashboardAdmin();
                 break;
             case '/Comment/put':
-                $commentController->publishComment();
+                $this->getCommentController()->publishComment();
                 break;
             case '/Post/post':
                 if ($isMethodPost) {
-                    $postController->createOnePost();
+                    $this->getPostController()->createOnePost();
                 }
                 break;
             case '/Post/delete':
                 if ($isMethodPost) {
-                    $postController->deleteOnePost();
+                    $this->getPostController()->deleteOnePost();
                 }
                 break;
             case '/Post/put':
                 if ($isMethodPost) {
-                    $postController->updateOnePost();
+                    $this->getPostController()->updateOnePost();
                 }
                 break;
             case '/logOut':
-                $userManager->logOut();
+                $this->getUserManager()->logOut();
                 break;
             default:
-                $form->showPage404();
+                $this->getElementsController()->showPage404();
                 break;
         }
     }
 
     public function backUrl()
     {
-        // Stocker l'URL actuelle dans une variable PHP
         $current_url = $_SERVER['HTTP_REFERER'];
-        // Si le formulaire est soumis, stockez l'URL dans la session
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['last_url'] = $_POST['current_url'];
             $current_url = $_SESSION['last_url'];

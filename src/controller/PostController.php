@@ -25,7 +25,7 @@ class PostController
     {
         /**@var PostModel[] $posts */
         $posts = $this->postManager->getAll();
-        echo $this->twigService->render('gallery.twig', ['posts' => $posts]);
+        $this->element->renderTemplate('gallery.twig', ['posts' => $posts]);
     }
 
     public function displayOnePost(int $postId)

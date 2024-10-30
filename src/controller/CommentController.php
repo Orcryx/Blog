@@ -4,7 +4,7 @@ namespace App\controller;
 
 use App\service\TwigService;
 use App\manager\CommentManager;
-use App\manager\UserManager;
+// use App\manager\UserManager;
 use App\controller\ElementsController;
 
 class CommentController

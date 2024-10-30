@@ -1,8 +1,10 @@
 <footer class="flex-around">
     <a href="https://github.com/Orcryx" alt="lien vers Github" class="userConnected"><i class="fa-brands fa-github"></i></a>
     <a href="https://www.linkedin.com/in/lmagar/" alt="lien vers Linkedin" class="userConnected"><i class="fa-brands fa-linkedin"></i></a>
-    {% if session.status %}
+    {% if session.status%}
+        {% if session.user.role == "isAdmin"%}
         <a href="/admin" alt="lien vers la page administration" class="userConnected"><i class="fa-solid fa-user-gear"></i></a>
+        {% endif %}
         <a href="/logOut" alt="lien de déconnexion" class="userConnected"><i class="fa-solid fa-right-from-bracket"></i></a>
         <!-- {{session.user.nickname }} -->
    {% endif %}

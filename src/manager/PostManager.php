@@ -53,6 +53,6 @@ class PostManager
 
     public function updateOnePostById(int $postId, string $title, string $message): void
     {
-        $this->postRepository->updateOnePostByI($postId, $title, $message);
+        $this->postRepository->updateOnePostById($postId, $title, $message);
     }
 }
