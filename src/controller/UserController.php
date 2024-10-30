@@ -25,8 +25,7 @@ class UserController
       $email = $_POST['email'];
       $password = $_POST['password'];
       if ($this->userManager->logIn($email, $password)) {
-        header("Location: $url"); // Rediriger vers l'accueil
-        exit();
+        header("Location: $url");
       } else {
         $attempts = $this->userManager->getLoginAttempts();
         $message = "Échec de connexion. Tentative $attempts / 3";
