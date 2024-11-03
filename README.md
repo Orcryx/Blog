@@ -26,32 +26,21 @@ Lien Codacy : https://app.codacy.com/gh/Orcryx/Blog/dashboard
    Créez un fichier .env.dev à la racine du projet pour les variables d'environnement. Ce fichier est crucial pour sécuriser les données sensibles (comme les identifiants de la base de données).
 
 -   Exemple de fichier .env.dev :
-    DB_HOST=localhost
-    DB_NAME=blog
-    DB_USER=root
-    DB_PASS=password
-    MAIL_PASS
-    MAIL_USER
-    MAIL_HOST
-    MAIL_ADRESS
-<<<<<<< HEAD
 
-<<<<<<< HEAD
+    -   DB_HOST=localhost
+    -   DB_NAME=blog
+    -   DB_USER=root
+    -   DB_PASS=password
+    -   MAIL_PASS
+    -   MAIL_USER
+    -   MAIL_HOST
+    -   MAIL_ADRESS
+
 Documentation : https://github.com/vlucas/phpdotenv
 
 2. Configuration de la base de données :
     - Créer une base de données SQL nommée "blog" (par exemple avec DBeaver)
     - Importez le fichier de base de données se trouvant dans document/blog.sql pour créer la structure et les données initiales nécessaires.
-=======
-=======
-    
->>>>>>> bbdaa2cffeed8f56caac588e673bd07aaa285f92
-Documentation : https://github.com/vlucas/phpdotenv 
-
-2. Configuration de la base de données :
-   - Créer une base de données SQL nommée "blog" (par exemple avec DBeaver)
-   - Importez le fichier de base de données se trouvant dans document/blog.sql pour créer la structure et les données initiales nécessaires.
->>>>>>> 873b333b2577f2dda7eaefb27d4fc356862521cf
 
 ## Installation
 
