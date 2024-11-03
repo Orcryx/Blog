@@ -9,7 +9,7 @@
 {% block content %}
    <!-- Zone pour afficher les messages d'alerte -->
     <div id="content">
-        <div id="blurred">
+        <div id="mini-blurred">
             <!-- Vérification de la présence du message -->
             {% if message %}
                 <div class="alert alert-warning">
@@ -20,7 +20,7 @@
             {% endif %}
             <div id="zoneArrow" class="zoneXmark">
                 <a href="{{origin}}" alt="lien vers la page administration" class="userConnected"> 
-                    <i class="fa-solid fa-arrow-left"></i>Retour
+                    <i class="fa-solid fa-arrow-left"></i> Retour
                 </a>
             </div>
         </div>    

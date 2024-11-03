@@ -34,15 +34,20 @@ Lien Codacy : https://app.codacy.com/gh/Orcryx/Blog/dashboard
     MAIL_USER
     MAIL_HOST
     MAIL_ADRESS
+    
+Documentation : https://github.com/vlucas/phpdotenv 
 
 2. Configuration de la base de données :
    - Créer une base de données SQL nommée "blog" (par exemple avec DBeaver)
    - Importez le fichier de base de données se trouvant dans document/blog.sql pour créer la structure et les données initiales nécessaires.
 
-4. Autoloading :
-   Assurez-vous que Composer génère correctement l’autoload avec PSR-4 pour le namespace App.
+## Installation
 
-Documentation : https://github.com/vlucas/phpdotenv 
+1. **Cloner le dépôt** : Clonez ce dépôt sur votre machine locale.
+2. Accéder au dossier du projet :
+    - cd blog
+3. Installer les dépendances avec Composer :
+    - composer install
 
 ## Installation
 

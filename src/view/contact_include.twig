@@ -10,21 +10,21 @@
     <div id="blurred">
       <div id="contact" class="flex-column">
           <h1>Écrivez-moi !</h1>
-          <form id="contact-form" action="/contact" method="POST">
+          <form id="contact-form" class="flex-column-center" action="/contact" method="POST">
                 <input type="hidden" name="formType" value="contact">  <!-- Champ caché -->
 
-                <div class="form-field">
+                <div class="flex-column field">
                     <label for="email">Email:</label>
                     <input type="email" id="email" name="email" required>
                 </div>
 
-                <div class="form-field">
+                <div class="flex-column field">
                     <label for="message">Message:</label>
-                    <textarea id="message" name="message" required></textarea>
+                    <textarea id="textarea-message" name="message" required></textarea>
                 </div>
 
-                <div class="form-field">
-                    <button type="submit">Envoyer</button>
+                <div class="flex-column field">
+                    <button class="button-mini" type="submit">Envoyer</button>
                 </div>
             </form>
             
@@ -32,7 +32,7 @@
                 <p>Merci, votre message a bien été envoyé.</p>
             {% endif %}
       </div>
-      <a href="/" alt="Lien vers la page d'accueil" class="button-blog"><i class="fa-solid fa-house"></i></a>
+      <a href="/" alt="Lien vers la page d'accueil" class="bottom-link"><i class="fa-solid fa-arrow-left"> Retour</i></a>
     </div>
  </div>
 {% endblock %}

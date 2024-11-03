@@ -1,35 +1,35 @@
 {% extends "layout.twig" %}
 {% block content %}
    <div id="content">
-        <div id="blurred">
+        <div id="mini-blurred">
             <div id="dialogDiv">
                     <div id="zoneArrow" class="">
                         <a href="{{origine}}" alt="lien retour" class=""> <i class="fa-solid fa-arrow-left"></i> </a>
                     </div>
                     {% if type == 'commentId' %}
-                        <form method="POST" action="/deleteComment">
+                        <form method="POST" action="/deleteComment" class="flex-column-center">
                             <input type="hidden" name="current_url" value="{{origine}}">
                             <input type="hidden" name="commentId"> 
                             <p>Êtes-vous sûr de vouloir supprimer le commentaire ?</p>
-                            <button id="comment-btn" type="submit">Supprimer</button>
+                            <button id="comment-btn" type="submit" class="button-mini">Supprimer</button>
                         </form>
                     {% elseif type == 'deletePost' %}
-                        <form method="POST" action="/Post/delete">
+                        <form method="POST" action="/Post/delete"  class="flex-column-center">
                             <input type="hidden" name="current_url" value="{{origine}}">
                             <input type="hidden" name="postId" value="{{postId}}"> 
                             <p>Êtes-vous sûr de vouloir supprimer le commentaire ?</p>
-                            <button id="post-btn" type="submit">Supprimer</button>
+                            <button id="post-btn" type="submit" class="button-mini">Supprimer</button>
                         </form>
                     {% elseif type == 'updatePost' %}
-                        <form  method="POST" action="/Post/put">
+                        <form  method="POST" action="/Post/put"  class="flex-column-center">
                             <input type="hidden" name="current_url" value="{{origine}}">
                             <input type="hidden" name="postId" id="postIdInput" value="{{postId}}">
                             <input name="title" id="postTitle" value="{{ title }}">
-                            <textarea id="postMessage" name="content">{{ comment }}</textarea>                            
-                            <button type="submit">Modifier</button>
+                            <textarea id="postMessage" class="textarea-message" name="content">{{ comment }}</textarea>                            
+                            <button type="submit" class="button-mini">Modifier</button>
                         </form>
                     {% elseif type == 'addComment' %}
-                        <form method="POST" action="/comment/add">
+                        <form method="POST" action="/comment/add"  class="flex-column-center">
                             <input type="hidden" name="current_url" value="{{origine}}">
                             <div class="hidden">
                             <input type="hidden" id="postId" name="postId" value="{{postId}}"/>
@@ -39,16 +39,16 @@
                             <label for="nickname">Pseudo:</label>
                             <input type="text" id="nickname" name="nickname" value="{{ session.user.nickname }}" readonly />
                             <label for="content">Message:</label>
-                            <textarea id="comment" name="content"></textarea>
+                            <textarea id="comment" class="textarea-message" name="content"></textarea>
                             </div>
-                            <button id="comment-btn" type="submit">Soumettre</button>
+                            <button id="comment-btn" class="button-mini" type="submit">Soumettre</button>
                         </form>
                     {% elseif type == 'updateComment' %}
-                        <form  method="POST" action="/Comment/update">
+                        <form  method="POST" action="/Comment/update"  class="flex-column-center">
                             <input type="hidden" name="current_url" value="{{origine}}">
                             <input type="hidden" name="commentId" id="commentIdInput" value="{{commentId}}">
-                            <textarea id="commentContent" name="content">{{ comment }}</textarea>
-                            <button type="submit">Modifier</button>
+                            <textarea id="commentContent" class="textarea-message" name="content">{{ comment }}</textarea>
+                            <button type="submit" class="button-mini">Modifier</button>
                         </form>
                     {% endif %}
             </div>
