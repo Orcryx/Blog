@@ -34,6 +34,7 @@ Lien Codacy : https://app.codacy.com/gh/Orcryx/Blog/dashboard
     MAIL_USER
     MAIL_HOST
     MAIL_ADRESS
+<<<<<<< HEAD
 
 <<<<<<< HEAD
 Documentation : https://github.com/vlucas/phpdotenv
@@ -42,12 +43,23 @@ Documentation : https://github.com/vlucas/phpdotenv
     - Créer une base de données SQL nommée "blog" (par exemple avec DBeaver)
     - Importez le fichier de base de données se trouvant dans document/blog.sql pour créer la structure et les données initiales nécessaires.
 =======
+=======
+    
+>>>>>>> bbdaa2cffeed8f56caac588e673bd07aaa285f92
 Documentation : https://github.com/vlucas/phpdotenv 
 
 2. Configuration de la base de données :
    - Créer une base de données SQL nommée "blog" (par exemple avec DBeaver)
    - Importez le fichier de base de données se trouvant dans document/blog.sql pour créer la structure et les données initiales nécessaires.
 >>>>>>> 873b333b2577f2dda7eaefb27d4fc356862521cf
+
+## Installation
+
+1. **Cloner le dépôt** : Clonez ce dépôt sur votre machine locale.
+2. Accéder au dossier du projet :
+    - cd blog
+3. Installer les dépendances avec Composer :
+    - composer install
 
 ## Installation
 
