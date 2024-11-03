@@ -1,13 +1,13 @@
 # Blog OCR PHP - Projet
 
 Ce projet est une application de blog construite en PHP8 sans framework. Il utilise Twig pour les templates, PHPMailer pour l'envoi d'emails, et PHP Dotenv pour la gestion des variables d'environnement sensibles.
-Lien Codacy : https://app.codacy.com/gh/Orcryx/Blog/dashboard 
+Lien Codacy : https://app.codacy.com/gh/Orcryx/Blog/dashboard
 
 ## Table des matières
 
 1. [Prérequis](#prérequis)
-2. [Installation](#installation)
-3. [Configuration](#configuration)
+2. [Configuration](#configuration)
+3. [Installation](#installation)
 4. [Utilisation](#utilisation)
 5. [Structure du projet](#structure-du-projet)
 6. [Documentation](#documentation)
@@ -20,14 +20,6 @@ Lien Codacy : https://app.codacy.com/gh/Orcryx/Blog/dashboard
 -   **MySQL** : Version recommandée : 8.0.19 ou plus récent.
 -   **Serveur local** : Apache ou un serveur équivalent pour exécuter l’application en local.
 
-## Installation
-
-1. **Cloner le dépôt** : Clonez ce dépôt sur votre machine locale.
-2. Accéder au dossier du projet :
-    - cd blog
-3. Installer les dépendances avec Composer :
-    - composer install
-
 ## Configuration
 
 1. Configuration de l'environnement :
@@ -38,25 +30,37 @@ Lien Codacy : https://app.codacy.com/gh/Orcryx/Blog/dashboard
     DB_NAME=blog
     DB_USER=root
     DB_PASS=password
+    MAIL_PASS
+    MAIL_USER
+    MAIL_HOST
+    MAIL_ADRESS
+
+Documentation : https://github.com/vlucas/phpdotenv
 
 2. Configuration de la base de données :
-   Importez le fichier de base de données se trouvant dans document/blog.sql pour créer la structure et les données initiales nécessaires.
+    - Créer une base de données SQL nommée "blog" (par exemple avec DBeaver)
+    - Importez le fichier de base de données se trouvant dans document/blog.sql pour créer la structure et les données initiales nécessaires.
 
-3. Autoloading :
-   Assurez-vous que Composer génère correctement l’autoload avec PSR-4 pour le namespace App.
+## Installation
+
+1. **Cloner le dépôt** : Clonez ce dépôt sur votre machine locale.
+2. Accéder au dossier du projet :
+    - cd blog
+3. Installer les dépendances avec Composer :
+    - composer install
 
 ## Utilisation
 
 Pour exécuter le projet, démarrez votre serveur local (Apache, Nginx, ou un serveur intégré comme celui de PHP) et accédez à l’index de l'application.
 Accédez à l’application dans votre navigateur via http://localhost:3000.
-Utilisateur : 
-- Admin
-    - ID : userAdminBlog@mailinator.com
-    - Mtp : oY4L4p3q
-      
-- User
-    - ID : userBlog@mailinator.com
-    - Mtp : x5plex    
+Utilisateur :
+
+-   Admin
+    -   ID : userAdminBlog@mailinator.com
+    -   Mtp : oY4L4p3q
+-   User
+    -   ID : userBlog@mailinator.com
+    -   Mtp : x5plex
 
 ## Structure du projet
 
@@ -70,4 +74,4 @@ Voici un aperçu de la structure du projet :
 
 ├── views/ # Templates Twig
 
-├── documentation/ # Documentation, UML, bdd
+├── document/ # Diagramme, UML, bdd
