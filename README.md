@@ -1,7 +1,7 @@
 # Blog OCR PHP - Projet
 
 Ce projet est une application de blog construite en PHP8 sans framework. Il utilise Twig pour les templates, PHPMailer pour l'envoi d'emails, et PHP Dotenv pour la gestion des variables d'environnement sensibles.
-Lien Codacy : https://app.codacy.com/gh/Orcryx/Blog/dashboard 
+Lien Codacy : https://app.codacy.com/gh/Orcryx/Blog/dashboard
 
 ## Table des matières
 
@@ -26,20 +26,21 @@ Lien Codacy : https://app.codacy.com/gh/Orcryx/Blog/dashboard
    Créez un fichier .env.dev à la racine du projet pour les variables d'environnement. Ce fichier est crucial pour sécuriser les données sensibles (comme les identifiants de la base de données).
 
 -   Exemple de fichier .env.dev :
-    DB_HOST=localhost
-    DB_NAME=blog
-    DB_USER=root
-    DB_PASS=password
-    MAIL_PASS
-    MAIL_USER
-    MAIL_HOST
-    MAIL_ADRESS
-    
-Documentation : https://github.com/vlucas/phpdotenv 
+
+    -   DB_HOST=localhost
+    -   DB_NAME=blog
+    -   DB_USER=root
+    -   DB_PASS=password
+    -   MAIL_PASS
+    -   MAIL_USER
+    -   MAIL_HOST
+    -   MAIL_ADRESS
+
+Documentation : https://github.com/vlucas/phpdotenv
 
 2. Configuration de la base de données :
-   - Créer une base de données SQL nommée "blog" (par exemple avec DBeaver)
-   - Importez le fichier de base de données se trouvant dans document/blog.sql pour créer la structure et les données initiales nécessaires.
+    - Créer une base de données SQL nommée "blog" (par exemple avec DBeaver)
+    - Importez le fichier de base de données se trouvant dans document/blog.sql pour créer la structure et les données initiales nécessaires.
 
 ## Installation
 
@@ -61,14 +62,14 @@ Documentation : https://github.com/vlucas/phpdotenv
 
 Pour exécuter le projet, démarrez votre serveur local (Apache, Nginx, ou un serveur intégré comme celui de PHP) et accédez à l’index de l'application.
 Accédez à l’application dans votre navigateur via http://localhost:3000.
-Utilisateur : 
-- Admin
-    - ID : userAdminBlog@mailinator.com
-    - Mtp : oY4L4p3q
-      
-- User
-    - ID : userBlog@mailinator.com
-    - Mtp : x5plex    
+Utilisateur :
+
+-   Admin
+    -   ID : userAdminBlog@mailinator.com
+    -   Mtp : oY4L4p3q
+-   User
+    -   ID : userBlog@mailinator.com
+    -   Mtp : x5plex
 
 ## Structure du projet
 
