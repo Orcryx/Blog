@@ -18,14 +18,21 @@ class UserController
 
   public function showAuth(): void
   {
-    $formType = $_POST['formType'] ?? '';
+    $input = filter_input_array(INPUT_POST, [
+      'formType' => FILTER_DEFAULT,
+      'email'    => FILTER_VALIDATE_EMAIL,
+      'password' => FILTER_DEFAULT // Mot de passe sans échappement
+    ]);
+
     $message = '';
     $url = $this->element->getUrl();
-    if ($formType === 'login' && isset($_POST['email'], $_POST['password'])) {
-      $email = $_POST['email'];
-      $password = $_POST['password'];
+    if ($input['formType'] === 'login' && $input['email'] && $input['password']) {
+      $email = $input['email'];
+      $password = $input['password'];
+
       if ($this->userManager->logIn($email, $password)) {
         header("Location: $url");
+        exit;
       } else {
         $attempts = $this->userManager->getLoginAttempts();
         $message = "Échec de connexion. Tentative $attempts / 3";
@@ -34,24 +41,39 @@ class UserController
           $message = "Compte bloqué après 3 tentatives échouées";
         }
       }
+    } else {
+      $message = "Erreur : tous les champs sont obligatoires pour la connexion.";
     }
+
     $this->element->renderTemplate('info.twig', ['message' => $message]);
   }
 
   public function addOneUser(): void
   {
-    $formType = $_POST['formType'] ?? '';
+    $input = filter_input_array(INPUT_POST, [
+      'formType'  => FILTER_DEFAULT,
+      'name'      => FILTER_DEFAULT,
+      'firstName' => FILTER_DEFAULT,
+      'nickname'  => FILTER_DEFAULT,
+      'email'     => FILTER_VALIDATE_EMAIL,
+      'password'  => FILTER_DEFAULT // Mot de passe sans échappement
+    ]);
+
     $textMessage = "Échec d'enregistrement";
-    if ($formType === 'register' && isset($_POST['name'], $_POST['firstName'], $_POST['nickname'], $_POST['email'], $_POST['password'])) {
-      $name = $_POST['name'];
-      $firstName = $_POST['firstName'];
-      $nickname = $_POST['nickname'];
-      $email = $_POST['email'];
-      $password = $_POST['password'];
+    if ($input['formType'] === 'register' && $input['name'] && $input['firstName'] && $input['nickname'] && $input['email'] && $input['password']) {
+      $name = strip_tags($input['name']);
+      $firstName = strip_tags($input['firstName']);
+      $nickname = strip_tags($input['nickname']);
+      $email = $input['email'];
+      $password = $input['password']; // Pas de strip_tags sur le mot de passe
+
       if ($this->userManager->register($name, $firstName, $email, $password, $nickname)) {
         $textMessage = "Inscription réussie";
       }
+    } else {
+      $textMessage = "Erreur : tous les champs requis pour l'inscription ne sont pas remplis ou sont invalides.";
     }
+
     $this->element->showDialog($textMessage, "/auth");
   }
 }
