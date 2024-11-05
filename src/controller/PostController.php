@@ -71,9 +71,9 @@ class PostController
         $environnement = "/admin";
 
         // Utilisation de filter_input pour récupérer les entrées sans les échapper
-        $title = filter_input(INPUT_POST, 'title', FILTER_DEFAULT);
-        $message = filter_input(INPUT_POST, 'content', FILTER_DEFAULT);
-        $userId = filter_input(INPUT_POST, 'userId', FILTER_VALIDATE_INT);
+        $title = strip_tags(filter_input(INPUT_POST, 'title', FILTER_DEFAULT));
+        $message = strip_tags(filter_input(INPUT_POST, 'content', FILTER_DEFAULT));
+        $userId = strip_tags(filter_input(INPUT_POST, 'userId', FILTER_VALIDATE_INT));
 
         // Validation des données
         if (empty($title) || empty($message)) {
@@ -94,7 +94,7 @@ class PostController
         $environnement = "/blog";
 
         // Utilisation de filter_input pour valider l'ID du post
-        $postId = filter_input(INPUT_POST, 'postId', FILTER_VALIDATE_INT);
+        $postId = strip_tags(filter_input(INPUT_POST, 'postId', FILTER_VALIDATE_INT));
 
         if ($postId !== false && $postId !== null) {
             $message = "L'article a été supprimé";
@@ -108,9 +108,9 @@ class PostController
     public function updateOnePost(): void
     {
         // Récupérer les données POST sans échapper les caractères
-        $postId = filter_input(INPUT_POST, 'postId', FILTER_VALIDATE_INT);
-        $title = filter_input(INPUT_POST, 'title', FILTER_DEFAULT);
-        $message = filter_input(INPUT_POST, 'content', FILTER_DEFAULT);
+        $postId = strip_tags(filter_input(INPUT_POST, 'postId', FILTER_VALIDATE_INT));
+        $title = strip_tags(filter_input(INPUT_POST, 'title', FILTER_DEFAULT));
+        $message = strip_tags(filter_input(INPUT_POST, 'content', FILTER_DEFAULT));
 
         if ($postId && $title && $message) {
             $this->postManager->updateOnePostById($postId, $title, $message);

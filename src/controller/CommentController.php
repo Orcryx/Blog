@@ -33,9 +33,9 @@ class CommentController
 
         // Vérifier si les champs requis sont définis et valides
         if ($input['content'] !== null && $input['postId'] !== null && $input['userId'] !== null) {
-            $comment = $input['content'];
-            $postId = $input['postId'];
-            $userId = $input['userId'];
+            $comment = strip_tags($input['content']);
+            $postId = strip_tags($input['postId']);
+            $userId = strip_tags($input['userId']);
             if (!empty($comment)) {
                 $isValidated = 0;
                 $message = "Votre commentaire est en attente de validation";
@@ -53,7 +53,7 @@ class CommentController
     public function deleteComment(): void
     {
         // Utiliser FILTER_VALIDATE_INT sans échappement
-        $commentId = filter_input(INPUT_POST, 'commentId', FILTER_VALIDATE_INT);
+        $commentId = strip_tags(filter_input(INPUT_POST, 'commentId', FILTER_VALIDATE_INT));
         if ($commentId !== null) {
             $this->commentManager->deleteCommentById($commentId);
             $message = "Le commentaire a été supprimé.";
@@ -66,7 +66,7 @@ class CommentController
     public function publishComment(): void
     {
         // Utiliser FILTER_VALIDATE_INT sans échappement
-        $commentId = filter_input(INPUT_POST, 'commentId', FILTER_VALIDATE_INT);
+        $commentId = strip_tags(filter_input(INPUT_POST, 'commentId', FILTER_VALIDATE_INT));
 
         if ($commentId !== null) {
             $this->commentManager->publishCommentById($commentId);
