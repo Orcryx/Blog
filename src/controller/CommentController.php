@@ -63,21 +63,6 @@ class CommentController
         $this->element->showDialog($message);;
     }
 
-    public function updateComment(): void
-    {
-        // Utiliser FILTER_DEFAULT pour le contenu sans échappement
-        $commentId = filter_input(INPUT_POST, 'commentId', FILTER_VALIDATE_INT);
-        $comment = filter_input(INPUT_POST, 'content', FILTER_DEFAULT);  // Pas d'échappement ici
-
-        if ($commentId !== null && $comment !== null) {
-            $message = "Le commentaire est mis à jour.";
-            $this->commentManager->updateCommentById($commentId, $comment);
-        } else {
-            $message = "Échec de la mise à jour du commentaire";
-        }
-        $this->element->showDialog($message);
-    }
-
     public function publishComment(): void
     {
         // Utiliser FILTER_VALIDATE_INT sans échappement

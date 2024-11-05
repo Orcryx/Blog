@@ -70,12 +70,6 @@
           <div class="comment">
                {% if comment.isOwner %}
                   <div id="comment-manager" class="flex-around">
-                      <form method="POST" action="/action">
-                        <input type="hidden" name="type" value="updateComment" class="hidden"/>
-                        <input type="hidden" name="commentId" value="{{comment.commentId }}" />
-                        <input type="hidden" id="commentContent" name="content" value="{{comment.comment }}" />
-                        <button class="content-button center-yz" id="publishComment" type="submit"><i class="fa-solid fa-pencil" id="upadateCommentIcon"></i></button>
-                      </form>
                       <form method="POST" action="/Comment/delete">
                         <!-- <input type="hidden" name="type" value="deleteComment" class="hidden"/> -->
                         <input type="hidden" name="commentId" value="{{comment.commentId }}" />

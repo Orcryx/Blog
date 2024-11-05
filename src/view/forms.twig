@@ -43,13 +43,6 @@
                             </div>
                             <button id="comment-btn" class="button-mini" type="submit">Soumettre</button>
                         </form>
-                    {% elseif type == 'updateComment' %}
-                        <form  method="POST" action="/Comment/update"  class="flex-column-center">
-                            <input type="hidden" name="current_url" value="{{origine}}">
-                            <input type="hidden" name="commentId" id="commentIdInput" value="{{commentId}}">
-                            <textarea id="commentContent" class="textarea-message" name="content">{{ comment }}</textarea>
-                            <button type="submit" class="button-mini">Modifier</button>
-                        </form>
                     {% endif %}
             </div>
         </div>

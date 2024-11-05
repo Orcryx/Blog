@@ -57,13 +57,6 @@ class CommentRepository
             ['commentId' => $commentId]
         );
     }
-    public function updateCommentById(int $commentId, string $comment): void
-    {
-        $this->databaseService->prepareAndExecuteOne(
-            'UPDATE comment SET comment = :comment WHERE commentId = :commentId',
-            ['commentId' => $commentId, 'comment' => $comment]
-        );
-    }
 
     public function getNoValidatedComment(): array
     {
