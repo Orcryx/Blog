@@ -32,7 +32,6 @@ class UserController
 
       if ($this->userManager->logIn($email, $password)) {
         header("Location: $url");
-        exit;
       } else {
         $attempts = $this->userManager->getLoginAttempts();
         $message = "Échec de connexion. Tentative $attempts / 3";

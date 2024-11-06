@@ -51,7 +51,6 @@ class PostRepository
 
         if ($newpost === false) {
             echo "Echec de la requête SQL Insert Into";
-            exit;
         }
     }
 
